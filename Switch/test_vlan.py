@@ -1,7 +1,7 @@
 import pytest
 import logging
 import json
-from test_switch.bridge_funcs import *
+from Switch.bridge_funcs import *
 from collections import namedtuple
 
 pytestmark = [pytest.mark.env_name("OLT_env"), pytest.mark.rest_dev("nms")]

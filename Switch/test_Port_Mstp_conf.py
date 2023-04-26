@@ -2,10 +2,10 @@ import pytest
 import logging
 import json
 from config import *
-from test_switch.test_vlan import vlan_config
-from test_switch.bridge_funcs import bridge_config
-from test_switch.test_Bridge_group_conf import switch_config
-from test_switch.test_Bridge_Mstp_instance_conf import Bridge_Mstp_config
+from Switch.test_vlan import vlan_config
+from Switch.bridge_funcs import bridge_config
+from Switch.test_Bridge_group_conf import switch_config
+from Switch.test_Bridge_Mstp_instance_conf import Bridge_Mstp_config
 # from pytest-check import check
 
 

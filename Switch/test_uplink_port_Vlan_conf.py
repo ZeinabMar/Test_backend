@@ -3,9 +3,9 @@ import logging
 import json
 from bridge_funcs import *
 from config import *
-from test_switch.bridge_funcs import bridge_config
-from test_switch.test_vlan import vlan_config
-from test_switch.test_Bridge_group_conf import switch_config
+from Switch.bridge_funcs import bridge_config
+from Switch.test_vlan import vlan_config
+from Switch.test_Bridge_group_conf import switch_config
 # from pytest-check import check
 
 

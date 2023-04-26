@@ -2,11 +2,11 @@ import pytest
 import logging
 import json
 from config import *
-from test_switch.bridge_funcs import bridge_config
-from test_switch.test_QinQ_registration_table_conf import QinQ_registration_table_config
-from test_switch.test_Bridge_group_conf import switch_config
-from test_switch.test_vlan import vlan_config
-from test_switch.test_uplink_port_Vlan_conf import uplink_vlan_config
+from Switch.bridge_funcs import bridge_config
+from Switch.test_QinQ_registration_table_conf import QinQ_registration_table_config
+from Switch.test_Bridge_group_conf import switch_config
+from Switch.test_vlan import vlan_config
+from Switch.test_uplink_port_Vlan_conf import uplink_vlan_config
 # from pytest-check import check
 
 
@@ -326,7 +326,7 @@ def test_Port_QinQ_config(rest_interface_module, node_id):
             #         vlan_config(rest_interface_module, node_id, vlan, method='POST')   
 
             for uplinkmode in up_link_mode_teory_1:   
-                for port_bridge_group in range(1,2):
+                for port_bridge_group in range(2,3):
                     switch_config(rest_interface_module, node_id, Switch_conf()._replace(ethIfIndex=port_bridge_group,index=4), method='POST') 
                     if uplinkmode == "CUSTOMER_NETWORK":
                         uplink_vlan_config(rest_interface_module, node_id, uplink_vlan_conf(port_bridge_group, None, "CUSTOMER_NETWORK", -1, "" , "", "", -1, "Pass"), method='POST')

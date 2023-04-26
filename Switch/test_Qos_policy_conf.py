@@ -2,10 +2,10 @@ import pytest
 import logging
 import json
 from config import *
-from test_switch.test_Qos_class_definition import Qos_Class_config
-from test_switch.test_Qos_management import Qos_Manage_config
-from test_switch.test_vlan import vlan_config
-from test_switch.bridge_funcs import bridge_config
+from Switch.test_Qos_class_definition import Qos_Class_config
+from Switch.test_Qos_management import Qos_Manage_config
+from Switch.test_vlan import vlan_config
+from Switch.bridge_funcs import bridge_config
 
 
 # from pytest-check import check

@@ -2,7 +2,7 @@ import pytest
 import logging
 import json
 from config import *
-from test_switch.bridge_funcs import bridge_config
+from Switch.bridge_funcs import bridge_config
 from collections import namedtuple
 # from pytest-check import check
 

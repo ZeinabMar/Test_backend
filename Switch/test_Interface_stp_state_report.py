@@ -2,9 +2,9 @@ import pytest
 import logging
 import json
 from config import *
-from test_switch.bridge_funcs import bridge_config
-from test_switch.test_Bridge_group_conf import switch_config
-from test_switch.test_Bridge_Stp_conf import Bridge_Stp_config
+from Switch.bridge_funcs import bridge_config
+from Switch.test_Bridge_group_conf import switch_config
+from Switch.test_Bridge_Stp_conf import Bridge_Stp_config
 
 # from pytest-check import check
 

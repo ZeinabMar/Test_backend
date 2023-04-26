@@ -2,8 +2,8 @@ import pytest
 import logging
 import json
 from config import *
-from test_switch.bridge_funcs import bridge_config
-from test_switch.test_Bridge_group_conf import switch_config
+from Switch.bridge_funcs import bridge_config
+from Switch.test_Bridge_group_conf import switch_config
 # from pytest-check import check
 
 
@@ -12,8 +12,8 @@ pytestmark = [pytest.mark.env_name("OLT_env"), pytest.mark.rest_dev("nms")]
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
-Port_Mirror = namedtuple('Port_Mirror', ["index" ,'ethIfIndex', 'phyIfMirrorBoth','phyIfMirrorRx',
-                         'phyIfMirrorTx', 'result','shelfId', 'slotId', 'nodeId'])
+Port_Mirror = namedtuple('Port_Mirror', ["index" ,'ethIfIndex', 'mirrorDirection','phyIfMirrorBoth',
+                         'phyIfMirrorRx', 'phyIfMirrorTx', 'result','shelfId', 'slotId', 'nodeId'])
 Port_Mirror.__new__.__defaults__ = (None, None, -1, -1, -1, "Pass", 1, 1, None)
 
 def Port_Mirror_config(rest_interface_module, node_id, Port_Mirror_data=Port_Mirror(), method='POST'):
