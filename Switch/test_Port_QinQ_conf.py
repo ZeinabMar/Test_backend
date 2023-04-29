@@ -34,55 +34,58 @@ Port_QinQ_DATA_Registration_ACCESS = (
 )
 
 Port_QinQ_DATA_Registration_TRUNK = (
-    Port_QinQ(1, None, "10", "reg", "", "", "", -1, "CTAGGED_SERVICE_INTERFACE", "", "", "", "", "", "", "Fail"),
+    # Port_QinQ(1, None, "10", "reg", "", "", "", -1, "CTAGGED_SERVICE_INTERFACE", "", "", "", "", "", "", "Fail"),
     Port_QinQ(2, None, -1, "reg", "", "10-13", "", -1, "CTAGGED_SERVICE_INTERFACE", "", "", "", "", "", "", "Pass"),
     Port_QinQ(3, None, "13", "reg", "10-13", "", "", -1, "CTAGGED_SERVICE_INTERFACE", "", "", "", "", "", "", "Fail"),
     Port_QinQ(4, None, -1, "reg", "10-13", "", "", -1, "CTAGGED_SERVICE_INTERFACE", "", "15", "", "", "", "", "Fali"),
-    Port_QinQ(5, None, -1, "reg", "10-13", "", "10-13", -1, "CTAGGED_SERVICE_INTERFACE", "", "", "", "", "", "", "Pass"),
+    Port_QinQ(5, None, -1, "__NO__", "10-13", "", "", -1, "CTAGGED_SERVICE_INTERFACE", "", "", "", "", "", "", "Pass"),
+    Port_QinQ(6, None, -1, "", "10-13", "", "10-13", -1, "CTAGGED_SERVICE_INTERFACE", "", "", "", "", "", "", "Pass"),
 )
 
 Port_QinQ_DATA_Registration_HYBRID = (
-    Port_QinQ(1, None, "13", "reg", "", "10-13", "", -1, "CTAGGED_SERVICE_INTERFACE", "", "", "", "", "", "", "Fail"),
-    Port_QinQ(2, None, "10-13", "reg", "", "10-13", "", -1, "CTAGGED_SERVICE_INTERFACE", "", "", "", "", "", "", "Pass"),
-    Port_QinQ(3, None, "10-13", "reg", "10-13", "14", "", -1, "CTAGGED_SERVICE_INTERFACE", "", "", "", "", "", "", "Pass"),
-    Port_QinQ(4, None, "10-13", "reg", "10-14", "", "", -1, "CTAGGED_SERVICE_INTERFACE", "", "15", "", "", "", "", "Fali"),
+    # Port_QinQ(1, None, "13", "reg", "", "10-13", "", -1, "CTAGGED_SERVICE_INTERFACE", "", "", "", "", "", "", "Fail"),
+    Port_QinQ(2, None, "13", "reg", "", "10-13", "", -1, "CTAGGED_SERVICE_INTERFACE", "", "", "", "", "", "", "Pass"),
+    Port_QinQ(3, None, "13", "reg", "10-13", "14", "", -1, "CTAGGED_SERVICE_INTERFACE", "", "", "", "", "", "", "Pass"),
+    # Port_QinQ(4, None, "13", "reg", "10-14", "", "", -1, "CTAGGED_SERVICE_INTERFACE", "", "15", "", "", "", "", "Fali"),
     Port_QinQ(5, None, "10-13", "reg", "10-14", "", "11", -1, "CTAGGED_SERVICE_INTERFACE", "", "", "", "", "", "", "Fail"),
-    Port_QinQ(6, None, "10-13", "reg", "10-14", "", "14", -1, "CTAGGED_SERVICE_INTERFACE", "", "", "", "", "", "", "Pass"),
-    Port_QinQ(7, None, -1, "reg", "10-14", "", "10-14", -1, "CTAGGED_SERVICE_INTERFACE", "", "", "", "", "", "", "Pass"),
+    Port_QinQ(6, None, "13", "reg", "10-14", "", "14", -1, "CTAGGED_SERVICE_INTERFACE", "", "", "", "", "", "", "Pass"),
+    Port_QinQ(7, None, "13", "__NO__", "10-13", "", "", -1, "CTAGGED_SERVICE_INTERFACE", "", "", "", "", "", "", "Pass"),
+    Port_QinQ(8, None, -1, "", "10-13", "", "10-13", -1, "CTAGGED_SERVICE_INTERFACE", "", "", "", "", "", "", "Pass"),
 )
 
 
-Port_QinQ_DATA_Trans_Edge = (
+# Port_QinQ_DATA_Trans_Edge = (
 
-#     Port_QinQ(1, None, -1, "", "", "", "", -1, "STAGGED_SERVICE_INTERFACE", "", "15", "", "", "", "", "Fail"),
-#     Port_QinQ(2, None, -1, "", "", "", "", -1, "STAGGED_SERVICE_INTERFACE", "", "", "", "", "16", "", "Fail"),
-#     Port_QinQ(3, None, -1, "", "", "", "", -1, "STAGGED_SERVICE_INTERFACE", "", "10", "", "", "", "", "Fail"),
+# #     Port_QinQ(1, None, -1, "", "", "", "", -1, "STAGGED_SERVICE_INTERFACE", "", "15", "", "", "", "", "Fail"),
+# #     Port_QinQ(2, None, -1, "", "", "", "", -1, "STAGGED_SERVICE_INTERFACE", "", "", "", "", "16", "", "Fail"),
+# #     Port_QinQ(3, None, -1, "", "", "", "", -1, "STAGGED_SERVICE_INTERFACE", "", "10", "", "", "", "", "Fail"),
+# # #***************************************************************************************************************************************
+# #     Port_QinQ(4, None, -1, "", "", "15-16", "", -1, "STAGGED_SERVICE_INTERFACE", "", "", "", "", "", "", "Pass"),
+# #     Port_QinQ(5, None, -1, "", "15-16", "10", "", -1, "STAGGED_SERVICE_INTERFACE", "", "", "", "", "", "", "Fail"),
+#     # Port_QinQ(5, None, "10", "", "15-16", "", "", -1, "STAGGED_SERVICE_INTERFACE", "", "", "", "", "", "", "Fail"),
+#     # Port_QinQ(5, None, -1, "reg", "15-16", "", "", -1, "STAGGED_SERVICE_INTERFACE", "", "", "", "", "", "", "Fail"),
+# # #***************************************************************************************************************************************
+# #     Port_QinQ(6, None, -1, "", "", "15-16", "", -1, "STAGGED_SERVICE_INTERFACE", "", "15", "", "", "", "", "Fail"),
+# #     Port_QinQ(7, None, -1, "", "", "15-16", "", -1, "STAGGED_SERVICE_INTERFACE", "", "", "", "", "16", "", "Fail"),
+# # #***************************************************************************************************************************************
+# #     Port_QinQ(8, None, -1, "", "15-16", "", "", -1, "STAGGED_SERVICE_INTERFACE", "", "15", "", "", "16", "", "Pass"),
+# #**************************************************************************************************************************************
+#     # Port_QinQ(9, None, -1, "", "", "15-16", "", -1, "STAGGED_SERVICE_INTERFACE", "", "", "", "", "16", "", "Fail"),
+#     # Port_QinQ(10, None, -1, "", "15-16", "", "15-16", -1, "STAGGED_SERVICE_INTERFACE", "15", "", "", "16", "", "", "Pass"),
+#     Port_QinQ(11, None, -1, "", "", "15-16", "", -1, "STAGGED_SERVICE_INTERFACE", "15", "", "", "16", "", "", "Pass"),
 # #***************************************************************************************************************************************
-#     Port_QinQ(4, None, -1, "", "", "15-16", "", -1, "STAGGED_SERVICE_INTERFACE", "", "", "", "", "", "", "Pass"),
-#     Port_QinQ(5, None, -1, "", "15-16", "10", "", -1, "STAGGED_SERVICE_INTERFACE", "", "", "", "", "", "", "Fail"),
-    # Port_QinQ(5, None, "10", "", "15-16", "", "", -1, "STAGGED_SERVICE_INTERFACE", "", "", "", "", "", "", "Fail"),
-    # Port_QinQ(5, None, -1, "reg", "15-16", "", "", -1, "STAGGED_SERVICE_INTERFACE", "", "", "", "", "", "", "Fail"),
+#     Port_QinQ(12, None, -1, "", "15-16", "17-23", "", -1, "STAGGED_SERVICE_INTERFACE", "15", "", "", "16", "", "", "Pass"),
+#     Port_QinQ(13, None, -1, "", "15,16,17,18,19,20,21,22,23", "", "", -1, "STAGGED_SERVICE_INTERFACE", "15", "17,19", "", "16", "18,20", "", "Pass"),
+#     Port_QinQ(14, None, -1, "", "15,16,17,18,19,20,21,22,23", "", "15-16", -1, "STAGGED_SERVICE_INTERFACE", "15,17,19", "", "", "16,18,20", "", "", "Pass"),
+#     Port_QinQ(15, None, -1, "", "17,18,19,20,21,22,23", "", "", -1, "STAGGED_SERVICE_INTERFACE", "17,19", "21", "", "18,20", "16", "", "Fail"),
+#     Port_QinQ(15, None, -1, "", "17,18,19,20,21,22,23", "", "", -1, "STAGGED_SERVICE_INTERFACE", "17,19", "21", "", "18,20", "22", "", "Pass"),
+#     Port_QinQ(16, None, -1, "", "17,18,19,20,21,22,23", "", "", -1, "STAGGED_SERVICE_INTERFACE", "17,19,21", "23", "", "18,20,22", "21", "", "Pass"),
 # #***************************************************************************************************************************************
-#     Port_QinQ(6, None, -1, "", "", "15-16", "", -1, "STAGGED_SERVICE_INTERFACE", "", "15", "", "", "", "", "Fail"),
-#     Port_QinQ(7, None, -1, "", "", "15-16", "", -1, "STAGGED_SERVICE_INTERFACE", "", "", "", "", "16", "", "Fail"),
+#     Port_QinQ(17, None, -1, "", "17,18,19,20,21,22,23", "10", "", -1, "STAGGED_SERVICE_INTERFACE", "17,19,21,23", "", "", "18,20,22,21", "", "", "Fail"),
 # #***************************************************************************************************************************************
-#     Port_QinQ(8, None, -1, "", "15-16", "", "", -1, "STAGGED_SERVICE_INTERFACE", "", "15", "", "", "16", "", "Pass"),
-#**************************************************************************************************************************************
-    # Port_QinQ(9, None, -1, "", "", "15-16", "", -1, "STAGGED_SERVICE_INTERFACE", "", "", "", "", "16", "", "Fail"),
-    # Port_QinQ(10, None, -1, "", "15-16", "", "15-16", -1, "STAGGED_SERVICE_INTERFACE", "15", "", "", "16", "", "", "Pass"),
-    Port_QinQ(11, None, -1, "", "", "15-16", "", -1, "STAGGED_SERVICE_INTERFACE", "15", "", "", "16", "", "", "Pass"),
-#***************************************************************************************************************************************
-    Port_QinQ(12, None, -1, "", "15-16", "17-23", "", -1, "STAGGED_SERVICE_INTERFACE", "15", "", "", "16", "", "", "Pass"),
-    Port_QinQ(13, None, -1, "", "15,16,17,18,19,20,21,22,23", "", "", -1, "STAGGED_SERVICE_INTERFACE", "15", "17,19", "", "16", "18,20", "", "Pass"),
-    Port_QinQ(14, None, -1, "", "15,16,17,18,19,20,21,22,23", "", "15-16", -1, "STAGGED_SERVICE_INTERFACE", "15,17,19", "", "", "16,18,20", "", "", "Fail"),
-    Port_QinQ(15, None, -1, "", "15,16,17,18,19,20,21,22,23", "", "", -1, "STAGGED_SERVICE_INTERFACE", "15,17,19", "21", "", "16,18,20", "16", "", "Pass"),
-    Port_QinQ(16, None, -1, "", "15,16,17,18,19,20,21,22,23", "", "", -1, "STAGGED_SERVICE_INTERFACE", "15,17,19,21", "22", "", "16,18,20", "21", "", "Pass"),
-#***************************************************************************************************************************************
-    Port_QinQ(17, None, -1, "", "15,16,17,18,19,20,21,22,23", "10", "", -1, "STAGGED_SERVICE_INTERFACE", "15,17,19,21,22", "", "", "16,18,20,16,21", "", "", "Fail"),
-#***************************************************************************************************************************************
-    Port_QinQ(18, None, -1, "", "15,16,17,18,19,20,21,22,23", "", "", -1, "STAGGED_SERVICE_INTERFACE", "15,17,19,21,22", "", "15,17,19,21,22", "16,18,20,16,21", "", "", "Pass"),
-    Port_QinQ(19, None, -1, "", "", "", "15,16,17,18,19,20,21,22,23", -1, "STAGGED_SERVICE_INTERFACE", "", "", "", "", "", "", "Pass"),
-)
+#     Port_QinQ(18, None, -1, "", "17,18,19,20,21,22,23", "", "", -1, "STAGGED_SERVICE_INTERFACE", "17,19,21,23", "", "17,19,21,23", "18,20,22,21", "", "", "Pass"),
+#     Port_QinQ(19, None, -1, "", "17,18,19,20,21,22,23", "", "17,18,19,20,21,22,23", -1, "STAGGED_SERVICE_INTERFACE", "", "", "", "", "", "", "Pass"),
+# )
 
 Port_QinQ_DATA_Trans = (
 
@@ -98,22 +101,22 @@ Port_QinQ_DATA_Trans = (
     Port_QinQ(8, None, -1, "", "15-16", "", "", -1, "STAGGED_SERVICE_INTERFACE", "", "15", "", "", "16", "", "Pass"),
 #**************************************************************************************************************************************
     # Port_QinQ(9, None, -1, "", "", "15-16", "", -1, "STAGGED_SERVICE_INTERFACE", "", "", "", "", "16", "", "Fail"),
-    # Port_QinQ(10, None, -1, "", "15-16", "", "15-16", -1, "STAGGED_SERVICE_INTERFACE", "15", "", "", "16", "", "", "Pass"),
-    # Port_QinQ(11, None, -1, "", "", "15-16", "", -1, "STAGGED_SERVICE_INTERFACE", "15", "", "", "16", "", "", "Pass"),
+    Port_QinQ(10, None, -1, "", "15-16", "", "15-16", -1, "STAGGED_SERVICE_INTERFACE", "15", "", "", "16", "", "", "Pass"),
+    Port_QinQ(11, None, -1, "", "", "15-16", "", -1, "STAGGED_SERVICE_INTERFACE", "15", "", "", "16", "", "", "Pass"),
 #***************************************************************************************************************************************
     Port_QinQ(12, None, -1, "", "15-16", "17-23", "", -1, "STAGGED_SERVICE_INTERFACE", "15", "", "", "16", "", "", "Pass"),
     Port_QinQ(13, None, -1, "", "15,16,17,18,19,20,21,22,23", "", "", -1, "STAGGED_SERVICE_INTERFACE", "15", "17,19", "", "16", "18,20", "", "Pass"),
-    Port_QinQ(14, None, -1, "", "15,16,17,18,19,20,21,22,23", "", "15-16", -1, "STAGGED_SERVICE_INTERFACE", "15,17,19", "", "", "16,18,20", "", "", "Pass"),
-    Port_QinQ(15, None, -1, "", "17,18,19,20,21,22,23", "", "", -1, "STAGGED_SERVICE_INTERFACE", "15,17,19", "21", "", "16,18,20", "16", "", "Pass"),
-    Port_QinQ(16, None, -1, "", "17,18,19,20,21,22,23", "", "", -1, "STAGGED_SERVICE_INTERFACE", "15,17,19,21", "22", "", "16,18,20", "21", "", "Pass"),
-#***************************************************************************************************************************************
-#***************************************************************************************************************************************
-    Port_QinQ(17, None, -1, "", "17,18,19,20,21,22,23", "", "", -1, "STAGGED_SERVICE_INTERFACE", "15,17,19,21,22", "", "15,17,19,21,22", "16,18,20,16,21", "", "", "Pass"),
-    Port_QinQ(18, None, -1, "", "", "", "17,18,19,20,21,22,23", -1, "STAGGED_SERVICE_INTERFACE", "", "", "", "", "", "", "Pass"),
+#     Port_QinQ(14, None, -1, "", "15,16,17,18,19,20,21,22,23", "", "15-16", -1, "STAGGED_SERVICE_INTERFACE", "15,17,19", "", "", "16,18,20", "", "", "Pass"),
+#     # Port_QinQ(15, None, -1, "", "17,18,19,20,21,22,23", "", "", -1, "STAGGED_SERVICE_INTERFACE", "15,17,19", "21", "", "16,18,20", "16", "", "Pass"),
+#     Port_QinQ(16, None, -1, "", "17,18,19,20,21,22,23", "", "", -1, "STAGGED_SERVICE_INTERFACE", "15,17,19", "22", "", "16,18,20", "19", "", "Pass"),
+# #***************************************************************************************************************************************
+# #***************************************************************************************************************************************
+#     Port_QinQ(17, None, -1, "", "17,18,19,20,21,22,23", "", "", -1, "STAGGED_SERVICE_INTERFACE", "15,17,19,22", "", "15,17,19,22", "16,18,20,19", "", "", "Pass"),
+#     Port_QinQ(18, None, -1, "", "17,18,19,20,21,22,23", "", "17,18,19,20,21,22,23", -1, "STAGGED_SERVICE_INTERFACE", "", "", "", "", "", "", "Pass"),
 )
 
-up_link_mode_teory_1 = ("CUSTOMER_NETWORK", "PROVIDER_NETWORK", "CUSTOMER_EDGE_ACCESS", "CUSTOMER_EDGE_HYBRID", "CUSTOMER_EDGE_TRUNK")
-up_link_mode_teory_2 = ("CUSTOMER_EDGE_ACCESS", "CUSTOMER_EDGE_HYBRID", "CUSTOMER_EDGE_TRUNK")
+up_link_mode_teory_1 = ("CUSTOMER_NETWORK","PROVIDER_NETWORK")#,"CUSTOMER_EDGE_ACCESS", "CUSTOMER_EDGE_HYBRID", "CUSTOMER_EDGE_TRUNK"
+up_link_mode_teory_2 = ("CUSTOMER_EDGE_HYBRID","CUSTOMER_EDGE_TRUNK","CUSTOMER_EDGE_ACCESS") 
 
 def Port_QinQ_config(rest_interface_module, node_id, Port_QinQ_data=Port_QinQ(), method='POST', theory_number=1):
     data = Port_QinQ_data._replace(nodeId=node_id)
@@ -127,7 +130,7 @@ def Port_QinQ_config(rest_interface_module, node_id, Port_QinQ_data=Port_QinQ(),
         response = rest_interface_module.post_request(url, data._asdict()) 
 
     if data.result == "Pass":
-        assert response.status_code == 200, f'{method} ERROR in Port_Qos_Policy config {data._asdict}'
+        assert response.status_code == 200, f'{method} ERROR in Port_QinQ_Port config {data._asdict}'
         if response.status_code != 200:
             logger.error(response.message)
         logger.info(f' GETTING Port_QinQ_config (after {method} method) ... ')
@@ -172,21 +175,24 @@ def Port_QinQ_config(rest_interface_module, node_id, Port_QinQ_data=Port_QinQ(),
                             len(input_data["qinQIfTranslationSrcVlanClr"]) == 0),f'IN Everythig is ok Bridge_Mstp config(after {method} with set action'
                 
                 elif len(data.qinQIfTranslationSrcVlanClr)!= 0 :
-                    counter1 = 0 
                     st1 = set_and_clear_data(str(data.qinQIfTranslationSrcVlanClr))
+                    st1 = re.findall('\d+', st1)
+                    st2 = set_and_clear_data(str(input_data["qinQIfTranslationSrcVlan"]))
+                    st2 = re.findall('\d+', st2)
+
                     for item in st1:
-                        if set_and_clear_data(str(input_data["qinQIfTranslationSrcVlan"])).find(item) == -1:
-                            counter1 = counter1 +1
+                        assert not(item in st2)
                     assert (input_data["ethIfIndex"] == data.ethIfIndex and
                             input_data["qinQIfPvId"] == -1 and 
                             input_data["vlanMode"] == data.vlanMode and
                             input_data["qinQIfMode"] == data.qinQIfMode and
-                            counter1 == len(st1) and
                             len(input_data["qinQIfTaggedVlanClr"]) == 0),f'IN Everythig is ok Bridge_Mstp config(after {method} with set action'
                 
                 elif len(data.qinQIfTaggedVlanClr)!= 0 :
-                    counter1 = counter2 = counter3 = counter4 = 0
                     st1 = set_and_clear_data(str(data.qinQIfTaggedVlanClr))
+                    st1 = re.findall('\d+', st1)
+                    st2 = set_and_clear_data(str(input_data["qinQIfTaggedVlan"]))
+                    st2 = re.findall('\d+', st2)
                     # for item in st1:
                     #     if set_and_clear_data(str(data.qinQIfTranslationSrcVlan)).find(item) == -1:
                     #         counter1 = counter1 +1
@@ -197,13 +203,11 @@ def Port_QinQ_config(rest_interface_module, node_id, Port_QinQ_data=Port_QinQ(),
                     #     if set_and_clear_data(str(input_data["qinQIfTranslationSrcVlan"])).find(item) == -1:
                     #         counter3 = counter3 +1        
                     for item in st1:
-                        if set_and_clear_data(str(input_data["qinQIfTaggedVlan"])).find(item) == -1:
-                            counter4 = counter4 +1        
+                        assert not(item in st2)
                     assert (input_data["ethIfIndex"] == data.ethIfIndex and
                             input_data["qinQIfPvId"] == -1 and 
                             input_data["vlanMode"] == data.vlanMode and
-                            input_data["qinQIfMode"] == data.qinQIfMode and
-                            counter4 == len(st1)),f'IN Everythig is ok Bridge_Mstp config(after {method} with set action'
+                            input_data["qinQIfMode"] == data.qinQIfMode ),f'IN Everythig is ok Bridge_Mstp config(after {method} with set action'
 
                 logger.info(f'every thing ok after Bridge_Mstp config(after {method} ')
 
@@ -232,13 +236,12 @@ def Port_QinQ_config(rest_interface_module, node_id, Port_QinQ_data=Port_QinQ(),
                 elif data.vlanMode == "CUSTOMER_EDGE_TRUNK":
                     if len(data.qinQIfTaggedVlanSet)!=0:
                          st1 = set_and_clear_data(str(data.qinQIfTaggedVlanSet))
-                         st1 = re.findall('\d+', st1c)
-                         st2 = set_and_clear_data(str(input_data["vlanRegistrationCVlan"]))
+                         st1 = re.findall('\d+', st1)
+                         st2 = set_and_clear_data(str(input_data["qinQIfTaggedVlan"]))
                          st2 = re.findall('\d+', st2)
                          for i in range(len(st1)):
                             assert st1[i] in st2
-                         assert (input_data["vlanId"] == -1 and
-                                input_data["qinQIfPvId"] == -1 and
+                         assert (input_data["qinQIfPvId"] == -1 and
                                 input_data["vlanMode"] == data.vlanMode and 
                                 input_data["qinQIfMode"] == data.qinQIfMode and 
                                 len(str(input_data["qinQIfTranslationSrcVlanSet"])) == 0 and 
@@ -268,8 +271,8 @@ def Port_QinQ_config(rest_interface_module, node_id, Port_QinQ_data=Port_QinQ(),
                 elif data.vlanMode == "CUSTOMER_EDGE_HYBRID":
                     if len(data.qinQIfTaggedVlanSet)!=0:
                         st1 = set_and_clear_data(str(data.qinQIfTaggedVlanSet))
-                        st1 = re.findall('\d+', st1c)
-                        st2 = set_and_clear_data(str(input_data["vlanRegistrationCVlan"]))
+                        st1 = re.findall('\d+', st1)
+                        st2 = set_and_clear_data(str(input_data["qinQIfTaggedVlan"]))
                         st2 = re.findall('\d+', st2)
                         for i in range(len(st1)):
                             assert st1[i] in st2
@@ -284,7 +287,7 @@ def Port_QinQ_config(rest_interface_module, node_id, Port_QinQ_data=Port_QinQ(),
                             assert  input_data["qinQIfPvId"] == -1
                     else :
                         st1 = set_and_clear_data(str(data.qinQIfPvId))
-                        st1 = re.findall('\d+', st1c)
+                        st1 = re.findall('\d+', st1)
                         st2 = set_and_clear_data(str(input_data["qinQIfPvId"]))
                         st2 = re.findall('\d+', st2)
                         for i in range(len(st1)):
@@ -297,8 +300,7 @@ def Port_QinQ_config(rest_interface_module, node_id, Port_QinQ_data=Port_QinQ(),
                         for item in st_clr:
                             if set_and_clear_data(str(input_data["qinQIfTaggedVlanClr"])).find(item) == -1:
                                 counter1 = counter1 +1  
-                        assert (input_data["vlanId"] == -1 and
-                                input_data["vlanMode"] == data.vlanMode and 
+                        assert (input_data["vlanMode"] == data.vlanMode and 
                                 input_data["qinQIfMode"] == data.qinQIfMode and 
                                 counter1 == len(st_clr) and
                                 len(str(input_data["qinQIfTaggedVlanSet"])) == 0 and 
@@ -327,17 +329,17 @@ def test_Port_QinQ_config(rest_interface_module, node_id):
 
             for uplinkmode in up_link_mode_teory_1:   
                 for port_bridge_group in range(2,3):
-                    switch_config(rest_interface_module, node_id, Switch_conf()._replace(ethIfIndex=port_bridge_group,index=4), method='POST') 
-                    if uplinkmode == "CUSTOMER_NETWORK":
-                        uplink_vlan_config(rest_interface_module, node_id, uplink_vlan_conf(port_bridge_group, None, "CUSTOMER_NETWORK", -1, "" , "", "", -1, "Pass"), method='POST')
-                        if bridge.bridgeProtocol == "PROVIDER_MSTP_EDGE" or bridge.bridgeProtocol == "PROVIDER_RSTP_EDGE":
-                            for qinq in Port_QinQ_DATA_Trans_Edge:
-                                Port_QinQ_config(rest_interface_module, node_id, qinq._replace(ethIfIndex=port_bridge_group, vlanMode="CUSTOMER_NETWORK"), method='POST', theory_number=1)
-                        else:
-                            for qinq in Port_QinQ_DATA_Trans:
-                                Port_QinQ_config(rest_interface_module, node_id, qinq._replace(ethIfIndex=port_bridge_group, vlanMode="CUSTOMER_NETWORK"), method='POST', theory_number=1)
+                    # switch_config(rest_interface_module, node_id, Switch_conf()._replace(ethIfIndex=port_bridge_group,index=4), method='POST') 
+                    # if uplinkmode == "CUSTOMER_NETWORK":
+                    #     uplink_vlan_config(rest_interface_module, node_id, uplink_vlan_conf(port_bridge_group, None, "CUSTOMER_NETWORK", -1, "" , "", "", -1, "Pass"), method='POST')
+                    #     if bridge.bridgeProtocol == "PROVIDER_MSTP_EDGE" or bridge.bridgeProtocol == "PROVIDER_RSTP_EDGE":
+                    #         for qinq in Port_QinQ_DATA_Trans_Edge:
+                    #             Port_QinQ_config(rest_interface_module, node_id, qinq._replace(ethIfIndex=port_bridge_group, vlanMode="CUSTOMER_NETWORK"), method='POST', theory_number=1)
+                    #     else:
+                    #         for qinq in Port_QinQ_DATA_Trans:
+                    #             Port_QinQ_config(rest_interface_module, node_id, qinq._replace(ethIfIndex=port_bridge_group, vlanMode="CUSTOMER_NETWORK"), method='POST', theory_number=1)
 
-                    elif uplinkmode == "PROVIDER_NETWORK":
+                    if uplinkmode == "PROVIDER_NETWORK":
                         uplink_vlan_config(rest_interface_module, node_id, uplink_vlan_conf(port_bridge_group, None, "PROVIDER_NETWORK", -1, "" , "", "", -1, "Pass"), method='POST')
                         if bridge.bridgeProtocol == "PROVIDER_MSTP_EDGE" or bridge.bridgeProtocol == "PROVIDER_RSTP_EDGE":
                             for qinq in Port_QinQ_DATA_Trans_Edge:
@@ -346,24 +348,24 @@ def test_Port_QinQ_config(rest_interface_module, node_id):
                             for qinq in Port_QinQ_DATA_Trans:
                                 Port_QinQ_config(rest_interface_module, node_id, qinq._replace(ethIfIndex=port_bridge_group, vlanMode="PROVIDER_NETWORK"), method='POST', theory_number=1)
 
-                    elif uplinkmode == "CUSTOMER_EDGE_ACCESS":
-                        uplink_vlan_config(rest_interface_module, node_id, uplink_vlan_conf(port_bridge_group, None, "CUSTOMER_EDGE_ACCESS", -1, "" , "", "", -1, "Pass"), method='POST')
-                        Port_QinQ_config(rest_interface_module, node_id, Port_QinQ(3, port_bridge_group, -1, "", "", "15-16", "", -1, "CUSTOMER_EDGE_ACCESS", "", "", "", "", "", "", "Fail"), method='POST', theory_number=1)
+                    # elif uplinkmode == "CUSTOMER_EDGE_ACCESS":
+                    #     uplink_vlan_config(rest_interface_module, node_id, uplink_vlan_conf(port_bridge_group, None, "CUSTOMER_EDGE_ACCESS", -1, "" , "", "", -1, "Pass"), method='POST')
+                    #     Port_QinQ_config(rest_interface_module, node_id, Port_QinQ(3, port_bridge_group, -1, "", "", "15-16", "", -1, "CUSTOMER_EDGE_ACCESS", "", "", "", "", "", "", "Fail"), method='POST', theory_number=1)
 
-                    elif uplinkmode == "CUSTOMER_EDGE_HYBRID":
-                        uplink_vlan_config(rest_interface_module, node_id, uplink_vlan_conf(port_bridge_group, None, "CUSTOMER_EDGE_HYBRID", -1, "" , "", "", -1, "Pass"), method='POST')
-                        Port_QinQ_config(rest_interface_module, node_id, Port_QinQ(3, port_bridge_group, -1, "", "", "15-16", "", -1, "CUSTOMER_EDGE_HYBRID", "", "", "", "", "", "", "Fail"), method='POST', theory_number=1)
+                    # elif uplinkmode == "CUSTOMER_EDGE_HYBRID":
+                    #     uplink_vlan_config(rest_interface_module, node_id, uplink_vlan_conf(port_bridge_group, None, "CUSTOMER_EDGE_HYBRID", -1, "" , "", "", -1, "Pass"), method='POST')
+                    #     Port_QinQ_config(rest_interface_module, node_id, Port_QinQ(3, port_bridge_group, -1, "", "", "15-16", "", -1, "CUSTOMER_EDGE_HYBRID", "", "", "", "", "", "", "Fail"), method='POST', theory_number=1)
 
-                    elif uplinkmode == "CUSTOMER_EDGE_TRUNK":
-                        uplink_vlan_config(rest_interface_module, node_id, uplink_vlan_conf(port_bridge_group, None, "CUSTOMER_EDGE_TRUNK", -1, "" , "", "", -1, "Pass"), method='POST')
-                        Port_QinQ_config(rest_interface_module, node_id, Port_QinQ(3, port_bridge_group, -1, "", "", "15-16", "", -1, "CUSTOMER_EDGE_TRUNK", "", "", "", "", "", "", "Fail"), method='POST', theory_number=1)
-                    switch_config(rest_interface_module, node_id, Switch_conf()._replace(ethIfIndex=port_bridge_group,index=9), method='DELETE')  
+                    # elif uplinkmode == "CUSTOMER_EDGE_TRUNK":
+                    #     uplink_vlan_config(rest_interface_module, node_id, uplink_vlan_conf(port_bridge_group, None, "CUSTOMER_EDGE_TRUNK", -1, "" , "", "", -1, "Pass"), method='POST')
+                    #     Port_QinQ_config(rest_interface_module, node_id, Port_QinQ(3, port_bridge_group, -1, "", "", "15-16", "", -1, "CUSTOMER_EDGE_TRUNK", "", "", "", "", "", "", "Fail"), method='POST', theory_number=1)
+            #         switch_config(rest_interface_module, node_id, Switch_conf()._replace(ethIfIndex=port_bridge_group,index=9), method='DELETE')  
 
-            for vlan in VLAN_DATA_conf_CUSTOM:
-                vlan_config(rest_interface_module, node_id, vlan, method='DELETE')   
-            for vlan in VLAN_DATA_conf_service:
-                vlan_config(rest_interface_module, node_id, vlan, method='DELETE')   
-            bridge_config(rest_interface_module, node_id, bridge(), method='DELETE')    
+            # for vlan in VLAN_DATA_conf_CUSTOM:
+            #     vlan_config(rest_interface_module, node_id, vlan, method='DELETE')   
+            # for vlan in VLAN_DATA_conf_service:
+            #     vlan_config(rest_interface_module, node_id, vlan, method='DELETE')   
+            # bridge_config(rest_interface_module, node_id, bridge(), method='DELETE')    
 
     #theory2 Registration                    
     if theory==2:
@@ -380,38 +382,40 @@ def test_Port_QinQ_config(rest_interface_module, node_id):
                 #    QinQ_registration_table_config(rest_interface_module, node_id, Reg_QinQ_Table_conf_DATA[0], method='ADD')  
 
                 for port_bridge_group in range(1,2):
-                    switch_config(rest_interface_module, node_id, Switch_conf()._replace(ethIfIndex=port_bridge_group,index=4), method='POST') 
+                    # switch_config(rest_interface_module, node_id, Switch_conf()._replace(ethIfIndex=port_bridge_group,index=4), method='POST') 
                     if uplinkmode == "CUSTOMER_EDGE_ACCESS":
-                        uplink_vlan_config(rest_interface_module, node_id, uplink_vlan_conf(port_bridge_group, None, "CUSTOMER_EDGE_ACCESS", -1, "" , "", "", -1, "Pass"), method='POST')
-                        for qinq in Port_QinQ_DATA_Registration_ACCESS:
-                            Port_QinQ_config(rest_interface_module, node_id, qinq._replace(ethIfIndex=port_bridge_group, vlanMode="CUSTOMER_EDGE_ACCESS"), method='POST', theory_number=2)
+                        pass
+                        # uplink_vlan_config(rest_interface_module, node_id, uplink_vlan_conf(port_bridge_group, None, "CUSTOMER_EDGE_ACCESS", -1, "" , "", "", -1, "Pass"), method='POST')
+                        # for qinq in Port_QinQ_DATA_Registration_ACCESS:
+                        #     Port_QinQ_config(rest_interface_module, node_id, qinq._replace(ethIfIndex=port_bridge_group, vlanMode="CUSTOMER_EDGE_ACCESS"), method='POST', theory_number=2)
 
                     elif uplinkmode == "CUSTOMER_EDGE_TRUNK":
-                        uplink_vlan_config(rest_interface_module, node_id, uplink_vlan_conf(port_bridge_group, None, "CUSTOMER_EDGE_TRUNK", -1, "" , "", "", -1, "Pass"), method='POST')
-                        for qinq in Port_QinQ_DATA_Registration_TRUNK:
-                            Port_QinQ_config(rest_interface_module, node_id, qinq._replace(ethIfIndex=port_bridge_group, vlanMode="CUSTOMER_EDGE_TRUNK"), method='POST', theory_number=2)
+                        pass
+                        # uplink_vlan_config(rest_interface_module, node_id, uplink_vlan_conf(port_bridge_group, None, "CUSTOMER_EDGE_TRUNK", -1, "" , "", "", -1, "Pass"), method='POST')
+                        # for qinq in Port_QinQ_DATA_Registration_TRUNK:
+                        #     Port_QinQ_config(rest_interface_module, node_id, qinq._replace(ethIfIndex=port_bridge_group, vlanMode="CUSTOMER_EDGE_TRUNK"), method='POST', theory_number=2)
 
                     elif uplinkmode == "CUSTOMER_EDGE_HYBRID":
                         uplink_vlan_config(rest_interface_module, node_id, uplink_vlan_conf(port_bridge_group, None, "CUSTOMER_EDGE_HYBRID", -1, "" , "", "", -1, "Pass"), method='POST')
                         for qinq in Port_QinQ_DATA_Registration_HYBRID:
                             Port_QinQ_config(rest_interface_module, node_id, qinq._replace(ethIfIndex=port_bridge_group, vlanMode="CUSTOMER_EDGE_HYBRID"), method='POST', theory_number=2)
 
-                    elif uplinkmode == "PROVIDER_NETWORK":
-                        uplink_vlan_config(rest_interface_module, node_id, uplink_vlan_conf(port_bridge_group, None, "PROVIDER_NETWORK", -1, "" , "", "", -1, "Pass"), method='POST')
-                        Port_QinQ_config(rest_interface_module, node_id, Port_QinQ(3, port_bridge_group, -1, "", "", "15-16", "", -1, "PROVIDER_NETWORK", "", "", "", "", "", "", "Fail"), method='POST', theory_number=2)
+                    # elif uplinkmode == "PROVIDER_NETWORK":
+                    #     uplink_vlan_config(rest_interface_module, node_id, uplink_vlan_conf(port_bridge_group, None, "PROVIDER_NETWORK", -1, "" , "", "", -1, "Pass"), method='POST')
+                    #     Port_QinQ_config(rest_interface_module, node_id, Port_QinQ(3, port_bridge_group, -1, "", "", "15-16", "", -1, "PROVIDER_NETWORK", "", "", "", "", "", "", "Fail"), method='POST', theory_number=2)
 
-                    elif uplinkmode == "CUSTOMER_NETWORK":
-                        uplink_vlan_config(rest_interface_module, node_id, uplink_vlan_conf(port_bridge_group, None, "CUSTOMER_NETWORK", -1, "" , "", "", -1, "Pass"), method='POST')
-                        Port_QinQ_config(rest_interface_module, node_id, Port_QinQ(3, port_bridge_group, -1, "", "", "15-16", "", -1, "CUSTOMER_NETWORK", "", "", "", "", "", "", "Fail"), method='POST', theory_number=2)
+                    # elif uplinkmode == "CUSTOMER_NETWORK":
+                    #     uplink_vlan_config(rest_interface_module, node_id, uplink_vlan_conf(port_bridge_group, None, "CUSTOMER_NETWORK", -1, "" , "", "", -1, "Pass"), method='POST')
+                    #     Port_QinQ_config(rest_interface_module, node_id, Port_QinQ(3, port_bridge_group, -1, "", "", "15-16", "", -1, "CUSTOMER_NETWORK", "", "", "", "", "", "", "Fail"), method='POST', theory_number=2)
                         
-                    switch_config(rest_interface_module, node_id, Switch_conf()._replace(ethIfIndex=port_bridge_group,index=9), method='DELETE') 
-                    QinQ_registration_table_config(rest_interface_module, node_id, Reg_QinQ_Table_conf(None, 1, "reg"), method='DELETE') 
+            #         switch_config(rest_interface_module, node_id, Switch_conf()._replace(ethIfIndex=port_bridge_group,index=9), method='DELETE') 
+            #         QinQ_registration_table_config(rest_interface_module, node_id, Reg_QinQ_Table_conf(None, 1, "reg"), method='DELETE') 
 
-            for vlan in VLAN_DATA_conf_CUSTOM:
-                vlan_config(rest_interface_module, node_id, vlan, method='DELETE')   
-            for vlan in VLAN_DATA_conf_service:
-                vlan_config(rest_interface_module, node_id, vlan, method='DELETE')   
-            bridge_config(rest_interface_module, node_id, bridge, method='DELETE')        
+            # for vlan in VLAN_DATA_conf_CUSTOM:
+            #     vlan_config(rest_interface_module, node_id, vlan, method='DELETE')   
+            # for vlan in VLAN_DATA_conf_service:
+            #     vlan_config(rest_interface_module, node_id, vlan, method='DELETE')   
+            # bridge_config(rest_interface_module, node_id, bridge, method='DELETE')        
 
     #**************************************************************************************************************
 

@@ -16,6 +16,12 @@ Port_Mirror = namedtuple('Port_Mirror', ["index" ,'ethIfIndex', 'mirrorDirection
                          'phyIfMirrorRx', 'phyIfMirrorTx', 'result','shelfId', 'slotId', 'nodeId'])
 Port_Mirror.__new__.__defaults__ = (None, None, -1, -1, -1, "Pass", 1, 1, None)
 
+Port_Mirror_DATA = [
+    Port_Mirror(1, 1, )
+]
+
+
+
 def Port_Mirror_config(rest_interface_module, node_id, Port_Mirror_data=Port_Mirror(), method='POST'):
     data = Port_Mirror_data._replace(nodeId=node_id)
     logger.info(f"TRY TO {method} Port_Mirror CONFIG ...")
