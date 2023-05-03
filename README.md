@@ -1,6 +1,5 @@
 # test_sp5100_rest
-        1) git+ssh://git@gitlab.sinacomsys.local/quality-assurance/test-infrastructure/pytest-sina-framework.git@environment_template#egg=pytest-sina-framework
-        pytest-check
+        1) git clone git@gitlab.sinacomsys.local:quality-assurance/test-infrastructure/pytest-sina-framework.git
         2) cd /pytest_sina_framework
         3) python -m pip install --editable ./pytest-sina-framework
 
