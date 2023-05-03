@@ -1,3 +1,5 @@
+git+ssh://git@gitlab.sinacomsys.local/quality-assurance/test-infrastructure/pytest-sina-framework.git@environment_template#egg=pytest-sina-framework
+pytest-check
 lib==4.0.0
 pytest==7.2.2
 pytest==4.6.9
