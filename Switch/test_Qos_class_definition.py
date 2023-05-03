@@ -7,7 +7,7 @@ from Switch.bridge_funcs import bridge_config
 from test_vlan import vlan_config
 # from pytest-check import check
 
-pytestmark = [pytest.mark.env_name("OLT_env"), pytest.mark.rest_dev("nms")]
+pytestmark = [pytest.mark.env_name("REST_env"), pytest.mark.rest_dev("nms")]
 
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
