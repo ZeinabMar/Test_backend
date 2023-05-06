@@ -10,5 +10,6 @@ git clone any library required for your Test code from Test Infrastructure git s
         3) python3 -m pip install -e .
 
 example run code :
+
         1) cd ../test_sp5100_rest
         2) python3 -m pytest -s /home/zeinab/test_sp5100/test_sp5100_rest/Switch/test_bridge_definition.py       
