@@ -17,7 +17,7 @@ pipeline {
             steps {
                 script {
                     currentBuild.description = """Report path: <a href="${env.TEST_REPORT_URL}">Link</a> """
-                    sh "python3 /home/pr/pr-docker-manager/exec_test.py -u jenkins -n ${TEST_RUN_NAME} -p sina-test-framework-samples -r ${params.revision_type} -v ${params.revision_value} -s ${params.test_suit_path}"
+                    sh "python3 /home/pr/pr-docker-manager/exec_test.py -u jenkins -n ${TEST_RUN_NAME} -p test_sp5100_rest -r ${params.revision_type} -v ${params.revision_value} -s ${params.test_suit_path}"
                 }
             }
         }
