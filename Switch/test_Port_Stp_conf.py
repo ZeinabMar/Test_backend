@@ -67,24 +67,24 @@ def Port_Stp_config(rest_interface_module, node_id, Port_Stp_data=Port_Stp(), me
 
 def test_Port_Stp_config(rest_interface_module, node_id):
 
-    # bridge_config(rest_interface_module, node_id, Bridge_conf(), method='POST')
-    # for port in range(9,25):  
-    #     for switch in Switch_conf_Data: 
-    #         if switch.index==4:
-    #             switch_config(rest_interface_module, node_id, switch._replace(ethIfIndex=port), method='POST')
+    bridge_config(rest_interface_module, node_id, Bridge_conf(), method='POST')
+    for port in range(9,25):  
+        for switch in Switch_conf_Data: 
+            if switch.index==4:
+                switch_config(rest_interface_module, node_id, switch._replace(ethIfIndex=port), method='POST')
     
-    for port in range(1,4):
+    for port in range(9,25):
         for stp in Port_Stp_DATA:
             if stp.index == 6:
                 Port_Stp_config(rest_interface_module, node_id, stp._replace(stpIndex=port), method='DELETE')
             else:
                 Port_Stp_config(rest_interface_module, node_id, stp._replace(stpIndex=port), method='POST')
 
-    # for port in range(1,25):  
-    #     for switch in Switch_conf_Data: 
-    #         if switch.index==9:
-    #             switch_config(rest_interface_module, node_id, switch._replace(index=9,ethIfIndex=port), method='DELETE')
-    # bridge_config(rest_interface_module, node_id, Bridge_conf(), method='DELETE')
+    for port in range(9,25):  
+        for switch in Switch_conf_Data: 
+            if switch.index==9:
+                switch_config(rest_interface_module, node_id, switch._replace(index=9,ethIfIndex=port), method='DELETE')
+    bridge_config(rest_interface_module, node_id, Bridge_conf(), method='DELETE')
 
 
 
