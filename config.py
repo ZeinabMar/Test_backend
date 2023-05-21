@@ -93,7 +93,7 @@ Port_L2_conf.__new__.__defaults__ = (None, 1, -1, "S10G", 1500, "NO", -1, "FULL"
 #*****************************************************************************************************************************
 Port_Stp_conf = namedtuple('Port_Stp_conf', ['stpIndex', 'stpIfStpAutoEdge','stpIfStpBpduFilter', 'stpIfStpBpduGuard',
                       'stpIfStpEdgePort', 'stpIfStpPortFast', 'stpIfStpRootGuard', 'result','shelfId', 'slotId', 'nodeId'])
-Port_Stp_conf.__new__.__defaults__ = (None, -1, "NO", "NO", -1, -1, -1, "Pass", 1, 1, None)
+Port_Stp_conf.__new__.__defaults__ =  (None, -1, "NO", "NO", -1, -1, -1, "Pass", 1, 1, None)
 #*****************************************************************************************************************************
 Port_Storm_conf = namedtuple('Port_Storm_conf', ['ethIfIndex', 'phyIfStormBroadcast', 'phyIfStormDLF', 
                         'phyIfStormMulticast', 'result', 'shelfId', 'slotId', 'nodeId'])

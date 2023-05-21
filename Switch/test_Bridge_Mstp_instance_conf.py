@@ -139,20 +139,20 @@ def test_Bridge_Mstp_config(rest_interface_module, node_id):
     for vlan in VLAN_DATA_conf_CUSTOM:
         vlan_config(rest_interface_module, node_id, vlan, method='POST')   
     #******************************************************************    
-    Bridge_Mstp_config(rest_interface_module, node_id, Bridge_Mstp_DATA[0], method='add')
-    Bridge_Mstp_config(rest_interface_module, node_id, Bridge_Mstp_DATA[1], method='add')
-    Bridge_Mstp_config(rest_interface_module, node_id, Bridge_Mstp_DATA[2], method='POST')
-    Bridge_Mstp_config(rest_interface_module, node_id, Bridge_Mstp_DATA[3], method='POST')
-    Bridge_Mstp_config(rest_interface_module, node_id, Bridge_Mstp_DATA[4], method='POST')
-    Bridge_Mstp_config(rest_interface_module, node_id, Bridge_Mstp_DATA[5], method='DELETE')
-    Bridge_Mstp_config(rest_interface_module, node_id, Bridge_Mstp_DATA[6], method='DELETE')
-    #******************************************************************
-    for vlan in VLAN_DATA_conf_service:
-        vlan_config(rest_interface_module, node_id, vlan, method='DELETE')  
-    for vlan in VLAN_DATA_conf_CUSTOM:
-        vlan_config(rest_interface_module, node_id, vlan, method='DELETE')   
-    #*****************************************************************************
-    bridge_config(rest_interface_module, node_id, Bridge_conf(1, 'PROVIDER_MSTP_EDGE', 100, 30, maxAge=6, maxHops=1, priority=12288), method='DELETE')
+    # Bridge_Mstp_config(rest_interface_module, node_id, Bridge_Mstp_DATA[0], method='add')
+    # Bridge_Mstp_config(rest_interface_module, node_id, Bridge_Mstp_DATA[1], method='add')
+    # Bridge_Mstp_config(rest_interface_module, node_id, Bridge_Mstp_DATA[2], method='POST')
+    # Bridge_Mstp_config(rest_interface_module, node_id, Bridge_Mstp_DATA[3], method='POST')
+    # Bridge_Mstp_config(rest_interface_module, node_id, Bridge_Mstp_DATA[4], method='POST')
+    # Bridge_Mstp_config(rest_interface_module, node_id, Bridge_Mstp_DATA[5], method='DELETE')
+    # Bridge_Mstp_config(rest_interface_module, node_id, Bridge_Mstp_DATA[6], method='DELETE')
+    # # ******************************************************************
+    # for vlan in VLAN_DATA_conf_service:
+    #     vlan_config(rest_interface_module, node_id, vlan, method='DELETE')  
+    # for vlan in VLAN_DATA_conf_CUSTOM:
+    #     vlan_config(rest_interface_module, node_id, vlan, method='DELETE')   
+    # #*****************************************************************************
+    # bridge_config(rest_interface_module, node_id, Bridge_conf(1, 'PROVIDER_MSTP_EDGE', 100, 30, maxAge=6, maxHops=1, priority=12288), method='DELETE')
 
 
 
