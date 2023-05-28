@@ -17,7 +17,7 @@ Port_Mirror = namedtuple('Port_Mirror', ["index" ,'ethIfIndex', 'mirrorDirection
 Port_Mirror.__new__.__defaults__ = (None, None, -1, -1, -1, "Pass", 1, 1, None)
 
 Port_Mirror_DATA = [
-    Port_Mirror(1, 1, )
+    Port_Mirror(1, 2, )
 ]
 
 
