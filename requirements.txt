@@ -1,4 +1,6 @@
 git+ssh://git@gitlab.sinacomsys.local/quality-assurance/test-infrastructure/pytest-sina-framework.git@master#egg=pytest-sina-framework
 git+ssh://git@gitlab.sinacomsys.local/quality-assurance/test-infrastructure/pytest-rst-report.git@master#egg=pytest_rst_report
+git+ssh://git@gitlab.sinacomsys.local/quality-assurance/test-infrastructure/restlib.git@master#egg=restlib
 pytest_check==2.1.4
+
 
