@@ -139,23 +139,23 @@ def test_QinQ_registration_table_config(rest_interface_module, node_id):
 
     
     for bridge in Bridge_conf_s_c:
-        # bridge_config(rest_interface_module, node_id, bridge, method='POST')
+        bridge_config(rest_interface_module, node_id, bridge, method='POST')
 
-        # for vlan in VLAN_DATA_conf_service:
-        #     vlan_config(rest_interface_module, node_id, vlan, method='POST')   
-        # for vlan in VLAN_DATA_conf_CUSTOM:
-        #     vlan_config(rest_interface_module, node_id, vlan, method='POST')   
+        for vlan in VLAN_DATA_conf_service:
+            vlan_config(rest_interface_module, node_id, vlan, method='POST')   
+        for vlan in VLAN_DATA_conf_CUSTOM:
+            vlan_config(rest_interface_module, node_id, vlan, method='POST')   
 
 
         # QinQ_registration_table_config(rest_interface_module, node_id, Reg_QinQ_Table_1_Data[0], method='ADD')    
-        # QinQ_registration_table_config(rest_interface_module, node_id, Reg_QinQ_Table_1_Data[1], method='ADD') 
-        QinQ_registration_table_config(rest_interface_module, node_id, Reg_QinQ_Table_1_Data[2], method='Post') 
-        QinQ_registration_table_config(rest_interface_module, node_id, Reg_QinQ_Table_1_Data[3], method='Post') 
-        QinQ_registration_table_config(rest_interface_module, node_id, Reg_QinQ_Table_1_Data[4], method='Post') 
-        QinQ_registration_table_config(rest_interface_module, node_id, Reg_QinQ_Table_1_Data[5], method='Post') 
-        QinQ_registration_table_config(rest_interface_module, node_id, Reg_QinQ_Table_1_Data[6], method='Post')
-        QinQ_registration_table_config(rest_interface_module, node_id, Reg_QinQ_Table_1_Data[7], method='Post')
-        QinQ_registration_table_config(rest_interface_module, node_id, Reg_QinQ_Table_1_Data[8], method='Post')
+        QinQ_registration_table_config(rest_interface_module, node_id, Reg_QinQ_Table_1_Data[1], method='ADD') 
+        # QinQ_registration_table_config(rest_interface_module, node_id, Reg_QinQ_Table_1_Data[2], method='Post') 
+        # QinQ_registration_table_config(rest_interface_module, node_id, Reg_QinQ_Table_1_Data[3], method='Post') 
+        # QinQ_registration_table_config(rest_interface_module, node_id, Reg_QinQ_Table_1_Data[4], method='Post') 
+        # QinQ_registration_table_config(rest_interface_module, node_id, Reg_QinQ_Table_1_Data[5], method='Post') 
+        # QinQ_registration_table_config(rest_interface_module, node_id, Reg_QinQ_Table_1_Data[6], method='Post')
+        # QinQ_registration_table_config(rest_interface_module, node_id, Reg_QinQ_Table_1_Data[7], method='Post')
+        # QinQ_registration_table_config(rest_interface_module, node_id, Reg_QinQ_Table_1_Data[8], method='Post')
 
 
         # QinQ_registration_table_config(rest_interface_module, node_id, Reg_QinQ_Table_2_Data[0], method='ADD') 
@@ -168,14 +168,14 @@ def test_QinQ_registration_table_config(rest_interface_module, node_id):
         # QinQ_registration_table_config(rest_interface_module, node_id, Reg_QinQ_Table_2_Data[7], method='Post') 
         # QinQ_registration_table_config(rest_interface_module, node_id, Reg_QinQ_Table_2_Data[8], method='Post') 
 
-        QinQ_registration_table_config(rest_interface_module, node_id, Reg_QinQ_Table(None, 1, "reg"), method='DELETE') 
+        # QinQ_registration_table_config(rest_interface_module, node_id, Reg_QinQ_Table(None, 1, "reg"), method='DELETE') 
         # QinQ_registration_table_config(rest_interface_module, node_id, Reg_QinQ_Table(None, 2, "reg2"), method='DELETE') 
 
-        for vlan in VLAN_DATA_conf_CUSTOM:
-            vlan_config(rest_interface_module, node_id, vlan, method='DELETE')   
-        for vlan in VLAN_DATA_conf_service:
-            vlan_config(rest_interface_module, node_id, vlan, method='DELETE')   
-        bridge_config(rest_interface_module, node_id, bridge, method='DELETE')    
+        # for vlan in VLAN_DATA_conf_CUSTOM:
+        #     vlan_config(rest_interface_module, node_id, vlan, method='DELETE')   
+        # for vlan in VLAN_DATA_conf_service:
+        #     vlan_config(rest_interface_module, node_id, vlan, method='DELETE')   
+        # bridge_config(rest_interface_module, node_id, bridge, method='DELETE')    
 
 
 

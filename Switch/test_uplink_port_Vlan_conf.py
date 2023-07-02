@@ -99,8 +99,8 @@ def uplink_vlan_config(rest_interface_module, node_id, UPLINK_VLAN_data=uplink_v
 
 
 def test_uplink_vlan_config(rest_interface_module, node_id):
-    # bridge_config(rest_interface_module, node_id, Bridge_conf(), method='POST')
-    #****************************************************************************************************************************
+    bridge_config(rest_interface_module, node_id, Bridge_conf(), method='POST')
+    # ****************************************************************************************************************************
     for vlan in VLAN_DATA_conf_CUSTOM:
         vlan_config(rest_interface_module, node_id, vlan, method='POST')  
     #**********************************************************************************************************************

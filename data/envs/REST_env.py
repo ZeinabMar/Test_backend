@@ -1,5 +1,6 @@
 
 DICT__NMS = {
+    'type': "Shelf_OLT",
     'ip': "192.168.1.65",
     'server_host': "https://192.168.1.65",
     'nms_username': "root",
