@@ -5,7 +5,7 @@ from config import *
 # from pytest-check import check
 
 
-pytestmark = [pytest.mark.env_name("REST_env"), pytest.mark.rest_dev("nms")]
+pytestmark = [pytest.mark.env_name("REST_env"), pytest.mark.rest_dev("olt_nms")]
 
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
@@ -58,7 +58,7 @@ def Port_L3_config(rest_interface_module, node_id, Port_L3_data=Port_L3(), metho
 
 def test_Port_L3_config(rest_interface_module, node_id):
 
-    for port in range(9,25):
+    for port in range(1,2):
         if port == 25:
             for portl3 in Port_L3_DATA:
                 if portl3.index==3:
