@@ -8,7 +8,7 @@ from collections import namedtuple
 # from pytest-check import check
 
 
-pytestmark = [pytest.mark.env_name("REST_env"), pytest.mark.rest_dev("nms")]
+pytestmark = [pytest.mark.env_name("REST_env"), pytest.mark.rest_dev("olt_nms")]
 
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
@@ -16,14 +16,14 @@ logger = logging.getLogger(__name__)
 Port_L2 = namedtuple('Port_L2', ['index', "ethIfIndex", 'ethIfTxStatus','phyIfState', 'phyIfSpeed',
                                  'phyIfMtu', 'phyIfFlowControl', 'phyIfLoopback', 'phyIfDuplex', 
                                  'phyIfDesc', 'result', 'shelfId', 'slotId', 'nodeId'])
-Port_L2.__new__.__defaults__ = (None, None, 1, -1, "S10G", 1500, "NO", -1, "FULL", "", "Pass", 1, 1, None)
+Port_L2.__new__.__defaults__ = (None, None, 1, -1, "10G", 1500, "NO", -1, "FULL", "", "Pass", 1, 1, None)
 Port_L2_DATA = (
-    Port_L2(1, None, 1, -1, "S100G", 1500, "NO", None, "FULL", "", "Fail", 1, 1, None),#S100G is over
-    Port_L2(2, None, 1, -1, "S1G", 1500, "BOTH", None, "FULL", "", "Pass", 1, 1, None),
-    Port_L2(3, None, 1, -1, "S10G", 3000, "RX", None, "FULL", "", "Pass", 1, 1, None),
-    Port_L2(4, None, 1, 1, "S1G", 3000, "TX", None, "FULL", "", "Pass", 1, 1, None),
+    Port_L2(1, None, 1, -1, "100G", 1500, "NO", None, "FULL", "", "Fail", 1, 1, None),#S100G is over
+    Port_L2(2, None, 1, -1, "1G", 1500, "BOTH", None, "FULL", "", "Pass", 1, 1, None),
+    Port_L2(3, None, 1, -1, "10G", 3000, "RX", None, "FULL", "", "Pass", 1, 1, None),
+    Port_L2(4, None, 1, 1, "1G", 3000, "TX", None, "FULL", "", "Pass", 1, 1, None),
     Port_L2(5, None, 1, 1, None, 3000, "NO", None, "FULL", "", "Fail", 1, 1, None),
-    Port_L2(6, None, 1, 1, "S1G", None, "NO", None, "FULL", "", "Fail", 1, 1, None),
+    Port_L2(6, None, 1, 1, "1G", None, "NO", None, "FULL", "", "Fail", 1, 1, None),
     Port_L2(7,None)
 )
 
@@ -40,7 +40,6 @@ def Port_L2_config(rest_interface_module, node_id, Port_L2_data=Port_L2(), metho
         if response.status_code != 200:
             logger.error(response.message)
         logger.info(f' GETTING Port_L2-config (after {method} method) ... ')
-
         read_data = rest_interface_module.get_request(f"/api/gponconfig/sp5100/portl2/get/{data.nodeId}/{data.shelfId}/{data.slotId}/{data.ethIfIndex}")
         input_data = json.loads(read_data.text)
         logger.info(f'data after read input_data {input_data}')
@@ -59,7 +58,7 @@ def Port_L2_config(rest_interface_module, node_id, Port_L2_data=Port_L2(), metho
             assert (input_data["ethIfIndex"] == data.ethIfIndex and 
                     input_data["ethIfTxStatus"] == 1 and
                     input_data["phyIfState"] == -1 and
-                    str(input_data["phyIfSpeed"]) == "S10G" and
+                    str(input_data["phyIfSpeed"]) == "10G" and
                     input_data["phyIfMtu"] == 1500 and
                     input_data["phyIfFlowControl"] == "NO" and
                     input_data["phyIfLoopback"] == None and
@@ -70,7 +69,7 @@ def Port_L2_config(rest_interface_module, node_id, Port_L2_data=Port_L2(), metho
 
 def test_Port_L2_config(rest_interface_module, node_id):
 
-    for port in range(9,10):
+    for port in range(1,2):
         for l2 in Port_L2_DATA:
             if l2.index == 7:
                 Port_L2_config(rest_interface_module, node_id, l2._replace(ethIfIndex=port), method='DELETE')
