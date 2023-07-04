@@ -69,12 +69,13 @@ def Port_L2_config(rest_interface_module, node_id, Port_L2_data=Port_L2(), metho
 
 def test_Port_L2_config(rest_interface_module, node_id):
 
-    for port in range(1,2):
+    for port in range(1,3):
         for l2 in Port_L2_DATA:
-            if l2.index == 7:
-                Port_L2_config(rest_interface_module, node_id, l2._replace(ethIfIndex=port), method='DELETE')
-            else:
+            if l2.index != 7:
                 Port_L2_config(rest_interface_module, node_id, l2._replace(ethIfIndex=port), method='POST')
+
+    for port in range(1,3):
+            Port_L2_config(rest_interface_module, node_id, Port_L2_DATA[6]._replace(ethIfIndex=port), method='DELETE')
 
 
 
