@@ -7,6 +7,14 @@ logger = logging.getLogger(__name__)
 board_ip = "192.168.9.127"
 
 
+
+def check_set_value(rest_interface_module, set_value, result, data):
+    logger.info(f'********************************check_set_value FUNCTION****************************')
+    rest_set_result = data[result]
+    assert(rest_set_result==set_value),f"ERROR in SETTING {result} *******************************"
+    
+
+
 def search_in_tree(tree, nodes):
     for item in tree:
         if item['childrenNodes']:

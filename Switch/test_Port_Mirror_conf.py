@@ -3,6 +3,7 @@ import logging
 import json
 from config import *
 from Switch.bridge_funcs import bridge_config
+from collections import namedtuple
 from Switch.test_Bridge_group_conf import switch_config
 # from pytest-check import check
 
