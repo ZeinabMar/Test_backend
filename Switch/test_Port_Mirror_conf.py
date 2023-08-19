@@ -58,7 +58,7 @@ def Port_Mirror_config(rest_interface_module, node_id, Port_Mirror_data=Port_Mir
 
 def test_Port_Mirror_config(rest_interface_module, node_id):
 
-    # bridge_config(rest_interface_module, node_id, Bridge_conf(1, 'PROVIDER_MSTP_EDGE', 100, 30, maxAge=6, maxHops=1, priority=12288), method='POST')
+    bridge_config(rest_interface_module, node_id, Bridge_conf(1, 'PROVIDER_MSTP_EDGE', 100, 30, maxAge=6, maxHops=1, priority=12288), method='POST')
     for dest in range(1,7):
         if dest!=24:
             i=1
