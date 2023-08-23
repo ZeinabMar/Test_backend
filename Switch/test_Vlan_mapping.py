@@ -26,15 +26,24 @@ Vlan_Map_Data = (
                    "shelfId":1,
                    "ifIndex":1,
                    "vlanId":10 ,
-                   "vlanTranslatedId":10,}, [{"vlanid": [10, "vlanId"],
+                   "vlanTranslatedId":11,}, [{"vlanid": [10, "vlanId"],
                                             "vlantranslatedid": [11, "vlanTranslatedId"],}], result="Pass"),
+    Vlan_Map(2, {"nodeId":None,
+                   "slotId":1,
+                   "shelfId":1,
+                   "ifIndex":1,
+                   "vlanId":11 ,
+                   "vlanTranslatedId":10,}, [{"vlanid": [10, "vlanId"],
+                                            "vlantranslatedid": [11, "vlanTranslatedId"],},{"vlanid": [11, "vlanId"],
+                                            "vlantranslatedid": [10, "vlanTranslatedId"],}], result="Pass"),
 )
 
-def Vlan_Map_config(rest_interface_module, node_id, Vlan_Map_data=Vlan_Map(), method='POST'):
+def Vlan_Map_config(rest_interface_module, node_id, Vlan_Map_data=Vlan_Map(),port=None, method='POST'):
     logger.info(f'VLAN MAPPING TEST DATA ------- > {Vlan_Map_data.index}')
     data = Vlan_Map_data._replace(nodeId=node_id)
     expected_set = data.expected_result_Set
     expected_set["nodeId"]= int(node_id)
+    expected_set["ifIndex"]= port
     expected_get = data.expected_result_Get  
    
     logger.info(f"TRY TO {method} Vlan_Map CONFIG ...")
@@ -81,10 +90,10 @@ def test_Vlan_Map_config(rest_interface_module, node_id):
     # for vlan in VLAN_DATA_conf_S_C:
     #     vlan_config(rest_interface_module, node_id, vlan, method='POST')  
     # **************************************************************************************************************
-    for port in range(2,3):
+    for port in range(1,2):
         switch_config(rest_interface_module, node_id, Switch_conf()._replace(ethIfIndex=port,index=4), method='POST') 
         for vlan_map in Vlan_Map_Data:
-            Vlan_Map_config(rest_interface_module, node_id, vlan_map._replace(ifIndex=port), method='add')
+            Vlan_Map_config(rest_interface_module, node_id, vlan_map, port, method='add')
 
     # #**************************************************************************************************************
     # for vlan in VLAN_DATA_conf_S_C:

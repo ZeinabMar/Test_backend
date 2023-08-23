@@ -1,13 +1,12 @@
 import pytest
 import logging
 import json
-from lib.restlib import rest_interface_module as rest_interface
 
-pytestmark = [pytest.mark.env_name("olt"), pytest.mark.rest_dev("nms")]
+
+pytestmark = [pytest.mark.env_name("REST_env"), pytest.mark.rest_dev("olt_nms")]
 
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
-
 
 
 
@@ -26,32 +25,34 @@ dba_general_data = [{
     }]
 
 
-def set_dba_profile(rest_interface, node_id, DBA_data=dba_general_data):
+def set_dba_profile(rest_interface_module, node_id, DBA_data=dba_general_data):
     for data in DBA_data:
         logger.info(f"DBA TEST-DATA --> {data}")
         data["nodeId"] = node_id
         data["shelfId"] = 1
         data["slotId"] = 1
-        r = rest_interface.post_request("/api/gponconfig/dbaProfile/add", data)
+        logger.info(f"dataaaaa first  {data}")
+        r = rest_interface_module.post_request("/api/gponconfig/dbaProfile/add", data)
         if data["result"] == "Pass":
             assert r.status_code == 200
-            read_data = rest_interface.get_request("/api/gponconfig/dbaProfile/getall/?nodeId={}&shelfId=1&slotId=1".format(data["nodeId"]))
+            read_data = rest_interface_module.get_request("/api/gponconfig/dbaProfile/getall/?nodeId={}&shelfId=1&slotId=1".format(data["nodeId"]))
+            logger.info(f"dataaaaa {read_data}")
             output_data = list(filter(lambda dic: dic["name"] == data["name"], json.loads(read_data.text)))
             assert output_data[0]["dbaType"] == data["dbaType"]
         else:
             assert r.status_code == 500
 
 
-def delete_dba_profile(rest_interface, node_id, DBA_data=dba_general_data):
+def delete_dba_profile(rest_interface_module, node_id, DBA_data=dba_general_data):
     for dba_id, data in enumerate(DBA_data):
         logger.info(f"DEL DBA TEST-DATA --> {data}")
         data["nodeId"] = node_id
         data["shelfId"] = 1
         data["slotId"] = 1
-        response = rest_interface.delete_request(f"/api/gponconfig/dbaProfile/delete/{node_id}/1/1/{dba_id+1}")
+        response = rest_interface_module.delete_request(f"/api/gponconfig/dbaProfile/delete/{node_id}/1/1/{dba_id+1}")
         if data["result"] == "Pass":
             assert 200 == response.status_code
-            read_data = rest_interface.get_request("/api/gponconfig/dbaProfile/getall/?nodeId={}&shelfId=1&slotId=1".format(data["nodeId"]))
+            read_data = rest_interface_module.get_request("/api/gponconfig/dbaProfile/getall/?nodeId={}&shelfId=1&slotId=1".format(data["nodeId"]))
             if read_data.text:
                 output_data = list(filter(lambda dic: dic["name"] == data["name"], json.loads(read_data.text)))
                 assert len(output_data) == 0
@@ -71,14 +72,14 @@ onu_general_data = [{
 }]
 
 
-def onu_auto_learn(rest_interface, node_id, ONU_data=onu_general_data):
+def onu_auto_learn(rest_interface_module, node_id, ONU_data=onu_general_data):
     for data in ONU_data:
         logger.info(f"ONU TEST-DATA --> {data}")
         data["nodeId"] = node_id
-        response = rest_interface.post_request("/api/gponconfig/pon/saveprimaryinfo", data)
+        response = rest_interface_module.post_request("/api/gponconfig/pon/saveprimaryinfo/add", data)
         if data["result"] == "Pass":
             assert 200 == response.status_code
-            read_data = rest_interface.get_request("/api/gponconfig/onu/getallauthenticated")
+            read_data = rest_interface_module.get_request("/api/gponconfig/onu/getallauthenticated")
             input_data = list(filter(lambda dic: dic["ifIndex"] == data["ifIndex"], json.loads(read_data.text)))
             assert input_data[0]["onuState"] == "OPERATION_STATE"
         else:
@@ -98,15 +99,15 @@ add_dba_data = [
 ]
 
 
-def test_add_dba_profile(rest_interface, node_id):
+def test_add_dba_profile(rest_interface_module, node_id):
 
-    set_dba_profile(rest_interface, node_id, add_dba_data)
+    set_dba_profile(rest_interface_module, node_id, add_dba_data)
 
-    delete_dba_profile(rest_interface, node_id, add_dba_data)
+    delete_dba_profile(rest_interface_module, node_id, add_dba_data)
 
 
-def test_onu_authentication(rest_interface, node_id):
-    onu_auto_learn(rest_interface, node_id)
+def test_onu_authentication(rest_interface_module, node_id):
+    onu_auto_learn(rest_interface_module, node_id)
 
 
 tcont_general_data = [
@@ -120,28 +121,28 @@ tcont_general_data = [
     "result": "Pass"
     }]
 
-def tcont_add_profile(rest_interface, node_id, TCONT_data=tcont_general_data):
+def tcont_add_profile(rest_interface_module, node_id, TCONT_data=tcont_general_data):
     for data in TCONT_data:
         logger.info(f"TCONT TEST-DATA --> {data}")
         data["nodeId"] = node_id
         data["shelfId"] = 1
         data["slotId"] = 1
-        response = rest_interface.post_request("/api/gponconfig/tcont/add", data)
+        response = rest_interface_module.post_request("/api/gponconfig/tcont/add", data)
         if data["result"] == "Pass":
             assert response.status_code == 200
-            read_data = rest_interface.get_request(f"/api/gponconfig/tcont/getall?nodeId={node_id}&shelfId=1&slotId=1&portId={data['portId']}&onuId={data['onuId']}")
+            read_data = rest_interface_module.get_request(f"/api/gponconfig/tcont/getall?nodeId={node_id}&shelfId=1&slotId=1&portId={data['portId']}&onuId={data['onuId']}")
             input_data = list(filter(lambda dic: dic["name"] == data["name"], json.loads(read_data.text)))
             assert int(input_data[0]["tcontId"]) == int(data["tcontId"])
         else:
             assert 500 == response.status_code
 
-def tcont_delete_profile(rest_interface, node_id, TCONT_data=tcont_general_data):
+def tcont_delete_profile(rest_interface_module, node_id, TCONT_data=tcont_general_data):
     for data in TCONT_data:
         logger.info(f"DEL TCONT TEST-DATA --> {data}")
-        response = rest_interface.delete_request(f"/api/gponconfig/tcont/delete/{node_id}/1/1/{data['portId']}/{data['onuId']}/{data['tcontId']}")
+        response = rest_interface_module.delete_request(f"/api/gponconfig/tcont/delete/{node_id}/1/1/{data['portId']}/{data['onuId']}/{data['tcontId']}")
         if data["result"] == "Pass":
             assert 200 == response.status_code
-            read_data = rest_interface.get_request(f"/api/gponconfig/tcont/getall?nodeId={node_id}&shelfId=1&slotId=1&portId={data['portId']}&onuId={data['onuId']}")
+            read_data = rest_interface_module.get_request(f"/api/gponconfig/tcont/getall?nodeId={node_id}&shelfId=1&slotId=1&portId={data['portId']}&onuId={data['onuId']}")
             if read_data.text:
                 output_data = list(filter(lambda dic: dic["name"] == data["name"], json.loads(read_data.text)))
                 assert len(output_data) == 0
@@ -171,15 +172,15 @@ tcont_data = [
 ]
 
 
-def test_tcont_profile(rest_interface, node_id):
+def test_tcont_profile(rest_interface_module, node_id):
 
-    set_dba_profile(rest_interface, node_id, DBA_data=dba_data_for_tcont)
+    set_dba_profile(rest_interface_module, node_id, DBA_data=dba_data_for_tcont)
 
-    tcont_add_profile(rest_interface, node_id, TCONT_data=tcont_data)
+    tcont_add_profile(rest_interface_module, node_id, TCONT_data=tcont_data)
 
-    tcont_delete_profile(rest_interface, node_id, TCONT_data=tcont_data)
+    tcont_delete_profile(rest_interface_module, node_id, TCONT_data=tcont_data)
 
-    delete_dba_profile(rest_interface, node_id, DBA_data=dba_data_for_tcont)
+    delete_dba_profile(rest_interface_module, node_id, DBA_data=dba_data_for_tcont)
 
 
 gem_general_data = [
@@ -194,28 +195,28 @@ gem_general_data = [
     }]
 
 
-def gem_add_profile(rest_interface, node_id, GEM_data=gem_general_data):
+def gem_add_profile(rest_interface_module, node_id, GEM_data=gem_general_data):
     for data in GEM_data:
         logger.info(f"GEM TEST-DATA --> {data}")
         data["nodeId"] = node_id
         data["shelfId"] = 1
         data["slotId"] = 1
-        response = rest_interface.post_request("/api/gponconfig/gem/add", data)
+        response = rest_interface_module.post_request("/api/gponconfig/gem/add", data)
         if data["result"] == "Pass":
             assert response.status_code == 200
-            read_data = rest_interface.get_request(f"/api/gponconfig/gem/getall?nodeId={node_id}&shelfId=1&slotId=1&portId={data['portId']}&onuId={data['onuId']}")
+            read_data = rest_interface_module.get_request(f"/api/gponconfig/gem/getall?nodeId={node_id}&shelfId=1&slotId=1&portId={data['portId']}&onuId={data['onuId']}")
             input_data = list(filter(lambda dic: dic["name"] == data["name"], json.loads(read_data.text)))
             assert int(input_data[0]["gemId"]) == int(data["gemId"])
         else:
             assert 500 == response.status_code
 
-def gem_delete_profile(rest_interface, node_id, GEM_data=gem_general_data):
+def gem_delete_profile(rest_interface_module, node_id, GEM_data=gem_general_data):
     for data in GEM_data:
         logger.info(f"DEL GEM TEST-DATA --> {data}")
-        response = rest_interface.delete_request(f"/api/gponconfig/gem/delete/{node_id}/1/1/{data['portId']}/{data['onuId']}/{data['gemId']}")
+        response = rest_interface_module.delete_request(f"/api/gponconfig/gem/delete/{node_id}/1/1/{data['portId']}/{data['onuId']}/{data['gemId']}")
         if data["result"] == "Pass":
             assert 200 == response.status_code
-            read_data = rest_interface.get_request(f"/api/gponconfig/gem/getall?nodeId={node_id}&shelfId=1&slotId=1&portId={data['portId']}&onuId={data['onuId']}")
+            read_data = rest_interface_module.get_request(f"/api/gponconfig/gem/getall?nodeId={node_id}&shelfId=1&slotId=1&portId={data['portId']}&onuId={data['onuId']}")
             if read_data.text:
                 output_data = list(filter(lambda dic: dic["name"] == data["name"], json.loads(read_data.text)))
                 assert len(output_data) == 0
@@ -245,20 +246,20 @@ gem_data = [
     ]
 
 
-def test_gem_profile(rest_interface, node_id):
+def test_gem_profile(rest_interface_module, node_id):
 
 
-    set_dba_profile(rest_interface, node_id, DBA_data=dba_data_for_tcont)
+    set_dba_profile(rest_interface_module, node_id, DBA_data=dba_data_for_tcont)
 
-    tcont_add_profile(rest_interface, node_id, TCONT_data=tcont_data_for_gem)
+    tcont_add_profile(rest_interface_module, node_id, TCONT_data=tcont_data_for_gem)
 
-    gem_add_profile(rest_interface, node_id, GEM_data=gem_data)
+    gem_add_profile(rest_interface_module, node_id, GEM_data=gem_data)
 
-    gem_delete_profile(rest_interface, node_id, GEM_data=gem_data)
+    gem_delete_profile(rest_interface_module, node_id, GEM_data=gem_data)
 
-    tcont_delete_profile(rest_interface, node_id, TCONT_data=tcont_data_for_gem)
+    tcont_delete_profile(rest_interface_module, node_id, TCONT_data=tcont_data_for_gem)
 
-    delete_dba_profile(rest_interface, node_id, DBA_data=dba_data_for_tcont)
+    delete_dba_profile(rest_interface_module, node_id, DBA_data=dba_data_for_tcont)
 
 
 service_general_data = [{
@@ -273,7 +274,7 @@ service_general_data = [{
 }]
 
 
-def service_add_profile(rest_interface, node_id, SERVICE_data=service_general_data):
+def service_add_profile(rest_interface_module, node_id, SERVICE_data=service_general_data):
     for data in SERVICE_data:
         logger.info(f"SERVICE TEST-DATA --> {data}")
         data["nodeId"] = node_id
@@ -281,23 +282,23 @@ def service_add_profile(rest_interface, node_id, SERVICE_data=service_general_da
         data["slotId"] = 1
         data["innerVlan"] = 0
         data["vlanPriority"] = 0
-        response = rest_interface.post_request("/api/gponconfig/service/add", data)
+        response = rest_interface_module.post_request("/api/gponconfig/service/add", data)
         if data["result"] == "Pass":
             assert response.status_code == 200
-            read_data = rest_interface.get_request(f"/api/gponconfig/service/getall?nodeId={node_id}&shelfId=1&slotId=1&portId={data['portId']}&onuId={data['onuId']}")
+            read_data = rest_interface_module.get_request(f"/api/gponconfig/service/getall?nodeId={node_id}&shelfId=1&slotId=1&portId={data['portId']}&onuId={data['onuId']}")
             input_data = list(filter(lambda dic: dic["servicePortId"] == data["servicePortId"], json.loads(read_data.text)))
             assert int(input_data[0]["userVlan"]) == int(data["userVlan"])
         else:
             assert 500 == response.status_code
 
 
-def service_delete_profile(rest_interface, node_id, SERVICE_data=service_general_data):
+def service_delete_profile(rest_interface_module, node_id, SERVICE_data=service_general_data):
     for data in SERVICE_data:
         logger.info(f"DEL SERVICE TEST-DATA --> {data}")
-        response = rest_interface.delete_request(f"/api/gponconfig/service/delete/{node_id}/1/1/{data['portId']}/{data['onuId']}/{data['servicePortId']}")
+        response = rest_interface_module.delete_request(f"/api/gponconfig/service/delete/{node_id}/1/1/{data['portId']}/{data['onuId']}/{data['servicePortId']}")
         if data["result"] == "Pass":
             assert 200 == response.status_code
-            read_data = rest_interface.get_request(f"/api/gponconfig/service/getall?nodeId={node_id}&shelfId=1&slotId=1&portId={data['portId']}&onuId={data['onuId']}")
+            read_data = rest_interface_module.get_request(f"/api/gponconfig/service/getall?nodeId={node_id}&shelfId=1&slotId=1&portId={data['portId']}&onuId={data['onuId']}")
             if read_data.text:
                 output_data = list(filter(lambda dic: dic["servicePortId"] == data["servicePortId"], json.loads(read_data.text)))
                 assert len(output_data) == 0
@@ -320,23 +321,23 @@ service_data = [
     ]
 
 
-def test_service_profile(rest_interface, node_id):
+def test_service_profile(rest_interface_module, node_id):
 
-    set_dba_profile(rest_interface, node_id, DBA_data=dba_data_for_tcont)
+    set_dba_profile(rest_interface_module, node_id, DBA_data=dba_data_for_tcont)
 
-    tcont_add_profile(rest_interface, node_id, TCONT_data=tcont_general_data)
+    tcont_add_profile(rest_interface_module, node_id, TCONT_data=tcont_general_data)
 
-    gem_add_profile(rest_interface, node_id, GEM_data=gem_data_for_other_TCs)
+    gem_add_profile(rest_interface_module, node_id, GEM_data=gem_data_for_other_TCs)
 
-    service_add_profile(rest_interface, node_id, SERVICE_data=service_data)
+    service_add_profile(rest_interface_module, node_id, SERVICE_data=service_data)
 
-    service_delete_profile(rest_interface, node_id, SERVICE_data=service_data)
+    service_delete_profile(rest_interface_module, node_id, SERVICE_data=service_data)
 
-    gem_delete_profile(rest_interface, node_id, GEM_data=gem_data_for_other_TCs)
+    gem_delete_profile(rest_interface_module, node_id, GEM_data=gem_data_for_other_TCs)
 
-    tcont_delete_profile(rest_interface, node_id, TCONT_data=tcont_general_data)
+    tcont_delete_profile(rest_interface_module, node_id, TCONT_data=tcont_general_data)
 
-    delete_dba_profile(rest_interface, node_id, DBA_data=dba_data_for_tcont)
+    delete_dba_profile(rest_interface_module, node_id, DBA_data=dba_data_for_tcont)
 
 
 
@@ -346,7 +347,7 @@ remote_service_general_data = [
 ]
 
 
-def remote_service_add_profile(rest_interface, node_id, REMOTE_SERVICE_data=remote_service_general_data):
+def remote_service_add_profile(rest_interface_module, node_id, REMOTE_SERVICE_data=remote_service_general_data):
     for data in REMOTE_SERVICE_data:
         logger.info(f"REMOTE_SERVICE TEST-DATA --> {data}")
         data["nodeId"] = node_id
@@ -354,22 +355,22 @@ def remote_service_add_profile(rest_interface, node_id, REMOTE_SERVICE_data=remo
         data["slotId"] = 1
         data["innerVlan"] = 0
         data["vlanPriority"] = 0
-        response = rest_interface.post_request("/api/gponconfig/sp5100/rmonu/service/add", data)
+        response = rest_interface_module.post_request("/api/gponconfig/sp5100/rmonu/service/add", data)
         if data["result"] == "Pass":
             assert response.status_code == 200
-            read_data = rest_interface.get_request(f"/api/gponconfig/sp5100/rmonu/service/getall?nodeId={node_id}&shelfId=1&slotId=1&onuId={data['onuId']}&portId={data['portId']}")
+            read_data = rest_interface_module.get_request(f"/api/gponconfig/sp5100/rmonu/service/getall?nodeId={node_id}&shelfId=1&slotId=1&onuId={data['onuId']}&portId={data['portId']}")
             input_data = list(filter(lambda dic: dic["rmServiceId"] == data["rmServiceId"], json.loads(read_data.text)))
             assert str(input_data[0]["vlanMode"]) == str(data["vlanMode"])
         else:
             assert 500 == response.status_code
 
-def remote_service_delete_profile(rest_interface, node_id, REMOTE_SERVICE_data=remote_service_general_data):
+def remote_service_delete_profile(rest_interface_module, node_id, REMOTE_SERVICE_data=remote_service_general_data):
     for data in REMOTE_SERVICE_data:
         logger.info(f"DEL REMOTE_SERVICE TEST-DATA --> {data}")
-        response = rest_interface.delete_request(f"/api/gponconfig/sp5100/rmonu/service/delete/{node_id}/1/1/{data['portId']}/{data['onuId']}/{data['rmServiceId']}")
+        response = rest_interface_module.delete_request(f"/api/gponconfig/sp5100/rmonu/service/delete/{node_id}/1/1/{data['portId']}/{data['onuId']}/{data['rmServiceId']}")
         if data["result"] == "Pass":
             assert 200 == response.status_code
-            read_data = rest_interface.get_request(f"/api/gponconfig/sp5100/rmonu/service/getall?nodeId={node_id}&shelfId=1&slotId=1&onuId={data['onuId']}&portId={data['portId']}")
+            read_data = rest_interface_module.get_request(f"/api/gponconfig/sp5100/rmonu/service/getall?nodeId={node_id}&shelfId=1&slotId=1&onuId={data['onuId']}&portId={data['portId']}")
             if read_data.text:
                 output_data = list(filter(lambda dic: dic["rmServiceId"] == data["rmServiceId"], json.loads(read_data.text)))
                 assert len(output_data) == 0
@@ -387,23 +388,23 @@ remote_service_data = [
 ]
 
 
-def test_remote_service_profile(rest_interface, node_id):
+def test_remote_service_profile(rest_interface_module, node_id):
 
-    set_dba_profile(rest_interface, node_id, DBA_data=dba_data_for_tcont)
+    set_dba_profile(rest_interface_module, node_id, DBA_data=dba_data_for_tcont)
 
-    tcont_add_profile(rest_interface, node_id, TCONT_data=tcont_general_data)
+    tcont_add_profile(rest_interface_module, node_id, TCONT_data=tcont_general_data)
 
-    gem_add_profile(rest_interface, node_id, GEM_data=gem_data_for_other_TCs)
+    gem_add_profile(rest_interface_module, node_id, GEM_data=gem_data_for_other_TCs)
 
-    remote_service_add_profile(rest_interface, node_id, REMOTE_SERVICE_data=remote_service_data)
+    remote_service_add_profile(rest_interface_module, node_id, REMOTE_SERVICE_data=remote_service_data)
 
-    remote_service_delete_profile(rest_interface, node_id, REMOTE_SERVICE_data=remote_service_data)
+    remote_service_delete_profile(rest_interface_module, node_id, REMOTE_SERVICE_data=remote_service_data)
 
-    gem_delete_profile(rest_interface, node_id, GEM_data=gem_data_for_other_TCs)
+    gem_delete_profile(rest_interface_module, node_id, GEM_data=gem_data_for_other_TCs)
 
-    tcont_delete_profile(rest_interface, node_id, TCONT_data=tcont_general_data)
+    tcont_delete_profile(rest_interface_module, node_id, TCONT_data=tcont_general_data)
 
-    delete_dba_profile(rest_interface, node_id, DBA_data=dba_data_for_tcont)
+    delete_dba_profile(rest_interface_module, node_id, DBA_data=dba_data_for_tcont)
 
 
 
@@ -421,21 +422,21 @@ bridge_general_data = [{
 }]
 
 
-def set_bridge(rest_interface, node_id, BRIDGE_data=bridge_general_data):
+def set_bridge(rest_interface_module, node_id, BRIDGE_data=bridge_general_data):
     for data in BRIDGE_data:
         logger.info(f"BRIDGE TEST-DATA --> {data}")
         data["nodeId"] = node_id
         data["shelfId"] = 1
         data["slotId"] = 1
-        response = rest_interface.post_request("/api/gponconfig/sp5100/bridgeconfig/add", data)
+        response = rest_interface_module.post_request("/api/gponconfig/sp5100/bridgeconfig/add", data)
         if data["result"] == "Pass":
             assert response.status_code == 200
-            read_data = rest_interface.get_request(f"/api/gponconfig/sp5100/bridgeconfig/getall?nodeId={node_id}&shelfId=1&slotId=1")
+            read_data = rest_interface_module.get_request(f"/api/gponconfig/sp5100/bridgeconfig/getall?nodeId={node_id}&shelfId=1&slotId=1")
             input_data = list(filter(lambda dic: dic["bridgeId"] == data["bridgeId"], json.loads(read_data.text)))
             assert str(input_data[0]["bridgeProtocol"]) == str(data["bridgeProtocol"])
         else:
             assert response.status_code == 500
 
 
-def test_set_bridge(rest_interface, node_id):
-    set_bridge(rest_interface, node_id)
+def test_set_bridge(rest_interface_module, node_id):
+    set_bridge(rest_interface_module, node_id)
