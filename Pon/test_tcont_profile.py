@@ -1,0 +1,109 @@
+import pytest
+import logging
+import json
+from config import *
+from conftest import *
+
+pytestmark = [pytest.mark.env_name("REST_env"), pytest.mark.rest_dev("olt_nms")]
+logging.basicConfig(level=logging.DEBUG)
+
+tcont = namedtuple('tcont', ['index', 'expected_result_Set', 'expected_result_Get', "result", "method"])                                       
+tcont.__new__.__defaults__ = (None, {}, {},None)
+
+tcont_Data = (
+tcont(1, {"nodeId":None, "slotId":1,"shelfId":1,"bwProfileId":1,"bwProfileName": "dba1_type1", "name": "tcont_valid1", "onuId": 1, "portId": 1, "tcontId": 8},
+                                                           {
+                                                            "bwProfileId": [1, "bwProfileId"],
+                                                            "bwProfileName": ["dba1_type1", "bwProfileName"],
+                                                            "name": ["tcont_valid1", "name"],
+                                                            "onuId": [1, "onuId"],
+                                                            "portId": [1, "portId"],
+                                                            "tcontId": [8, "tcontId"]},result="Pass",method="ADD"),  
+
+tcont(2, {"nodeId":None, "slotId":1,"shelfId":1,"bwProfileId":2,"bwProfileName": "dba2_type2", "name": "tcont_valid2", "onuId": 1, "portId": 1, "tcontId": 4},
+                                                           {
+                                                            "bwProfileId": [2, "bwProfileId"],
+                                                            "bwProfileName": ["dba2_type2", "bwProfileName"],
+                                                            "name": ["tcont_valid2", "name"],
+                                                            "onuId": [1, "onuId"],
+                                                            "portId": [1, "portId"],
+                                                            "tcontId": [4, "tcontId"]},result="Pass", method="ADD"),  
+tcont(3, {"nodeId":None, "slotId":1,"shelfId":1,"bwProfileId":3,"bwProfileName": "dba3_type3", "name": "tcont_valid3", "onuId": 1, "portId": 1, "tcontId": 6},
+                                                           {
+                                                            "bwProfileId": [3, "bwProfileId"],
+                                                            "bwProfileName": ["dba3_type3", "bwProfileName"],
+                                                            "name": ["tcont_valid3", "name"],
+                                                            "onuId": [1, "onuId"],
+                                                            "portId": [1, "portId"],
+                                                            "tcontId": [6, "tcontId"]},result="Pass", method="ADD"), 
+tcont(4, {"nodeId":None, "slotId":1,"shelfId":1,"bwProfileId":3,"bwProfileName": "dba3_type3", "name": "tcont_valid3", "onuId": 1, "portId": 1, "tcontId": 6},
+                                                           {
+                                                            "bwProfileId": [3, "bwProfileId"],
+                                                            "bwProfileName": ["dba3_type3", "bwProfileName"],
+                                                            "name": ["tcont_valid3", "name"],
+                                                            "onuId": [1, "onuId"],
+                                                            "portId": [1, "portId"],
+                                                            "tcontId": [6, "tcontId"]},result="Fail"), 
+tcont(5, {"nodeId":None, "slotId":1,"shelfId":1,"bwProfileId":1,"bwProfileName": "dba1_type1", "name": "tcont_disable_pon", "onuId": 1, "portId": 5, "tcontId": 6},
+                                                           {
+                                                            "bwProfileId": [1, "bwProfileId"],
+                                                            "bwProfileName": ["dba1_type1", "bwProfileName"],
+                                                            "name": ["tcont_disable_pon", "name"],
+                                                            "onuId": [1, "onuId"],
+                                                            "portId": [5, "portId"],
+                                                            "tcontId": [6, "tcontId"]},result="Fail", method="UPDATE"), 
+
+  )
+
+
+def Tcont_Management(rest_interface_module, node_id, tcont_data=tcont(), method='ADD'):
+    method = tcont_data.method
+    logger.info(f'TCONT MANAGEMENT TEST DATA ------- > {dba_profile_data.index}')
+    expected_set = dba_profile_data.expected_result_Set
+    expected_set["nodeId"]= int(node_id)
+    expected_get = dba_profile_data.expected_result_Get  
+
+    logger.info(f"TRY TO {method} Qos_Policy CONFIG ...")
+    if method == 'ADD':
+        url = "/api/gponconfig/tcont/add"
+        response = rest_interface_module.post_request(url, expected_set) 
+    elif method == "UPDATE":
+        url = "/api/gponconfig/sp5100/tcont/update"
+        response = rest_interface_module.post_request(url, expected_set)     
+    else:  # method==DELETE   
+        url = f"/api/gponconfig/tcont/delete/"+str(expected_set["nodeId"])+"/"+str(expected_set["shelfId"])+"/"+str(expected_set["slotId"])+"/"+str(expected_set["portId"])+"/"+str(expected_set["onuId"])+"/"+str(expected_set["tcontId"])
+        response = rest_interface_module.delete_request(url)
+
+    if tcont_data.result == "Pass":
+        assert response.status_code == 200, f'{method} ERROR in PROFILE DBA config {expected_set}'
+        if response.status_code != 200:
+            logger.error(response.message)
+        logger.info(f' GETTING Qos_Policy-config (after {method} method) ... ')
+        read_data = rest_interface_module.get_request(f"/api/gponconfig/tcont/get/"+str(expected_set["nodeId"])+"/"+str(expected_set["shelfId"])+"/"+str(expected_set["slotId"])+"/"+str(expected_set["portId"])+"/"+str(expected_set["onuId"])+"/"+str(expected_set["tcontId"]))
+        input_data = json.loads(read_data.text)
+        #**********************************************************************
+        if method == 'ADD' or 'DELETE' or "UPDATE": 
+            for key in expected_get.keys():
+                logger.info(f"{method} IN {expected_get[key]}")
+                check_set_value(rest_interface_module, expected_get[key][0], expected_get[key][1],input_data)
+            logger.info(f'check is completed in {method} method')
+
+    else:
+        assert response.status_code in range(400, 505), f'{method} SET INCORRECT DATA in TCONT MANAGE {data._asdict}'
+        if len(expected_get.keys()) !=0:
+            read_data = rest_interface_module.get_request(f"/api/gponconfig/tcont/get/"+str(expected_set["nodeId"])+"/"+str(expected_set["shelfId"])+"/"+str(expected_set["slotId"])+"/"+str(expected_set["portId"])+"/"+str(expected_set["onuId"])+"/"+str(expected_set["tcontId"]))
+            input_data = json.loads(read_data.text)
+            for key in expected_get.keys():
+                logger.info(f"set steeep IN {expected_get[key]}")
+                check_set_value(rest_interface_module, expected_get[key][0], expected_get[key][1],input_data)
+
+
+
+
+
+def test_Tcont_Management(rest_interface_module, node_id):
+
+    for tcont in tcont_Data:
+        Tcont_Management(rest_interface_module, node_id, tcont)
+    for tcont in tcont_Data_Delete:
+        Tcont_Management(rest_interface_module, node_id, tcont)
