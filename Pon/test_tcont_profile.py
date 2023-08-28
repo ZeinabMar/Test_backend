@@ -103,7 +103,13 @@ def Tcont_Management(rest_interface_module, node_id, tcont_data=tcont(), method=
 
 def test_Tcont_Management(rest_interface_module, node_id):
 
+    for dba in dba_profile_Data_Config:
+        DBA_Profile(rest_interface_module, node_id, dba, method='ADD')
+ 
     for tcont in tcont_Data:
         Tcont_Management(rest_interface_module, node_id, tcont)
     for tcont in tcont_Data_Delete:
         Tcont_Management(rest_interface_module, node_id, tcont)
+
+    for dba in dba_profile_Data_Config_Delete:
+        DBA_Profil(rest_interface_module, node_id, dba, method='DELETE')       

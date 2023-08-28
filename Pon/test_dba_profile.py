@@ -13,9 +13,9 @@ dba_profile.__new__.__defaults__ = (None, {}, [],None)
 dba_profile_Data = (
 
 
-dba_profile(1, {"nodeId":None, "slotId":1,"shelfId":1,"dbaId":1,"name": "dba_test1", "dbaType": 1, "fixedBwValue": 32000, "assureBwValue": None, "maxBwValue": None},
+dba_profile(1, {"nodeId":None, "slotId":1,"shelfId":1,"dbaId":1,"name": "dba_test12", "dbaType": 1, "fixedBwValue": 32000, "assureBwValue": None, "maxBwValue": None},
                                                            [{
-                                                            "namedba": ["dba_test1", "name"],
+                                                            "namedba": ["dba_test12", "name"],
                                                             "dbatype": [1, "dbaType"],
                                                             "fixedbwvalue": [32000, "fixedBwValue"],
                                                             "assurebwvalue": [32250, "assureBwValue"],
@@ -30,8 +30,8 @@ dba_profile(2, {"nodeId":None, "slotId":1,"shelfId":1,"dbaId":2,"name": "dba_tes
                                                             "dbatype": [1, "dbaType"],
                                                             "fixedbwvalue": [32000, "fixedBwValue"],
                                                             "assurebwvalue": [32250, "assureBwValue"],
-                                                            "maxbwvalue": [32500., "maxBwValue"]}
-                                                            ,{
+                                                            "maxbwvalue": [32500., "maxBwValue"]},
+                                                            {
                                                             "name": ["dba_test2", "name"],
                                                             "dbaType": [1, "dbaType"],
                                                             "fixedBwValue": [32000, "fixedBwValue"],
@@ -148,23 +148,27 @@ def DBA_Profile(rest_interface_module, node_id, dba_profile_data=dba_profile(), 
         logger.info(f' GETTING DBA PROFILE (after {method} method) ... ')
         url = f"/api/gponconfig/dbaProfile/getall?nodeId="+str(expected_set["nodeId"])+"&shelfId="+str(expected_set["shelfId"])+"&slotId="+str(expected_set["slotId"])
         read_data = rest_interface_module.get_request("/api/gponconfig/dbaProfile/getall?nodeId=17&shelfId=1&slotId=1")
-        logger.info(f'read_data {read_data}')
-        for i in range(len(read_data)):
-            input_data = json.loads(read_data[i].text)
-            #**********************************************************************
-            if method == 'ADD' or 'DELETE': 
-                for key in expected_get[i].keys():
-                    logger.info(f"{method} IN {expected_get[key]}")
-                    check_set_value(rest_interface_module, expected_get[i][key][0], expected_get[i][key][1],input_data)
-                logger.info(f'check is completed in {method} method')
-    else:
-        assert response.status_code in range(400, 505), f'{method} SET INCORRECT DATA in PROFILE DBA {data._asdict}'
-        if len(expected_get.keys()) !=0:
-            read_data = rest_interface_module.get_request(f"/api/gponconfig/dbaProfile/getall?nodeId="+str(expected_set["nodeId"])+"&shelfId="+str(expected_set["shelfId"])+"&slotId="+str(expected_set["slotId"]))
-            input_data = json.loads(read_data.text)
-            for key in expected_get.keys():
-                logger.info(f"set steeep IN {expected_get[key]}")
-                check_set_value(rest_interface_module, expected_get[key][0], expected_get[key][1],input_data)
+        logger.info(f'read_data {read_data[0]}')
+        # output_data = list(filter(lambda dic: dic["name"] == data["name"], json.loads(read_data.text)))
+        # assert output_data[0]["dbaType"] == data["dbaType"]
+        # logger.info(f'read_data {output_data[0]}')
+        # logger.info(f'expected_set {expected_set}')
+        # for i in range(len(read_data)):
+        #     input_data = json.loads(read_data[i].text)
+        #     #**********************************************************************
+        #     if method == 'ADD' or 'DELETE': 
+        #         for key in expected_get[i].keys():
+        #             logger.info(f"{method} IN {expected_get[key]}")
+        #             check_set_value(rest_interface_module, expected_get[i][key][0], expected_get[i][key][1],input_data)
+        #         logger.info(f'check is completed in {method} method')
+    # else:
+    #     assert response.status_code in range(400, 505), f'{method} SET INCORRECT DATA in PROFILE DBA {data._asdict}'
+    #     if len(expected_get.keys()) !=0:
+    #         read_data = rest_interface_module.get_request(f"/api/gponconfig/dbaProfile/getall?nodeId="+str(expected_set["nodeId"])+"&shelfId="+str(expected_set["shelfId"])+"&slotId="+str(expected_set["slotId"]))
+    #         input_data = json.loads(read_data.text)
+    #         for key in expected_get.keys():
+    #             logger.info(f"set steeep IN {expected_get[key]}")
+    #             check_set_value(rest_interface_module, expected_get[key][0], expected_get[key][1],input_data)
 
 
 

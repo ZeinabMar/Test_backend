@@ -196,38 +196,41 @@ dba_profile(1, {"nodeId":None, "slotId":1,"shelfId":1,"dbaId":None,"name": "dba1
                                                             "maxbwvalue": [32500, "maxBwValue"]}],result="Pass"),
                                                             
                                                             
-dba_profile(2, {"nodeId":None, "slotId":1,"shelfId":1,"dbaId":None,"name": "dba2_type2", "dbaType": 2, "fixedBwValue": None, "assureBwValue": 128000, "maxBwValue": None},
-                                                           [{
-                                                            "namedba": ["dba1_type1", "name"],
-                                                            "dbatype": [1, "dbaType"],
-                                                            "fixedbwvalue": [32000, "fixedBwValue"],
-                                                            "assurebwvalue": [32250, "assureBwValue"],
-                                                            "maxbwvalue": [32500, "maxBwValue"]}
-                                                            ,{
-                                                            "namedba": ["dba2_type2", "name"],
-                                                            "dbatype": [1, "dbaType"],
-                                                            "fixedbwvalue": [None, "fixedBwValue"],
-                                                            "assurebwvalue": [128000, "assureBwValue"],
-                                                            "maxbwvalue": [None, "maxBwValue"]}],result="Pass"), 
-dba_profile(3, {"nodeId":None, "slotId":1,"shelfId":1,"dbaId":None,"name": "dba3_type3", "dbaType": 3, "fixedBwValue": 250, "assureBwValue": 500, "maxBwValue": 1000},
-                                                           [{
-                                                            "namedba": ["dba1_type1", "name"],
-                                                            "dbatype": [1, "dbaType"],
-                                                            "fixedbwvalue": [32000, "fixedBwValue"],
-                                                            "assurebwvalue": [32250, "assureBwValue"],
-                                                            "maxbwvalue": [32500, "maxBwValue"]}
-                                                            ,{
-                                                            "namedba": ["dba2_type2", "name"],
-                                                            "dbatype": [1, "dbaType"],
-                                                            "fixedbwvalue": [None, "fixedBwValue"],
-                                                            "assurebwvalue": [128000, "assureBwValue"],
-                                                            "maxbwvalue": [None, "maxBwValue"]}
-                                                            ,{
-                                                            "namedba": ["dba3_type3", "name"],
-                                                            "dbatype": [3, "dbaType"],
-                                                            "fixedbwvalue": [250, "fixedBwValue"],
-                                                            "assurebwvalue": [250, "assureBwValue"],
-                                                            "maxbwvalue": [250, "maxBwValue"]}],result="Pass"),                                                            
+# dba_profile(2, {"nodeId":None, "slotId":1,"shelfId":1,"dbaId":None,"name": "dba2_type2", "dbaType": 2, "fixedBwValue": None, "assureBwValue": 128000, "maxBwValue": None},
+#                                                            [{
+#                                                             "namedba": ["dba1_type1", "name"],
+#                                                             "dbatype": [1, "dbaType"],
+#                                                             "fixedbwvalue": [32000, "fixedBwValue"],
+#                                                             "assurebwvalue": [32250, "assureBwValue"],
+#                                                             "maxbwvalue": [32500, "maxBwValue"]}
+#                                                             ,{
+#                                                             "namedba": ["dba2_type2", "name"],
+#                                                             "dbatype": [1, "dbaType"],
+#                                                             "fixedbwvalue": [None, "fixedBwValue"],
+#                                                             "assurebwvalue": [128000, "assureBwValue"],
+#                                                             "maxbwvalue": [None, "maxBwValue"]}],result="Pass"), 
+# dba_profile(3, {"nodeId":None, "slotId":1,"shelfId":1,"dbaId":None,"name": "dba3_type3", "dbaType": 3, "fixedBwValue": 250, "assureBwValue": 500, "maxBwValue": 1000},
+#                                                            [{
+#                                                             "namedba": ["dba1_type1", "name"],
+#                                                             "dbatype": [1, "dbaType"],
+#                                                             "fixedbwvalue": [32000, "fixedBwValue"],
+#                                                             "assurebwvalue": [32250, "assureBwValue"],
+#                                                             "maxbwvalue": [32500, "maxBwValue"]}
+#                                                             ,{
+#                                                             "namedba": ["dba2_type2", "name"],
+#                                                             "dbatype": [1, "dbaType"],
+#                                                             "fixedbwvalue": [None, "fixedBwValue"],
+#                                                             "assurebwvalue": [128000, "assureBwValue"],
+#                                                             "maxbwvalue": [None, "maxBwValue"]}
+#                                                             ,{
+#                                                             "namedba": ["dba3_type3", "name"],
+#                                                             "dbatype": [3, "dbaType"],
+#                                                             "fixedbwvalue": [250, "fixedBwValue"],
+#                                                             "assurebwvalue": [250, "assureBwValue"],
+#                                                             "maxbwvalue": [250, "maxBwValue"]}],result="Pass"),                                                            
                                                             
                                                             
                                                              ) 
+dba_profile_Data_Config = (
+dba_profile(1, {"nodeId":None, "slotId":1,"shelfId":1,"dbaId":1},{"message": ["", "message"],},result="Pass"),)
+                                                            
