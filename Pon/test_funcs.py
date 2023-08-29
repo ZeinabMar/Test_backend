@@ -36,7 +36,6 @@ def set_dba_profile(rest_interface_module, node_id, DBA_data=dba_general_data):
         if data["result"] == "Pass":
             assert r.status_code == 200
             read_data = rest_interface_module.get_request("/api/gponconfig/dbaProfile/getall/?nodeId={}&shelfId=1&slotId=1".format(data["nodeId"]))
-            logger.info(f"dataaaaa {read_data}")
             output_data = list(filter(lambda dic: dic["name"] == data["name"], json.loads(read_data.text)))
             assert output_data[0]["dbaType"] == data["dbaType"]
         else:

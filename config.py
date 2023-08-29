@@ -231,6 +231,44 @@ dba_profile(1, {"nodeId":None, "slotId":1,"shelfId":1,"dbaId":None,"name": "dba1
                                                             
                                                             
                                                              ) 
-dba_profile_Data_Config = (
+dba_profile_Data_Config_Delete = (
 dba_profile(1, {"nodeId":None, "slotId":1,"shelfId":1,"dbaId":1},{"message": ["", "message"],},result="Pass"),)
-                                                            
+#********************************************************************************************************
+tcont = namedtuple('tcont', ['index', 'expected_result_Set', 'expected_result_Get', "result", "method"])                                       
+tcont.__new__.__defaults__ = (None, {}, {},None)
+
+tcont_Data = (
+tcont(1, {"nodeId":None, "slotId":1,"shelfId":1,"bwProfileId":1,"bwProfileName": "dba1_type1", "name": "tcont_valid8", "onuId": 1, "portId": 1, "tcontId": 8},
+                                                           {
+                                                            "bwProfileId": [1, "bwProfileId"],
+                                                            "bwProfileName": ["dba1_type1", "bwProfileName"],
+                                                            "name": ["tcont_valid8", "name"],
+                                                            "onuId": [1, "onuId"],
+                                                            "portId": [1, "portId"],
+                                                            "tcontId": [8, "tcontId"]},result="Pass",method="ADD"),  
+tcont(1, {"nodeId":None, "slotId":1,"shelfId":1,"bwProfileId":2,"bwProfileName": "dba2_type2", "name": "tcont_valid4", "onuId": 1, "portId": 1, "tcontId": 4},
+                                                           {
+                                                            "bwProfileId": [2, "bwProfileId"],
+                                                            "bwProfileName": ["dba2_type2", "bwProfileName"],
+                                                            "name": ["tcont_valid8", "name"],
+                                                            "onuId": [1, "onuId"],
+                                                            "portId": [1, "portId"],
+                                                            "tcontId": [4, "tcontId"]},result="Pass",method="ADD"),  
+tcont(1, {"nodeId":None, "slotId":1,"shelfId":1,"bwProfileId":3,"bwProfileName": "dba3_type3", "name": "tcont_valid6", "onuId": 1, "portId": 1, "tcontId": 6},
+                                                           {
+                                                            "bwProfileId": [3, "bwProfileId"],
+                                                            "bwProfileName": ["dba3_type3", "bwProfileName"],
+                                                            "name": ["tcont_valid6", "name"],
+                                                            "onuId": [1, "onuId"],
+                                                            "portId": [1, "portId"],
+                                                            "tcontId": [6, "tcontId"]},result="Pass",method="ADD"), 
+ tcont(1, {"nodeId":None, "slotId":1,"shelfId":1,"bwProfileId":4,"bwProfileName": "dba4_type4", "name": "tcont_valid2", "onuId": 1, "portId": 1, "tcontId": 8},
+                                                           {
+                                                            "bwProfileId": [1, "bwProfileId"],
+                                                            "bwProfileName": ["dba4_type4", "bwProfileName"],
+                                                            "name": ["tcont_valid2", "name"],
+                                                            "onuId": [1, "onuId"],
+                                                            "portId": [1, "portId"],
+                                                            "tcontId": [2, "tcontId"]},result="Pass",method="ADD"),                                                                                                                                                                                
+)
+
