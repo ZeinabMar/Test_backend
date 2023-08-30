@@ -5,7 +5,7 @@ from config import *
 # from pytest-check import check
 
 
-pytestmark = [pytest.mark.env_name("REST_env"), pytest.mark.rest_dev("nms")]
+pytestmark = [pytest.mark.env_name("REST_env"), pytest.mark.rest_dev("olt_nms")]
 
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
