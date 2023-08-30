@@ -12,31 +12,31 @@ tcont = namedtuple('tcont', ['index', 'expected_result_Set', 'expected_result_Ge
 tcont.__new__.__defaults__ = (None, {}, {},None, None)
 
 tcont_Data = (
-# tcont(1, {"nodeId":None, "slotId":1,"shelfId":1,"bwProfileId":1,"bwProfileName": "dba1_type1", "name": "tcont_valid1", "onuId": 1, "portId": 1, "tcontId": 8},
-#                                                            {
-#                                                             "bwProfileId": [1, "bwProfileId"],
-#                                                             "bwProfileName": ["dba1_type1", "bwProfileName"],
-#                                                             "name": ["tcont_valid1", "name"],
-#                                                             "onuId": [1, "onuId"],
-#                                                             "portId": [1, "portId"],
-#                                                             "tcontId": [8, "tcontId"]},result="Pass",method="ADD"),  
+tcont(1, {"nodeId":None, "slotId":1,"shelfId":1,"bwProfileId":1,"bwProfileName": "dba1_type1", "name": "tcont_valid1", "onuId": 1, "portId": 1, "tcontId": 8},
+                                                           {
+                                                            "bwProfileId": [1, "bwProfileId"],
+                                                            "bwProfileName": ["dba1_type1", "bwProfileName"],
+                                                            "name": ["tcont_valid1", "name"],
+                                                            "onuId": [1, "onuId"],
+                                                            "portId": [1, "portId"],
+                                                            "tcontId": [8, "tcontId"]},result="Pass",method="ADD"),  
 
-# tcont(2, {"nodeId":None, "slotId":1,"shelfId":1,"bwProfileId":2,"bwProfileName": "dba2_type2", "name": "tcont_valid2", "onuId": 1, "portId": 1, "tcontId": 4},
-#                                                            {
-#                                                             "bwProfileId": [2, "bwProfileId"],
-#                                                             "bwProfileName": ["dba2_type2", "bwProfileName"],
-#                                                             "name": ["tcont_valid2", "name"],
-#                                                             "onuId": [1, "onuId"],
-#                                                             "portId": [1, "portId"],
-#                                                             "tcontId": [4, "tcontId"]},result="Pass", method="ADD"),  
-# tcont(3, {"nodeId":None, "slotId":1,"shelfId":1,"bwProfileId":3,"bwProfileName": "dba3_type3", "name": "tcont_valid3", "onuId": 1, "portId": 1, "tcontId": 6},
-#                                                            {
-#                                                             "bwProfileId": [3, "bwProfileId"],
-#                                                             "bwProfileName": ["dba3_type3", "bwProfileName"],
-#                                                             "name": ["tcont_valid3", "name"],
-#                                                             "onuId": [1, "onuId"],
-#                                                             "portId": [1, "portId"],
-#                                                             "tcontId": [6, "tcontId"]},result="Pass", method="ADD"), 
+tcont(2, {"nodeId":None, "slotId":1,"shelfId":1,"bwProfileId":2,"bwProfileName": "dba2_type2", "name": "tcont_valid2", "onuId": 1, "portId": 1, "tcontId": 4},
+                                                           {
+                                                            "bwProfileId": [2, "bwProfileId"],
+                                                            "bwProfileName": ["dba2_type2", "bwProfileName"],
+                                                            "name": ["tcont_valid2", "name"],
+                                                            "onuId": [1, "onuId"],
+                                                            "portId": [1, "portId"],
+                                                            "tcontId": [4, "tcontId"]},result="Pass", method="ADD"),  
+tcont(3, {"nodeId":None, "slotId":1,"shelfId":1,"bwProfileId":3,"bwProfileName": "dba3_type3", "name": "tcont_valid3", "onuId": 1, "portId": 1, "tcontId": 6},
+                                                           {
+                                                            "bwProfileId": [3, "bwProfileId"],
+                                                            "bwProfileName": ["dba3_type3", "bwProfileName"],
+                                                            "name": ["tcont_valid3", "name"],
+                                                            "onuId": [1, "onuId"],
+                                                            "portId": [1, "portId"],
+                                                            "tcontId": [6, "tcontId"]},result="Pass", method="ADD"), 
 tcont(4, {"nodeId":None, "slotId":1,"shelfId":1,"bwProfileId":3,"bwProfileName": "dba3_type3", "name": "tcont_valid3", "onuId": 1, "portId": 1, "tcontId": 6},result="Fail", method="ADD"), 
 tcont(5, {"nodeId":None, "slotId":1,"shelfId":1,"bwProfileId":1,"bwProfileName": "dba1_type1", "name": "tcont_disable_pon", "onuId": 1, "portId": 5, "tcontId": 6},result="Fail", method="UPDATE"), 
 )

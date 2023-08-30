@@ -14,75 +14,65 @@ gem_profile = namedtuple('gem_profile', ['index', 'expected_result_Set', 'expect
 gem_profile.__new__.__defaults__ = (None, {}, {},None, None)
 
 gem_profile_Data = (
-gem_profile(1, {"nodeId":None, "slotId":1,"shelfId":1,"gemId":"1","name": "gem1", "onuId": 1, "portId": 1, "tcontId": 8, "tcontName": "tcont_valid8"},
+gem_profile(1, {"nodeId":None, "slotId":1,"shelfId":1,"gemId":"1","name": "gem1", "onuId": 1, "portId": 1, "tcontId": 8},
                                                            {
-                                                            "gemid": ["1", "gemId"],
+                                                            "gemid": [1, "gemId"],
                                                             "name": ["gem1", "name"],
                                                             "onuId": [1, "onuId"],
                                                             "portId": [1, "portId"],
-                                                            "tcontId": [8, "tcontId"],                                                            
-                                                            "tcontname": ["tcont_valid8", "tcontName"],},result="Pass",method="ADD"),  
-gem_profile(2, {"nodeId":None, "slotId":1,"shelfId":1,"gemId":"2","name": "gem2", "onuId": 1, "portId": 1, "tcontId": 6, "tcontName": "tcont_valid6"},
+                                                            "tcontId": [8, "tcontId"]},result="Pass",method="ADD"),  
+gem_profile(2, {"nodeId":None, "slotId":1,"shelfId":1,"gemId":"2","name": "gem2", "onuId": 1, "portId": 1, "tcontId": 6},
                                                            {
-                                                            "gemid": ["2", "gemId"],
+                                                            "gemid": [2, "gemId"],
                                                             "name": ["gem2", "name"],
                                                             "onuId": [1, "onuId"],
                                                             "portId": [1, "portId"],
-                                                            "tcontId": [6, "tcontId"],                                                            
-                                                            "tcontname": ["tcont_valid6", "tcontName"],},result="Pass",method="ADD"),  
-gem_profile(3, {"nodeId":None, "slotId":1,"shelfId":1,"gemId":"3","name": "gem3", "onuId": 1, "portId": 1, "tcontId": 4, "tcontName": "tcont_valid4"},
+                                                            "tcontId": [6, "tcontId"]},result="Pass",method="ADD"),  
+gem_profile(3, {"nodeId":None, "slotId":1,"shelfId":1,"gemId":"3","name": "gem3", "onuId": 1, "portId": 1, "tcontId": 4},
                                                            {
-                                                            "gemid": ["3", "gemId"],
+                                                            "gemid": [3, "gemId"],
+                                                            "name": ["gem3", "name"],
+                                                            "onuId": [1, "onuId"],
+                                                            "portId": [1, "portId"],
+                                                            "tcontId": [4, "tcontId"]},result="Pass",method="ADD"),  
+gem_profile(4, {"nodeId":None, "slotId":1,"shelfId":1,"gemId":"4","name": "gem4", "onuId": 1, "portId": 1, "tcontId": 2},
+                                                           {
+                                                            "gemid": [4, "gemId"],
                                                             "name": ["gem4", "name"],
                                                             "onuId": [1, "onuId"],
                                                             "portId": [1, "portId"],
-                                                            "tcontId": [4, "tcontId"],                                                            
-                                                            "tcontname": ["tcont_valid4", "tcontName"],},result="Pass",method="ADD"),  
-gem_profile(4, {"nodeId":None, "slotId":1,"shelfId":1,"gemId":"4","name": "gem4", "onuId": 1, "portId": 1, "tcontId": 2, "tcontName": "tcont_valid2"},
-                                                           {
-                                                            "gemid": ["4", "gemId"],
-                                                            "name": ["gem4", "name"],
-                                                            "onuId": [1, "onuId"],
-                                                            "portId": [1, "portId"],
-                                                            "tcontId": [2, "tcontId"],                                                            
-                                                            "tcontname": ["tcont_valid2", "tcontName"],},result="Pass",method="ADD"),  
+                                                            "tcontId": [2, "tcontId"]},result="Pass",method="ADD"),  
 
-gem_profile(5, {"nodeId":None, "slotId":1,"shelfId":1,"gemId":"5","name": "gem5", "onuId": 1, "portId": 1, "tcontId": 8, "tcontName": "tcont_valid8"},
+gem_profile(5, {"nodeId":None, "slotId":1,"shelfId":1,"gemId":"5","name": "gem5", "onuId": 1, "portId": 1, "tcontId": 8},
                                                            {
-                                                            "gemid": ["5", "gemId"],
+                                                            "gemid": [5, "gemId"],
                                                             "name": ["gem5", "name"],
                                                             "onuId": [1, "onuId"],
                                                             "portId": [1, "portId"],
-                                                            "tcontId": [8, "tcontId"],                                                            
-                                                            "tcontname": ["tcont_valid8", "tcontName"],},result="Pass",method="ADD"),  
-gem_profile(6, {"nodeId":None, "slotId":1,"shelfId":1,"gemId":"6","name": "gem6", "onuId": 1, "portId": 1, "tcontId": 3, "tcontName": "tcont_valid8"},
-                                                           {
-                                                            "gemid": ["5", "gemId"],
-                                                            "name": ["gem5", "name"],
-                                                            "onuId": [1, "onuId"],
-                                                            "portId": [1, "portId"],
-                                                            "tcontId": [8, "tcontId"],                                                            
-                                                            "tcontname": ["tcont_valid8", "tcontName"],},result="Fail",method="ADD"),  
+                                                            "tcontId": [8, "tcontId"]},result="Pass",method="ADD"),  
+gem_profile(6, {"nodeId":None, "slotId":1,"shelfId":1,"gemId":"6","name": "gem6", "onuId": 1, "portId": 1, "tcontId": 3},result="Fail",method="ADD"),  #unavailable tcont
 
-gem_profile(7, {"nodeId":None, "slotId":1,"shelfId":1,"gemId":"1","name": "gem1", "onuId": 1, "portId": 1, "tcontId": 6, "tcontName": "tcont_valid6"},
+gem_profile(7, {"nodeId":None, "slotId":1,"shelfId":1,"gemId":"1","name": "gem1", "onuId": 1, "portId": 1, "tcontId": 6},
                                                            {
-                                                            "gemid": ["1", "gemId"],
+                                                            "gemid": [1, "gemId"],
                                                             "name": ["gem1", "name"],
                                                             "onuId": [1, "onuId"],
                                                             "portId": [1, "portId"],
-                                                            "tcontId": [8, "tcontId"],                                                            
-                                                            "tcontname": ["tcont_valid8", "tcontName"],},result="Fail",method="ADD"), 
-gem_profile(8, {"nodeId":None, "slotId":1,"shelfId":1,"gemId":"1","name": "gem2", "onuId": 1, "portId": 1, "tcontId": 8, "tcontName": "tcont_valid8"},
+                                                            "tcontId": [8, "tcontId"]},result="Fail",method="ADD"), 
+gem_profile(8, {"nodeId":None, "slotId":1,"shelfId":1,"gemId":"1","name": "gem2", "onuId": 1, "portId": 1, "tcontId": 8},
                                                            {
-                                                            "gemid": ["1", "gemId"],
-                                                            "name": ["gem2", "name"],
+                                                            "gemid": [1, "gemId"],
+                                                            "name": ["gem1", "name"],
                                                             "onuId": [1, "onuId"],
                                                             "portId": [1, "portId"],
-                                                            "tcontId": [8, "tcontId"],                                                            
-                                                            "tcontname": ["tcont_valid8", "tcontName"],},result="Pass",method="ADD"), 
+                                                            "tcontId": [8, "tcontId"]},result="Fail",method="ADD"), 
 )
 gem_profile_Data_Delete = (
-    gem_profile(1, {"nodeId":None, "slotId":1,"shelfId":1,"gemId":"1","name": "gem1", "onuId": 1, "portId": 1, "tcontId": 8},result="Pass",method="ADD"), 
+    gem_profile(1, {"nodeId":None, "slotId":1,"shelfId":1,"gemId":"1","name": "gem1", "onuId": 1, "portId": 1, "tcontId": 8},result="Pass",method="DELETE"), 
+    gem_profile(2, {"nodeId":None, "slotId":1,"shelfId":1,"gemId":"2","name": "gem2", "onuId": 1, "portId": 1, "tcontId": 6},result="Pass",method="DELETE"), 
+    gem_profile(3, {"nodeId":None, "slotId":1,"shelfId":1,"gemId":"3","name": "gem3", "onuId": 1, "portId": 1, "tcontId": 4},result="Pass",method="DELETE"), 
+    gem_profile(4, {"nodeId":None, "slotId":1,"shelfId":1,"gemId":"4","name": "gem4", "onuId": 1, "portId": 1, "tcontId": 2},result="Pass",method="DELETE"), 
+    gem_profile(5, {"nodeId":None, "slotId":1,"shelfId":1,"gemId":"5","name": "gem5", "onuId": 1, "portId": 1, "tcontId": 8},result="Pass",method="DELETE"), 
 
 )
 
@@ -102,7 +92,7 @@ def Gem_Management(rest_interface_module, node_id, gem_data=gem_profile(), metho
         response = rest_interface_module.delete_request(url)
 
     if gem_data.result == "Pass":
-        assert response.status_code == 200, f'{method} ERROR in PROFILE DBA config {expected_set}'
+        assert response.status_code == 200, f'{method} ERROR in Gem_Management config {expected_set}'
         if response.status_code != 200:
             logger.error(response.message)
         logger.info(f' GETTING Gem_Management (after {method} method) ... ')
@@ -114,7 +104,6 @@ def Gem_Management(rest_interface_module, node_id, gem_data=gem_profile(), metho
                 logger.info(f"{method} IN {expected_get[key]}")
                 check_set_value(rest_interface_module, expected_get[key][0], expected_get[key][1],input_data)
             logger.info(f'check is completed in {method} method')
-
     else:
         assert response.status_code in range(400, 505), f'{method} SET INCORRECT DATA in GEM MANAGE {gem_data._asdict}'
         if len(expected_get.keys()) !=0:
@@ -136,13 +125,14 @@ def test_Gem_Management(rest_interface_module, node_id):
     # for tcont in tcont_Data_Config:
     #     Tcont_Management(rest_interface_module, node_id, tcont)
     
-    for gem in gem_profile_Data:
-        Gem_Management(rest_interface_module, node_id, gem)
-    # for gem in gem_profile_Data_Delete:
+    # for gem in gem_profile_Data:
     #     Gem_Management(rest_interface_module, node_id, gem)
 
-    # for tcont in tcont_Data_Delete_Config:
-    #     Tcont_Management(rest_interface_module, node_id, tcont)
+    for gem in gem_profile_Data_Delete:
+        Gem_Management(rest_interface_module, node_id, gem)
+
+    for tcont in tcont_Data_Delete_Config:
+        Tcont_Management(rest_interface_module, node_id, tcont)
 
     # for dba in dba_profile_Data_Delete_Config:
     #     DBA_Profil(rest_interface_module, node_id, dba, method='DELETE')       
