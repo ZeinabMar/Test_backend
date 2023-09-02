@@ -5,6 +5,10 @@ from config import *
 from conftest import *
 from Pon.test_tcont_profile import Tcont_Management
 from Pon.test_dba_profile import DBA_Profile
+from Pon.test_gem_profile import Gem_Management
+from Switch.bridge_funcs import bridge_config
+from Switch.test_vlan import vlan_config
+
 
 
 pytestmark = [pytest.mark.env_name("REST_env"), pytest.mark.rest_dev("olt_nms")]
@@ -14,16 +18,16 @@ service_profile = namedtuple('service_profile', ['index', 'expected_result_Set',
 service_profile.__new__.__defaults__ = (None, {}, {},None, None)
 
 service_profile_Data = (
-service_profile(1, {"nodeId":None, "slotId":1,"shelfId":1, "innerVlan":0,"vlanPriority":1 ,"servicePortId": 3, "onuId": 1, "portId": 1, "gemId": 1, "userVlan": 10},
+service_profile(1, {"nodeId":None, "slotId":1,"shelfId":1, "servicePortId": 3, "onuId": 1, "portId": 1, "gemId": 1, "userVlan": 10},
                                                            {
                                                             "gemId": [1, "gemId"],
-                                                            "servicePortId": ["gem1", "name"],
+                                                            "servicePortId": [3, "servicePortId"],
                                                             "onuId": [1, "onuId"],
                                                             "portId": [1, "portId"],
                                                             "userVlan": [10, "userVlan"],},result="Pass",method="ADD"),  
 )                                                       
 service_profile_Data_Delete = (
-    service_profile(1, {"nodeId":None, "slotId":1,"shelfId":1, "innerVlan":0,"vlanPriority":1 ,"servicePortId": 3, "onuId": 1, "portId": 1},result="Pass",method="DELETE"),  
+    service_profile(1, {"nodeId":None, "slotId":1,"shelfId":1, "servicePortId": 3, "onuId": 1, "portId": 1},result="Pass",method="DELETE"),  
 
 )
 
@@ -70,6 +74,10 @@ def Service_Profile(rest_interface_module, node_id, service_data=service_profile
 
 
 def test_Service_Profile(rest_interface_module, node_id):
+    bridge_config(rest_interface_module, node_id, Bridge_conf(), method='POST')
+    # ****************************************************************************************************************************
+    for vlan in VLAN_DATA_conf_CUSTOM:
+        vlan_config(rest_interface_module, node_id, vlan, method='POST')  
 
     # for dba in dba_profile_Data_Config:
     #     DBA_Profile(rest_interface_module, node_id, dba, method='ADD')
@@ -79,8 +87,10 @@ def test_Service_Profile(rest_interface_module, node_id):
     
     # for gem in gem_profile_Data_Config:
     #     Gem_Management(rest_interface_module, node_id, gem)
+
     for service in service_profile_Data:
         Service_Profile(rest_interface_module, node_id, service)
+
     for service in service_profile_Data_Delete:
         Service_Profile(rest_interface_module, node_id, service)
     # for gem in gem_profile_Data_Delete_Config:
@@ -90,4 +100,12 @@ def test_Service_Profile(rest_interface_module, node_id):
     #     Tcont_Management(rest_interface_module, node_id, tcont)
 
     # for dba in dba_profile_Data_Delete_Config:
-    #     DBA_Profil(rest_interface_module, node_id, dba, method='DELETE')       
+    #     DBA_Profil(rest_interface_module, node_id, dba, method='DELETE')  
+    # 
+    for port in range(1,3):
+        switch_config(rest_interface_module, node_id, Switch_conf()._replace(ethIfIndex=port,index=9), method='POST')
+ 
+    for vlan in VLAN_DATA_conf_CUSTOM:
+        vlan_config(rest_interface_module, node_id, vlan, method='DELETE')
+    #****************************************************************************************************************************
+    bridge_config(rest_interface_module, node_id, Bridge_conf(), method='DELETE')    
