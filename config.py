@@ -62,6 +62,16 @@ Switch_conf_Data = (
             Switch_conf(None, 4),
             Switch_conf(None, 9))
 #****************************************************************************************************************************
+uplink_vlan_conf = namedtuple('uplink_vlan', ['ethIfIndex', 'index', 'vlanMode', 'pvId', 'taggedVlan', 
+                    'taggedVlanClr', 'taggedVlanSet', 'untaggedVlan', 'result', 
+                    'shelfId', 'slotId', 'nodeId'])
+uplink_vlan_conf.__new__.__defaults__ = (None, None, "ACCESS",  -1, "" , "", "", -1, "Pass", 1, 1, None)
+uplink_vlan_conf_DATA = (
+    uplink_vlan_conf(1, 1, "ACCESS", 10),
+    uplink_vlan_conf(2, 2, "TRUNK", -1, "", "", "10-12"),
+    uplink_vlan_conf(3, 4, "HYBRID", 10, "", "", "10-12"),
+    )
+#****************************************************************************************************************************
 Qos_Manage_conf = namedtuple('Qos_Manage_conf', ['qosIndex', 'qosState', 'shelfId', 'slotId', 'result', 'nodeId'])
 Qos_Manage_conf.__new__.__defaults__ = (1, -1, 1, 1, "Pass", None)
 #****************************************************************************************************************************

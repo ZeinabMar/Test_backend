@@ -1,7 +1,6 @@
 import pytest
 import logging
 import json
-from bridge_funcs import *
 from config import *
 from Switch.bridge_funcs import bridge_config
 from Switch.test_vlan import vlan_config

@@ -102,9 +102,7 @@ def test_Service_Profile(rest_interface_module, node_id):
     # for dba in dba_profile_Data_Delete_Config:
     #     DBA_Profil(rest_interface_module, node_id, dba, method='DELETE')  
     # 
-    for port in range(1,3):
-        switch_config(rest_interface_module, node_id, Switch_conf()._replace(ethIfIndex=port,index=9), method='POST')
- 
+
     for vlan in VLAN_DATA_conf_CUSTOM:
         vlan_config(rest_interface_module, node_id, vlan, method='DELETE')
     #****************************************************************************************************************************
