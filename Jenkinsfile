@@ -20,7 +20,7 @@ pipeline {
                     TEST_REPORT_URL = "http://192.168.1.47/reports/${DATE_ISO_FORMAT}/${USERNAME}_${TEST_RUN_NAME}/build/html"
                     currentBuild.description = """Report path: <a href="${TEST_REPORT_URL}">Link</a> """
                     sshagent (credentials: ['olt_qa_qms_account']) {
-                        sh "ssh -o StrictHostKeyChecking=no -p 5555 ${USERNAME}@192.168.1.47 qa -n ${TEST_RUN_NAME} -p test_sp5100_rest -r ${revision_type},${revision_value} -s \"${test_suit_path}\" -vv || true"
+                        sh "ssh -o StrictHostKeyChecking=no -p 5555 ${USERNAME}@192.168.1.47 qa -n ${TEST_RUN_NAME} -p test_sp5100_rest -r ${revision_type},${revision_value} -s \\\'--stepwise\\\' \\\'--cache-clear\\\' \"${test_suit_path}\" -vv || true"
                     }
                 }
             }
