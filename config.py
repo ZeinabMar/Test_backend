@@ -84,17 +84,72 @@ Qos_Class_conf_DATA = (
     Qos_Class_conf(1, "C"),
     Qos_Class_conf(2, "B"))
 #****************************************************************************************************************************
-Qos_Policy_conf = namedtuple('Qos_Policy_conf', ['index','qosIndex', 'qosPolicyName', 'qosPolicyClassName',
-                        'qosPolicyPolicerBucket', 'qosPolicyPolicerCBS', 'qosPolicyPolicerCIR',
-                        'qosPolicyPolicerEBS', 'qosPolicyPolicerExceedAction','result' ,'shelfId', 
-                        'slotId', 'nodeId'])
-Qos_Policy_conf.__new__.__defaults__ = (None, None, None, None, None, None, None, None, None, "Pass", 1, 1, None)
-Qos_Policy_DATA_conf = (
-    Qos_Policy_conf(1, "1", "P", "C", "CBS", "1000", "1000", "2000", "DROP"),
-    Qos_Policy_conf(2, "2", "D", "B", "FULL", "1000", "1000", "2000","DROP"),
-    Qos_Policy_conf(3, 1),
-    Qos_Policy_conf(4, 2))
-
+# Qos_Policy_conf = namedtuple('Qos_Policy_conf', ['index','qosIndex', 'qosPolicyName', 'qosPolicyClassName',
+#                         'qosPolicyPolicerBucket', 'qosPolicyPolicerCBS', 'qosPolicyPolicerCIR',
+#                         'qosPolicyPolicerEBS', 'qosPolicyPolicerExceedAction','result' ,'shelfId', 
+#                         'slotId', 'nodeId'])
+# Qos_Policy_conf.__new__.__defaults__ = (None, None, None, None, None, None, None, None, None, "Pass", 1, 1, None)
+# Qos_Policy_DATA_conf = (
+#     Qos_Policy_conf(1, "1", "P", "C", "CBS", "1000", "1000", "2000", "DROP"),
+#     Qos_Policy_conf(2, "2", "D", "B", "FULL", "1000", "1000", "2000","DROP"),
+#     Qos_Policy_conf(3, 1),
+#     Qos_Policy_conf(4, 2))
+Qos_Policy_conf = namedtuple('Qos_Policy_conf', ['index', 'expected_result_Set', 'expected_result_Get', "result", "shelfId", "slotId", 'nodeId', "qosIndex"])                                       
+Qos_Policy_conf.__new__.__defaults__ = (None, {}, {},None, 1, 1, None, None)
+Qos_Policy_DATA_Config = (
+    Qos_Policy_conf(1, {"nodeId":None,
+                   "slotId":1,
+                   "shelfId":1,
+                   "qosIndex":1,
+                   "qosPolicyClassName": "B",
+                   "qosPolicyName": "policy1",
+                   "qosPolicyPolicerAct": "DROP",
+                   "qosPolicyPolicerCBS": 1000,
+                   "qosPolicyPolicerCIR": 100,
+                   "qosPolicyPolicerColor": "AWARE",
+                   "qosPolicyPolicerCount": "BYTE_BASE",
+                   "qosPolicyPolicerEBS":100,
+                   "qosPolicyPolicerPIR": 2000,
+                   "qosPolicyPolicerRate": "SINGLE_RATE"}, {"qosIndex": [1, "qosIndex"],
+                                                            "PolicyName": ["policy1", "qosPolicyName"],
+                                                            "ClassName": ["B", "qosPolicyClassName"],
+                                                            "CBS": [1000, "qosPolicyPolicerCBS"],
+                                                            "color": ["AWARE", "qosPolicyPolicerColor"],
+                                                            "CIR": [100, "qosPolicyPolicerCIR"],
+                                                            "EBS": [100, "qosPolicyPolicerEBS"],
+                                                            "Act": ["DROP", "qosPolicyPolicerAct"],
+                                                            "Rate": ["SINGLE_RATE", "qosPolicyPolicerRate"],
+                                                            "count": ["BYTE_BASE", "qosPolicyPolicerCount"],
+                                                            "PIR": [0, "qosPolicyPolicerPIR"],}, result="Pass", qosIndex=1),
+    Qos_Policy_conf(2, {"nodeId":None,
+                   "slotId":1,
+                   "shelfId":1,
+                   "qosIndex":2,
+                   "qosPolicyClassName": "B",
+                   "qosPolicyName": "policy2",
+                   "qosPolicyPolicerAct": "DROP",
+                   "qosPolicyPolicerCBS": 1000,
+                   "qosPolicyPolicerCIR": 100,
+                   "qosPolicyPolicerColor": "AWARE",
+                   "qosPolicyPolicerCount": "BYTE_BASE",
+                   "qosPolicyPolicerEBS":100,
+                   "qosPolicyPolicerPIR": 2000,
+                   "qosPolicyPolicerRate": "SINGLE_RATE"}, {"qosIndex": [2, "qosIndex"],
+                                                            "PolicyName": ["policy2", "qosPolicyName"],
+                                                            "ClassName": ["B", "qosPolicyClassName"],
+                                                            "CBS": [1000, "qosPolicyPolicerCBS"],
+                                                            "color": ["AWARE", "qosPolicyPolicerColor"],
+                                                            "CIR": [100, "qosPolicyPolicerCIR"],
+                                                            "EBS": [100, "qosPolicyPolicerEBS"],
+                                                            "Act": ["DROP", "qosPolicyPolicerAct"],
+                                                            "Rate": ["SINGLE_RATE", "qosPolicyPolicerRate"],
+                                                            "count": ["BYTE_BASE", "qosPolicyPolicerCount"],
+                                                            "PIR": [0, "qosPolicyPolicerPIR"],}, result="Pass", qosIndex=2),                                                        
+                                                            )
+Qos_Policy_Delete_Config = (
+    Qos_Policy_conf(1, result="Pass", qosIndex=2),
+    Qos_Policy_conf(2, result="Pass", qosIndex=1)
+    )
 #*****************************************************************************************************************************
 Port_L2_conf = namedtuple('Port_L2_conf', [ "ethIfIndex", 'ethIfTxStatus','phyIfState', 'phyIfSpeed',
                                  'phyIfMtu', 'phyIfFlowControl', 'phyIfLoopback', 'phyIfDuplex', 
