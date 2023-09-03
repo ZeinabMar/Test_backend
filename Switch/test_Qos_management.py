@@ -52,4 +52,4 @@ def Qos_Manage_config(rest_interface_module, node_id, QoS_MANAGE_data=Qos_Manage
 def test_Qos_Manage_config(rest_interface_module, node_id):
     for qos in Qos_Manage_DATA:
         Qos_Manage_config(rest_interface_module, node_id, qos, method='POST')
-    # Qos_Manage_config(rest_interface_module, node_id, qos, method='DELETE')
+    Qos_Manage_config(rest_interface_module, node_id, qos, method='DELETE')

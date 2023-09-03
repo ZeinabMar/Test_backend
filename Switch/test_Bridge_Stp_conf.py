@@ -66,7 +66,7 @@ def Bridge_Stp_config(rest_interface_module, node_id, Bridge_Stp_data=Bridge_Stp
 
 def test_Bridge_Stp_config(rest_interface_module, node_id):
 
-    # bridge_config(rest_interface_module, node_id, Bridge_conf(), method='POST')
+    bridge_config(rest_interface_module, node_id, Bridge_conf(), method='POST')
 
     for b_stp in Bridge_Stp_DATA:
         if b_stp.index == 7:
@@ -74,7 +74,7 @@ def test_Bridge_Stp_config(rest_interface_module, node_id):
         else:
             Bridge_Stp_config(rest_interface_module, node_id, b_stp, method='POST')
 
-    # bridge_config(rest_interface_module, node_id, Bridge_conf(), method='DELETE')
+    bridge_config(rest_interface_module, node_id, Bridge_conf(), method='DELETE')
 
 
 

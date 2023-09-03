@@ -78,11 +78,11 @@ def Qos_Class_config(rest_interface_module, node_id, Qos_Class_data=Qos_Class(),
 
 
 def test_Qos_Class_config(rest_interface_module, node_id):
-    # bridge_config(rest_interface_module, node_id, Bridge_conf(1, "PROVIDER_MSTP_EDGE"), method='POST')
-    # for vlan in VLAN_DATA_conf_S_C:
-    #     vlan_config(rest_interface_module, node_id, vlan, method='POST')  
-    #**************************************************************************************************************
-    # Qos_Manage_config(rest_interface_module, node_id, Qos_Manage_conf()._replace(qosState=1),method='POST')
+    bridge_config(rest_interface_module, node_id, Bridge_conf(1, "PROVIDER_MSTP_EDGE"), method='POST')
+    for vlan in VLAN_DATA_conf_S_C:
+        vlan_config(rest_interface_module, node_id, vlan, method='POST')  
+    # **************************************************************************************************************
+    Qos_Manage_config(rest_interface_module, node_id, Qos_Manage_conf()._replace(qosState=1),method='POST')
     #*******************************************************************************************************
     Qos_Class_config(rest_interface_module, node_id, Qos_Class_DATA[0], method='add')
     Qos_Class_config(rest_interface_module, node_id, Qos_Class_DATA[1], method='add')

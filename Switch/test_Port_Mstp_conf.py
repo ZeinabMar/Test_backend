@@ -71,17 +71,17 @@ def Port_Mstp_config(rest_interface_module, node_id, Port_Mstp_data=Port_Mstp(),
 
 def test_Port_Mstp_config(rest_interface_module, node_id):
 
-    # bridge_config(rest_interface_module, node_id, Bridge_conf(1, 'PROVIDER_MSTP_EDGE', 100, 30, maxAge=6, maxHops=1, priority=12288), method='POST')
+    bridge_config(rest_interface_module, node_id, Bridge_conf(1, 'PROVIDER_MSTP_EDGE', 100, 30, maxAge=6, maxHops=1, priority=12288), method='POST')
     # *********************************************************************************************
-    # for vlan in VLAN_DATA_conf_service:
-    #     vlan_config(rest_interface_module, node_id, vlan, method='POST')  
-    # for vlan in VLAN_DATA_conf_CUSTOM:
-    #     vlan_config(rest_interface_module, node_id, vlan, method='POST')  
+    for vlan in VLAN_DATA_conf_service:
+        vlan_config(rest_interface_module, node_id, vlan, method='POST')  
+    for vlan in VLAN_DATA_conf_CUSTOM:
+        vlan_config(rest_interface_module, node_id, vlan, method='POST')  
     # *****************************************************************************
-    # Bridge_Mstp_config(rest_interface_module, node_id, Bridge_Mstp_DATA_conf[0], method='add')
+    Bridge_Mstp_config(rest_interface_module, node_id, Bridge_Mstp_DATA_conf[0], method='add')
     # ************************************************************    
-    # for port in range(1,6):
-    #     switch_config(rest_interface_module, node_id, Switch_conf()._replace(ethIfIndex=port,index=4), method='POST')
+    for port in range(1,6):
+        switch_config(rest_interface_module, node_id, Switch_conf()._replace(ethIfIndex=port,index=4), method='POST')
     # **************************************************
     for port in range(1,6):
         Port_Mstp_config(rest_interface_module, node_id, Port_Mstp(port, 5, 0, 0, "Pass"), method='POST')
