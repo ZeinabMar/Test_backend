@@ -60,6 +60,7 @@ def delete_dba_profile(rest_interface_module, node_id, DBA_data=dba_general_data
 
 
 onu_general_data = [{
+    "nodeId":None,
 	"adminState": "ENABLE",
 	"autoLearn": "ENABLE",
 	"ifIndex": 1,

@@ -48,7 +48,7 @@ remote_service_profile_Data_Delete = (
 
 )
 
-def Remote_Service_Profile(rest_interface_module, node_id, remote_service_data=remote_service_profile(), method='ADD'):
+def ONU_remote_Service_Profile(rest_interface_module, node_id, remote_service_data=remote_service_profile(), method='ADD'):
     method = remote_service_data.method
     logger.info(f'SERVICE PROFILE TEST DATA ------- > {remote_service_data.index}')
     expected_set = remote_service_data.expected_result_Set
@@ -90,17 +90,17 @@ def Remote_Service_Profile(rest_interface_module, node_id, remote_service_data=r
 
 
 
-def test_Service_Profile(rest_interface_module, node_id):
+def test_ONU_remote_Service_Profile(rest_interface_module, node_id):
     # bridge_config(rest_interface_module, node_id, Bridge_conf(), method='POST')
     # # ****************************************************************************************************************************
     # for vlan in VLAN_DATA_conf_CUSTOM:
     #     vlan_config(rest_interface_module, node_id, vlan, method='POST')  
 
-    # for port in range(1,4):
-    #     switch_config(rest_interface_module, node_id, Switch_conf()._replace(ethIfIndex=port, index=4), method='POST')
+    for port in range(1,4):
+        switch_config(rest_interface_module, node_id, Switch_conf()._replace(ethIfIndex=port, index=4), method='POST')
 
-    # for uplink in uplink_vlan_conf_DATA:    
-    #     uplink_vlan_config(rest_interface_module, node_id, uplink, method='POST') 
+    for uplink in uplink_vlan_conf_DATA:    
+        uplink_vlan_config(rest_interface_module, node_id, uplink, method='POST') 
 
     # for dba in dba_profile_Data_Config:
     #     DBA_Profile(rest_interface_module, node_id, dba, method='ADD')
@@ -108,14 +108,14 @@ def test_Service_Profile(rest_interface_module, node_id):
     # for tcont in tcont_Data_Config:
     #     Tcont_Management(rest_interface_module, node_id, tcont)
     
-    for gem in gem_profile_Data_Config:
-        Gem_Management(rest_interface_module, node_id, gem)
+    # for gem in gem_profile_Data_Config:
+    #     Gem_Management(rest_interface_module, node_id, gem)
 
-    # for service in service_profile_Data:
-    #     Service_Profile(rest_interface_module, node_id, service)
+    for remote in service_profile_Data:
+        ONU_remote_Service_Profile(rest_interface_module, node_id, remote)
 
-    # for service in service_profile_Data_Delete:
-    #     Service_Profile(rest_interface_module, node_id, service)
+    for remote in remote_service_profile_Data_Delete:
+        ONU_remote_Service_Profile(rest_interface_module, node_id, remote)
 
     # for gem in gem_profile_Data_Delete_Config:
     #     Gem_Management(rest_interface_module, node_id, gem)
