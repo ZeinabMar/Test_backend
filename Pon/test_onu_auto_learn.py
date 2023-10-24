@@ -11,26 +11,29 @@ onu_general = namedtuple('onu_general', ['index', 'expected_result_Set', 'expect
 onu_general.__new__.__defaults__ = (None, {}, {},None)
 
 #*************************************    PON SECTION   ******************************************************    
+# gpon-onu1/3:1
 onu_general_Data = (
-    onu_general(1, {"nodeId": 17,
-                "shelfId": 1,
-                "slotId": 1,
-                "portId": 1,
-                "ifIndex": 1,
-                "adminState": "ENABLE",
-                "ponServiceEnable5100": "ENABLE",
-                "ponOnuAutoDiscovery": "DISABLE",
-                "ifModuleState5100": "DISABLED",
-                "sfpModuleState5100": "DISABLED",
-                "operationalState": None,
-                "scbPort": None,
-                "modulePresent": 4,
-                "scbMaxBw": None,
-                "autoLearn": "ENABLE",
-                "operationalStateStr": "act_working",
-                "modulePresentStr": "Disabled",
-                "deviceType": None,
-                "errorCode": 0},None, result = "Pass"),
+    onu_general(1, {
+    "nodeId": 11,
+    "shelfId": 1,
+    "slotId": 1,
+    "portId": 3,
+    "ifIndex": 3,
+    "adminState": "ENABLE",
+    "ponServiceEnable5100": "ENABLE",
+    "ponOnuAutoDiscovery": "ENABLE",
+    "ifModuleState5100": "ENABLED",
+    "sfpModuleState5100": "ENABLED",
+    "operationalState": null,
+    "scbPort": null,
+    "modulePresent": 1,
+    "scbMaxBw": null,
+    "autoLearn": "ENABLE",
+    "operationalStateStr": "act_working",
+    "modulePresentStr": "Enabled",
+    "deviceType": null,
+    "errorCode": 0
+},None, result = "Pass"),
                 )
 
 def onu_auto_learn(rest_interface_module, node_id, ONU_data=onu_general()):

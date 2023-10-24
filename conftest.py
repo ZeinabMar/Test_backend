@@ -4,7 +4,7 @@ import logging
 
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
-board_ip = "192.168.9.127"
+board_ip = "192.168.9.128"
 
 
 
@@ -15,6 +15,16 @@ def check_set_value(rest_interface_module, set_value, result, data):
     rest_set_result = data[result]
     assert(rest_set_result==set_value),f"ERROR in SETTING {result} *******************************"
     
+
+def find_in_getall(data, item, value):
+    logger.info(f"data {data}")        
+    logger.info(f"item {item}")        
+    for member in data:
+        for key in member.keys():
+            if key[item] == value:
+                break
+    logger.info(f"member {member}")        
+    return member
 
 
 def search_in_tree(tree, nodes):
@@ -46,6 +56,9 @@ def node_id(rest_interface_module, get_zone_tree):
     for node in get_zone_tree:
         if node["ip"] == board_ip:
             return node["id"]
+
+
+
 
 
 
