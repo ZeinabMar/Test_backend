@@ -250,98 +250,98 @@ def set_and_clear_data(input_data=d_string):
 #*************************************    PON SECTION   ******************************************************    
 
 dba_profile = namedtuple('dba_profile', ['index', 'expected_result_Set', 'expected_result_Get', "result"])                                       
-dba_profile.__new__.__defaults__ = (None, {}, [],None)
+dba_profile.__new__.__defaults__ = (None, {}, {},None)
 dba_profile_Data_Config = (
-dba_profile(1, {"nodeId":None, "slotId":1,"shelfId":1,"dbaId":None,"name": "dba1_type1", "dbaType": 1, "fixedBwValue": 32000, "assureBwValue": None, "maxBwValue": None},
-                                                          [{
-                                                            "namedba": ["dba1_type1", "name"],
+dba_profile(1, {"nodeId":None, "slotId":1,"shelfId":1,"dbaId":None,"name": "dba_type1", "dbaType": 1, "fixedBwValue": 32000, "assureBwValue": None, "maxBwValue": None},
+                                                          {
+                                                            "namedba": ["dba_type1", "name"],
                                                             "dbatype": [1, "dbaType"],
                                                             "fixedbwvalue": [32000, "fixedBwValue"],
                                                             "assurebwvalue": [32250, "assureBwValue"],
-                                                            "maxbwvalue": [32500, "maxBwValue"]}],result="Pass"),
+                                                            "maxbwvalue": [32500, "maxBwValue"]},result="Pass"),
                                                             
                                                             
-# dba_profile(2, {"nodeId":None, "slotId":1,"shelfId":1,"dbaId":None,"name": "dba2_type2", "dbaType": 2, "fixedBwValue": None, "assureBwValue": 128000, "maxBwValue": None},
-#                                                            [{
-#                                                             "namedba": ["dba1_type1", "name"],
-#                                                             "dbatype": [1, "dbaType"],
-#                                                             "fixedbwvalue": [32000, "fixedBwValue"],
-#                                                             "assurebwvalue": [32250, "assureBwValue"],
-#                                                             "maxbwvalue": [32500, "maxBwValue"]}
-#                                                             ,{
-#                                                             "namedba": ["dba2_type2", "name"],
-#                                                             "dbatype": [1, "dbaType"],
-#                                                             "fixedbwvalue": [None, "fixedBwValue"],
-#                                                             "assurebwvalue": [128000, "assureBwValue"],
-#                                                             "maxbwvalue": [None, "maxBwValue"]}],result="Pass"), 
-# dba_profile(3, {"nodeId":None, "slotId":1,"shelfId":1,"dbaId":None,"name": "dba3_type3", "dbaType": 3, "fixedBwValue": 250, "assureBwValue": 500, "maxBwValue": 1000},
-#                                                            [{
-#                                                             "namedba": ["dba1_type1", "name"],
-#                                                             "dbatype": [1, "dbaType"],
-#                                                             "fixedbwvalue": [32000, "fixedBwValue"],
-#                                                             "assurebwvalue": [32250, "assureBwValue"],
-#                                                             "maxbwvalue": [32500, "maxBwValue"]}
-#                                                             ,{
-#                                                             "namedba": ["dba2_type2", "name"],
-#                                                             "dbatype": [1, "dbaType"],
-#                                                             "fixedbwvalue": [None, "fixedBwValue"],
-#                                                             "assurebwvalue": [128000, "assureBwValue"],
-#                                                             "maxbwvalue": [None, "maxBwValue"]}
-#                                                             ,{
-#                                                             "namedba": ["dba3_type3", "name"],
-#                                                             "dbatype": [3, "dbaType"],
-#                                                             "fixedbwvalue": [250, "fixedBwValue"],
-#                                                             "assurebwvalue": [250, "assureBwValue"],
-#                                                             "maxbwvalue": [250, "maxBwValue"]}],result="Pass"),                                                            
-                                                            
-                                                            
+dba_profile(2, {"nodeId":None, "slotId":1,"shelfId":1,"dbaId":2,"name": "dba_type2", "dbaType": 1, "fixedBwValue": 32000, "assureBwValue": None, "maxBwValue": None,}, 
+                                                          {
+                                                            "namedba": ["dba_type2", "name"],
+                                                            "dbaType": [1, "dbaType"],
+                                                            "fixedBwValue": [32000, "fixedBwValue"],
+                                                            "assureBwValue": [32250, "assureBwValue"],
+                                                            "maxBwValue": [32500, "maxBwValue"]},result="Pass"),
+dba_profile(3, {"nodeId":None, "slotId":1,"shelfId":1,"dbaId":3,"name": "dba_type3", "dbaType": 3, "fixedBwValue": 250, "assureBwValue": 500, "maxBwValue": 750,}, 
+                                                          {
+                                                            "namedba": ["dba_type3", "name"],
+                                                            "dbaType": [3, "dbaType"],
+                                                            "fixedBwValue": [0, "fixedBwValue"],
+                                                            "assureBwValue": [500, "assureBwValue"],
+                                                            "maxBwValue": [750, "maxBwValue"]},result="Pass"),
+ dba_profile(4, {"nodeId":None, "slotId":1,"shelfId":1,"dbaId":4,"name": "dba_type4", "dbaType": 4, "fixedBwValue": None, "assureBwValue": None, "maxBwValue": 50000}, 
+                                                         {
+                                                            "namedba": ["dba_type4", "name"],
+                                                            "dbaType": [4, "dbaType"],
+                                                            "fixedBwValue": [0, "fixedBwValue"],
+                                                            "assureBwValue": [250, "assureBwValue"],
+                                                            "maxBwValue": [50000, "maxBwValue"]},result="Pass"),                                                           
                                                              ) 
 dba_profile_Data_Config_Delete = (
-dba_profile(1, {"nodeId":None, "slotId":1,"shelfId":1,"dbaId":1},{"message": ["", "message"],},result="Pass"),)
+    dba_profile(1, {"nodeId":None, "slotId":1,"shelfId":1,"dbaId":1}, result="Pass"),
+    dba_profile(2, {"nodeId":None, "slotId":1,"shelfId":1,"dbaId":2}, result="Pass"),
+    dba_profile(3, {"nodeId":None, "slotId":1,"shelfId":1,"dbaId":3}, result="Pass"),
+    dba_profile(4, {"nodeId":None, "slotId":1,"shelfId":1,"dbaId":4}, result="Pass"),
+    )
 #********************************************************************************************************
 tcont = namedtuple('tcont', ['index', 'expected_result_Set', 'expected_result_Get', "result", "method"])                                       
 tcont.__new__.__defaults__ = (None, {}, {},None, None)
 
 tcont_Data_Config = (
-tcont(1, {"nodeId":None, "slotId":1,"shelfId":1,"bwProfileId":1,"bwProfileName": "dba1_type1", "name": "tcont_valid8", "onuId": 1, "portId": 1, "tcontId": 8},
+tcont(1, {"nodeId":None, "slotId":1,"shelfId":1,"bwProfileId":1,"bwProfileName": "dba_type1", "name": "tcont_valid8", "onuId": 1, "portId": 2, "tcontId": 8},
                                                            {
                                                             "bwProfileId": [1, "bwProfileId"],
-                                                            "bwProfileName": ["dba1_type1", "bwProfileName"],
+                                                            "bwProfileName": ["dba_type1", "bwProfileName"],
                                                             "name": ["tcont_valid8", "name"],
                                                             "onuId": [1, "onuId"],
-                                                            "portId": [1, "portId"],
+                                                            "portId": [2, "portId"],
                                                             "tcontId": [8, "tcontId"]},result="Pass",method="ADD"),  
-tcont(2, {"nodeId":None, "slotId":1,"shelfId":1,"bwProfileId":2,"bwProfileName": "dba2_type2", "name": "tcont_valid6", "onuId": 1, "portId": 1, "tcontId": 6},
+tcont(2, {"nodeId":None, "slotId":1,"shelfId":1,"bwProfileId":2,"bwProfileName": "dba_type2", "name": "tcont_valid6", "onuId": 1, "portId": 2, "tcontId": 6},
                                                            {
                                                             "bwProfileId": [2, "bwProfileId"],
-                                                            "bwProfileName": ["dba2_type2", "bwProfileName"],
+                                                            "bwProfileName": ["dba_type2", "bwProfileName"],
                                                             "name": ["tcont_valid6", "name"],
                                                             "onuId": [1, "onuId"],
-                                                            "portId": [1, "portId"],
+                                                            "portId": [2, "portId"],
                                                             "tcontId": [6, "tcontId"]},result="Pass",method="ADD"),  
-tcont(3, {"nodeId":None, "slotId":1,"shelfId":1,"bwProfileId":3,"bwProfileName": "dba3_type3", "name": "tcont_valid4", "onuId": 1, "portId": 1, "tcontId":4},
+tcont(3, {"nodeId":None, "slotId":1,"shelfId":1,"bwProfileId":3,"bwProfileName": "dba_type3", "name": "tcont_valid4", "onuId": 1, "portId": 2, "tcontId":4},
                                                            {
                                                             "bwProfileId": [3, "bwProfileId"],
-                                                            "bwProfileName": ["dba3_type3", "bwProfileName"],
+                                                            "bwProfileName": ["dba_type3", "bwProfileName"],
                                                             "name": ["tcont_valid4", "name"],
                                                             "onuId": [1, "onuId"],
-                                                            "portId": [1, "portId"],
+                                                            "portId": [2, "portId"],
                                                             "tcontId": [4, "tcontId"]},result="Pass",method="ADD"), 
- tcont(4, {"nodeId":None, "slotId":1,"shelfId":1,"bwProfileId":4,"bwProfileName": "dba4_type4", "name": "tcont_valid2", "onuId": 1, "portId": 1, "tcontId": 2},
+ tcont(4, {"nodeId":None, "slotId":1,"shelfId":1,"bwProfileId":4,"bwProfileName": "dba_type4", "name": "tcont_valid2", "onuId": 1, "portId": 2, "tcontId": 2},
                                                            {
                                                             "bwProfileId": [4, "bwProfileId"],
-                                                            "bwProfileName": ["dba4_type4", "bwProfileName"],
+                                                            "bwProfileName": ["dba_type4", "bwProfileName"],
                                                             "name": ["tcont_valid2", "name"],
                                                             "onuId": [1, "onuId"],
-                                                            "portId": [1, "portId"],
-                                                            "tcontId": [2, "tcontId"]},result="Pass",method="ADD"),                                                                                                                                                                                
+                                                            "portId": [2, "portId"],
+                                                            "tcontId": [2, "tcontId"]},result="Pass",method="ADD"),        
+tcont(5, {"nodeId":None, "slotId":1,"shelfId":1,"bwProfileId":1,"bwProfileName": "dba_type1", "name": "tcont_valid8", "onuId": 1, "portId": 3, "tcontId": 8},
+                                                           {
+                                                            "bwProfileId": [1, "bwProfileId"],
+                                                            "bwProfileName": ["dba_type1", "bwProfileName"],
+                                                            "name": ["tcont_valid8", "name"],
+                                                            "onuId": [1, "onuId"],
+                                                            "portId": [3, "portId"],
+                                                            "tcontId": [8, "tcontId"]},result="Pass",method="ADD"),                                                                                                                                                                                                                                      
 )
 
 tcont_Data_Delete_Config = (
-    tcont(1, {"nodeId":None, "slotId":1,"shelfId":1, "onuId": 1, "portId": 1, "tcontId": 2},result="Pass",method="DELETE"),    
-    tcont(2, {"nodeId":None, "slotId":1,"shelfId":1, "onuId": 1, "portId": 1, "tcontId": 4},result="Pass",method="DELETE"),                                                                                                                                                                                
-    tcont(3, {"nodeId":None, "slotId":1,"shelfId":1, "onuId": 1, "portId": 1, "tcontId": 6},result="Pass",method="DELETE"),                                                                                                                                                                                
-    tcont(4, {"nodeId":None, "slotId":1,"shelfId":1, "onuId": 1, "portId": 1, "tcontId": 8},result="Pass",method="DELETE"),                                                                                                                                                                                                                                                                                                                                                            
+    tcont(1, {"nodeId":None, "slotId":1,"shelfId":1, "onuId": 1, "portId": 2, "tcontId": 2},result="Pass",method="DELETE"),    
+    tcont(2, {"nodeId":None, "slotId":1,"shelfId":1, "onuId": 1, "portId": 2, "tcontId": 4},result="Pass",method="DELETE"),                                                                                                                                                                                
+    tcont(3, {"nodeId":None, "slotId":1,"shelfId":1, "onuId": 1, "portId": 2, "tcontId": 6},result="Pass",method="DELETE"),                                                                                                                                                                                
+    tcont(4, {"nodeId":None, "slotId":1,"shelfId":1, "onuId": 1, "portId": 2, "tcontId": 8},result="Pass",method="DELETE"),   
+    tcont(5, {"nodeId":None, "slotId":1,"shelfId":1, "onuId": 1, "portId": 3, "tcontId": 8},result="Pass",method="DELETE"),                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
 )
 
 #********************************************************************************************************
@@ -352,14 +352,14 @@ gem_profile = namedtuple('gem_profile', ['index', 'expected_result_Set', 'expect
 gem_profile.__new__.__defaults__ = (None, {}, {},None, None)
 
 gem_profile_Data_Config = (
-gem_profile(1, {"nodeId":None, "slotId":1,"shelfId":1,"gemId":"1","name": "gem_test1", "onuId": 1, "portId": 1, "tcontId": 8},
+gem_profile(1, {"nodeId":None, "slotId":1,"shelfId":1,"gemId":"1","name": "gem_test1", "onuId": 1, "portId": 2, "tcontId": 8},
                                                            {
                                                             "gemid": [1, "gemId"],
                                                             "name": ["gem_test1", "name"],
                                                             "onuId": [1, "onuId"],
                                                             "portId": [1, "portId"],
                                                             "tcontId": [8, "tcontId"]},result="Pass",method="ADD"), 
-gem_profile(2, {"nodeId":None, "slotId":1,"shelfId":1,"gemId":"2","name": "gem_test2", "onuId": 1, "portId": 1, "tcontId": 6},
+gem_profile(2, {"nodeId":None, "slotId":1,"shelfId":1,"gemId":"2","name": "gem_test2", "onuId": 1, "portId": 2, "tcontId": 6},
                                                            {
                                                             "gemid": [2, "gemId"],
                                                             "name": ["gem_test2", "name"],
@@ -367,7 +367,7 @@ gem_profile(2, {"nodeId":None, "slotId":1,"shelfId":1,"gemId":"2","name": "gem_t
                                                             "portId": [1, "portId"],
                                                             "tcontId": [6, "tcontId"]},result="Pass",method="ADD"),)
 gem_profile_Data_Delete_Config= (
-    gem_profile(1, {"nodeId":None, "slotId":1,"shelfId":1,"gemId":"1","name": "gem1", "onuId": 1, "portId": 1, "tcontId": 8},result="Pass",method="DELETE"), 
-    gem_profile(2, {"nodeId":None, "slotId":1,"shelfId":1,"gemId":"2","name": "gem2", "onuId": 1, "portId": 1, "tcontId": 6},result="Pass",method="DELETE"), 
+    gem_profile(1, {"nodeId":None, "slotId":1,"shelfId":1,"gemId":"1","name": "gem1", "onuId": 1, "portId": 2, "tcontId": 8},result="Pass",method="DELETE"), 
+    gem_profile(2, {"nodeId":None, "slotId":1,"shelfId":1,"gemId":"2","name": "gem2", "onuId": 1, "portId": 2, "tcontId": 6},result="Pass",method="DELETE"), 
 )
 
