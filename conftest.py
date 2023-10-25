@@ -10,8 +10,8 @@ board_ip = "192.168.9.128"
 
 def check_set_value(rest_interface_module, set_value, result, data):
     logger.info(f'********************************check_set_value FUNCTION****************************')
-    logger.info(f"dataaaa {data}")
-    logger.info(f"resultttt {result}")
+    # logger.info(f"dataaaa {data}")
+    # logger.info(f"resultttt {result}")
     rest_set_result = data[result]
     assert(rest_set_result==set_value),f"ERROR in SETTING {result} *******************************"
     
@@ -21,10 +21,15 @@ def find_in_getall(data, item, value):
     logger.info(f"item {item}")        
     for member in data:
         for key in member.keys():
-            if key[item] == value:
-                break
-    logger.info(f"member {member}")        
-    return member
+            if key == item:
+                if member[key] == value:
+                    true_find = member
+                    break
+                else:
+                    continue
+
+    logger.info(f"member {true_find}")        
+    return true_find
 
 
 def search_in_tree(tree, nodes):
