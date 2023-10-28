@@ -357,17 +357,52 @@ gem_profile(1, {"nodeId":None, "slotId":1,"shelfId":1,"gemId":"1","name": "gem_t
                                                             "gemid": [1, "gemId"],
                                                             "name": ["gem_test1", "name"],
                                                             "onuId": [1, "onuId"],
-                                                            "portId": [1, "portId"],
+                                                            "portId": [2, "portId"],
                                                             "tcontId": [8, "tcontId"]},result="Pass",method="ADD"), 
 gem_profile(2, {"nodeId":None, "slotId":1,"shelfId":1,"gemId":"2","name": "gem_test2", "onuId": 1, "portId": 2, "tcontId": 6},
                                                            {
                                                             "gemid": [2, "gemId"],
                                                             "name": ["gem_test2", "name"],
                                                             "onuId": [1, "onuId"],
-                                                            "portId": [1, "portId"],
-                                                            "tcontId": [6, "tcontId"]},result="Pass",method="ADD"),)
+                                                            "portId": [2, "portId"],
+                                                            "tcontId": [6, "tcontId"]},result="Pass",method="ADD"),
+gem_profile(3, {"nodeId":None, "slotId":1,"shelfId":1,"gemId":"1","name": "gem_test1", "onuId": 1, "portId": 3, "tcontId": 8},
+                                                           {
+                                                            "gemid": [1, "gemId"],
+                                                            "name": ["gem_test1", "name"],
+                                                            "onuId": [1, "onuId"],
+                                                            "portId": [3, "portId"],
+                                                            "tcontId": [8, "tcontId"]},result="Pass",method="ADD"),
+                                                            )
 gem_profile_Data_Delete_Config= (
-    gem_profile(1, {"nodeId":None, "slotId":1,"shelfId":1,"gemId":"1","name": "gem1", "onuId": 1, "portId": 2, "tcontId": 8},result="Pass",method="DELETE"), 
-    gem_profile(2, {"nodeId":None, "slotId":1,"shelfId":1,"gemId":"2","name": "gem2", "onuId": 1, "portId": 2, "tcontId": 6},result="Pass",method="DELETE"), 
+    gem_profile(1, {"nodeId":None, "slotId":1,"shelfId":1,"gemId":"1","name": "gem_test1", "onuId": 1, "portId": 2, "tcontId": 8},result="Pass",method="DELETE"), 
+    gem_profile(2, {"nodeId":None, "slotId":1,"shelfId":1,"gemId":"2","name": "gem_test2", "onuId": 1, "portId": 2, "tcontId": 6},result="Pass",method="DELETE"), 
+    gem_profile(3, {"nodeId":None, "slotId":1,"shelfId":1,"gemId":"1","name": "gem_test1", "onuId": 1, "portId": 3, "tcontId": 8},result="Pass",method="DELETE"), 
+
 )
 
+#******************************************************************************************************************************************
+service_profile = namedtuple('service_profile', ['index', 'expected_result_Set', 'expected_result_Get', "result", "method"])                                       
+service_profile.__new__.__defaults__ = (None, {}, {},None, None)
+
+service_profile_Data_Config = (
+service_profile(1, {"nodeId":None, "slotId":1,"shelfId":1, "servicePortId": "1", "onuId": 1, "portId": 2, "gemId": 1, "userVlan": "10-14"},
+                                                           {
+                                                            "gemId": [1, "gemId"],
+                                                            "servicePortId": [1, "servicePortId"],
+                                                            "onuId": [1, "onuId"],
+                                                            "portId": [2, "portId"],
+                                                            "userVlan": [10, "userVlan"],},result="Pass",method="ADD"),  
+service_profile(2, {"nodeId":None, "slotId":1,"shelfId":1, "servicePortId": "2", "onuId": 1, "portId": 3, "gemId": 1, "userVlan": "10-14"},
+                                                           {
+                                                            "gemId": [1, "gemId"],
+                                                            "servicePortId": [2, "servicePortId"],
+                                                            "onuId": [1, "onuId"],
+                                                            "portId": [2, "portId"],
+                                                            "userVlan": [10, "userVlan"],},result="Pass",method="ADD"),   
+)
+
+service_profile_Data_Delete_Config = (
+    service_profile(1, {"nodeId":None, "slotId":1,"shelfId":1, "servicePortId": 1, "onuId": 1, "portId": 2},result="Pass",method="DELETE"),  
+    service_profile(1, {"nodeId":None, "slotId":1,"shelfId":1, "servicePortId": 1, "onuId": 1, "portId": 3},result="Pass",method="DELETE"),  
+)
