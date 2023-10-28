@@ -36,10 +36,8 @@ def uplink_vlan_config(rest_interface_module, node_id, UPLINK_VLAN_data=uplink_v
         url = "/api/gponconfig/sp5100/portvlan/update"
         response = rest_interface_module.post_request(url, data._asdict())
     else:  # method==DELETE
-        logger.info(f'hoooo {data}')
         data = data._replace(nodeId=node_id,pvId=-1,taggedVlanClr=data.taggedVlanSet)
         data = data._replace(taggedVlanSet="")
-        logger.info(f'hiiiiii {data}')
         url = "/api/gponconfig/sp5100/portvlan/update"
         response = rest_interface_module.post_request(url, data._asdict())
 
