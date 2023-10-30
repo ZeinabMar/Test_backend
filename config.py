@@ -414,3 +414,19 @@ service_profile_Data_Delete_Config = (
     service_profile(2, {"nodeId":None, "slotId":1,"shelfId":1, "servicePortId": 2, "onuId": 1, "portId": 2},result="Pass",method="DELETE"),  
     service_profile(3, {"nodeId":None, "slotId":1,"shelfId":1, "servicePortId": 1, "onuId": 1, "portId": 3},result="Pass",method="DELETE"),  
 )
+#**************************************************************************************
+Onu_Service_Profile = namedtuple('Onu_Service_Profile', ['index', 'expected_result_Set', 'expected_result_Get', "result"])                                       
+Onu_Service_Profile.__new__.__defaults__ = (None, {}, {},None)
+
+Onu_Service_Profile_Data_Config = (
+    Onu_Service_Profile(1, {
+    "nodeId": None,"shelfId": 1,"slotId": 1,"onuServiceProfileId": "1","onuServiceProfileName": None,"onuTypeProfileName": "Default"},
+    {"onuserviceId": [1, "onuServiceProfileId"],"onuServiceProfileName": [None, "onuServiceProfileName"],"onuTypeProfileName": ["Default", "onuTypeProfileName"]},result="Pass"),  
+Onu_Service_Profile(2, {
+    "nodeId": None,"shelfId": 1,"slotId": 1,"onuServiceProfileId": "2","onuServiceProfileName": None,"onuTypeProfileName": "Default"},
+    {"onuserviceId": [2, "onuServiceProfileId"], "onuServiceProfileName": [None, "onuServiceProfileName"], "onuTypeProfileName": ["Default", "onuTypeProfileName"]},result="Pass"),              
+)
+Onu_Service_Profile_Delete_Config = (
+    Onu_Service_Profile(1, {"nodeId":None, "slotId":1,"shelfId":1,"onuServiceProfileId":"1"}, result="Pass"),
+    Onu_Service_Profile(2, {"nodeId":None, "slotId":1,"shelfId":1,"onuServiceProfileId":"2"}, result="Pass"),
+)

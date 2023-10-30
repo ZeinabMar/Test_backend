@@ -5,12 +5,7 @@ from config import *
 from conftest import *
 from Pon.test_tcont_profile import Tcont_Management
 from Pon.test_dba_profile import DBA_Profile
-from Pon.test_gem_profile import Gem_Management
-from Switch.bridge_funcs import bridge_config
-from Switch.test_vlan import vlan_config
-from Switch.test_Bridge_group_conf import switch_config
-from Switch.test_uplink_port_Vlan_conf import uplink_vlan_config
-from Pon.test_OLT_Service_profile import OLT_Service_Profile
+from Pon.test_Service_Profile_Definition import Service_Profile_Definition
 
 
 pytestmark = [pytest.mark.env_name("REST_env"), pytest.mark.rest_dev("olt_nms")]
@@ -21,16 +16,18 @@ Tcont_service_profile.__new__.__defaults__ = (None, {}, {},None, None)
 
 Tcont_service_profile_Data = (
 Tcont_service_profile(1, {
-    "nodeId": None,"shelfId": 1,"slotId": 1,"portId": 2,"onuId": 1, "rmServiceId": "1",
-    "onuPortType": "VEIP","onuPortId": 0,"vlanMode": "ACCESS","gemId": 1,"pvId": "10","priority": "3",}, {"rmServiceId": [1, "rmServiceId"],
-                                                                                                "onuPortType": ["VEIP", "onuPortType"],
-                                                                                                "onuPortId": [0, "onuPortId"],
-                                                                                                "onuId": [1, "onuId"],
-                                                                                                "portId": [2, "portId"],
-                                                                                                "gemId": [1, "gemId"],
-                                                                                                "vlanMode": ["ACCESS", "vlanMode"],
-                                                                                                "pvId": [10, "pvId"],
-                                                                                                "priority": [3, "priority"],},result="Pass",method="ADD"),
+    "id": None,"tcontId": "1","nodeId": None,"shelfId": 1,"slotId": 1,"onuId": 3,"name": "test_tcont1",
+    "bwProfileName": "dba_type1","bwProfileId": 1,"bwProfileShow": "dba_type1(1)",}, {"name": ["test_tcont1", "name"],
+                                                                                                "bwProfileName": ["dba_type1", "bwProfileName"],
+                                                                                                "bwProfileId": [1, "bwProfileId"],
+                                                                                                "onuId": [3, "onuId"]},result="Pass",method="ADD"),
+Tcont_service_profile(2, {
+    "id": None,"tcontId": "1","nodeId": None,"shelfId": 1,"slotId": 1,"onuId": 2,"name": "test_tcont1",
+    "bwProfileName": "dba_type1","bwProfileId": 1,"bwProfileShow": "dba_type1(1)",}, {"name": ["test_tcont1", "name"],
+                                                                                                "bwProfileName": ["dba_type1", "bwProfileName"],
+                                                                                                "bwProfileId": [1, "bwProfileId"],
+                                                                                                "onuId": [2, "onuId"]},result="Pass",method="ADD"),
+
 )  
 
 Tcont_service_profile_Delete = (
@@ -81,14 +78,19 @@ def Tcont_Service_Profile(rest_interface_module, node_id, tcont_service_profile_
 
 def test_Tcont_Service_Profile(rest_interface_module, node_id):
 
-    for dba in dba_profile_Data_Config:
-        DBA_Profile(rest_interface_module, node_id, dba, method='ADD')
- 
-    # for service_tcont in Tcont_service_profile_Data:
-    #     Tcont_Service_Profile(rest_interface_module, node_id, service_tcont)
+    # for dba in dba_profile_Data_Config:
+    #     DBA_Profile(rest_interface_module, node_id, dba, method='ADD')
+    # for service_def in Onu_Service_Profile_Data_Config:
+    #     Service_Profile_Definition(rest_interface_module, node_id, service_def, method='ADD')
+
+    for service_tcont in Tcont_service_profile_Data:
+        Tcont_Service_Profile(rest_interface_module, node_id, service_tcont)
 
     # for service_tcont in Tcont_service_profile_Delete:
     #     Tcont_Service_Profile(rest_interface_module, node_id, service_tcont)
+
+    # for service_def in Onu_Service_Profile_Delete_Config:
+    #     Service_Profile_Definition(rest_interface_module, node_id, service_def, method='DELETE')    
 
     # for dba in dba_profile_Data_Config_Delete:
     #     DBA_Profile(rest_interface_module, node_id, dba, method='DELETE')       

@@ -22,6 +22,8 @@ def find_in_getall(data, item, value):
     for member in data:
         for key in member.keys():
             if key == item:
+                logger.info(f"member[key] {member[key]}")  
+                logger.info(f"value {value}")  
                 if member[key] == value:
                     true_find = member
                     break
