@@ -414,7 +414,7 @@ service_profile_Data_Delete_Config = (
     service_profile(2, {"nodeId":None, "slotId":1,"shelfId":1, "servicePortId": 2, "onuId": 1, "portId": 2},result="Pass",method="DELETE"),  
     service_profile(3, {"nodeId":None, "slotId":1,"shelfId":1, "servicePortId": 1, "onuId": 1, "portId": 3},result="Pass",method="DELETE"),  
 )
-#**************************************************************************************
+#****************************************************************************************************************************
 Onu_Service_Profile = namedtuple('Onu_Service_Profile', ['index', 'expected_result_Set', 'expected_result_Get', "result"])                                       
 Onu_Service_Profile.__new__.__defaults__ = (None, {}, {},None)
 
@@ -429,4 +429,88 @@ Onu_Service_Profile(2, {
 Onu_Service_Profile_Delete_Config = (
     Onu_Service_Profile(1, {"nodeId":None, "slotId":1,"shelfId":1,"onuServiceProfileId":"1"}, result="Pass"),
     Onu_Service_Profile(2, {"nodeId":None, "slotId":1,"shelfId":1,"onuServiceProfileId":"2"}, result="Pass"),
+)
+#****************************************************************************************************************************
+Tcont_service_profile = namedtuple('Tcont_service_profile', ['index', 'expected_result_Set', 'expected_result_Get', "result", "method"])                                       
+Tcont_service_profile.__new__.__defaults__ = (None, {}, {},None, None)
+
+Tcont_service_profile_Data_Config = (
+Tcont_service_profile(1, {
+    "id": None,"tcontId": "1","nodeId": None,"shelfId": 1,"slotId": 1,"onuId": 1,"name": "test_tcont1",
+    "bwProfileName": "dba_type1","bwProfileId": 1,"bwProfileShow": "dba_type1(1)",}, {"name": ["test_tcont1", "name"],
+                                                                                                "bwProfileName": ["dba_type1", "bwProfileName"],
+                                                                                                "bwProfileId": [1, "bwProfileId"],
+                                                                                                "onuId": [1, "onuId"]},result="Pass",method="ADD"),
+Tcont_service_profile(2, {
+    "id": None,"tcontId": "1","nodeId": None,"shelfId": 1,"slotId": 1,"onuId": 2,"name": "test_tcont1",
+    "bwProfileName": "dba_type1","bwProfileId": 1,"bwProfileShow": "dba_type1(1)",}, {"name": ["test_tcont1", "name"],
+                                                                                                "bwProfileName": ["dba_type1", "bwProfileName"],
+                                                                                                "bwProfileId": [1, "bwProfileId"],
+                                                                                                "onuId": [2, "onuId"]},result="Pass",method="ADD"),
+
+)  
+
+Tcont_service_profile_Delete_Config = (
+    Tcont_service_profile(1, {"nodeId":None, "slotId":1,"shelfId":1, "onuId": 1, "tcontId": 1},result="Pass",method="DELETE"), 
+    Tcont_service_profile(1, {"nodeId":None, "slotId":1,"shelfId":1, "onuId": 2, "tcontId": 1},result="Pass",method="DELETE"), 
+)
+
+#****************************************************************************************************************************
+
+Gem_service_profile = namedtuple('Gem_service_profile', ['index', 'expected_result_Set', 'expected_result_Get', "result", "method"])                                       
+Gem_service_profile.__new__.__defaults__ = (None, {}, {},None, None)
+
+Gem_service_profile_Data_Config = (
+Gem_service_profile(1, { "gemId": "1", "tcontId": 1,"tcontName": "", "nodeId": None, "shelfId": 1,
+                         "slotId": 1,"onuId": 1, "name": "test_gem1",}, {"tcontId": [1, "tcontId"],
+                                                                         "name": ["test_gem1", "name"],
+                                                                         "onuId": [1, "onuId"],
+                                                                         "gemId": [1, "gemId"]},result="Pass",method="ADD"),
+Gem_service_profile(2, { "gemId": "1", "tcontId": 1,"tcontName": "", "nodeId": None, "shelfId": 1,
+                         "slotId": 1,"onuId": 2, "name": "test_gem1",}, {"tcontId": [1, "tcontId"],
+                                                                         "name": ["test_gem1", "name"],
+                                                                         "onuId": [2, "onuId"],
+                                                                         "gemId": [1, "gemId"]},result="Pass",method="ADD"),
+
+)
+
+Gem_service_profile_Delete_Config = (
+    Gem_service_profile(1, {"nodeId":None, "slotId":1,"shelfId":1, "onuId": 1, "gemId": 1},result="Pass",method="DELETE"), 
+    Gem_service_profile(2, {"nodeId":None, "slotId":1,"shelfId":1, "onuId": 2, "gemId": 1},result="Pass",method="DELETE"), 
+)
+#****************************************************************************************************************************
+
+olt_service_profile = namedtuple('olt_service_profile', ['index', 'expected_result_Set', 'expected_result_Get', "result", "method"])                                       
+olt_service_profile.__new__.__defaults__ = (None, {}, {},None, None)
+
+olt_service_profile_Data_Config = (
+olt_service_profile(1, {"servicePortId": "1","nodeId": None,"shelfId": 1, "slotId": 1, "portShowName": "PON ",
+                        "onuId": 1,"gemId": 1,"vlan": 0,"svlan": 0,"userVlan": "10","innerVlan": 0,
+                        "vlanPriority": 0,"svlanPriority": 0,"vlanPriorityAction": "1","svlanPriorityAction": "1",
+                        "cosQueueProfileId": 0,"queue": 0,"queueSelectMode": 0,"upLinkC2CId": 0,"downLinkC2CId": 0,}, {"servicePortId": [1, "servicePortId"],
+                                                                                                                       "userVlan": [10, "userVlan"],
+                                                                                                                       "onuId": [1, "onuId"],
+                                                                                                                       "gemId": [1, "gemId"]},result="Pass",method="ADD"),
+
+olt_service_profile(2, {"servicePortId": "1","nodeId": None,"shelfId": 1, "slotId": 1, "portShowName": "PON ",
+                        "onuId": 2,"gemId": 1,"vlan": 0,"svlan": 0,"userVlan": "10","innerVlan": 0,
+                        "vlanPriority": 0,"svlanPriority": 0,"vlanPriorityAction": "1","svlanPriorityAction": "1",
+                        "cosQueueProfileId": 0,"queue": 0,"queueSelectMode": 0,"upLinkC2CId": 0,"downLinkC2CId": 0,}, {"servicePortId": [1, "servicePortId"],
+                                                                                                                       "userVlan": [10, "userVlan"],
+                                                                                                                       "onuId": [2, "onuId"],
+                                                                                                                       "gemId": [1, "gemId"]},result="Pass",method="ADD"),
+olt_service_profile(3, {"servicePortId": "2","nodeId": None,"shelfId": 1, "slotId": 1, "portShowName": "PON ",
+                        "onuId": 2,"gemId": 2,"vlan": 0,"svlan": 0,"userVlan": "11","innerVlan": 0,
+                        "vlanPriority": 0,"svlanPriority": 0,"vlanPriorityAction": "1","svlanPriorityAction": "1",
+                        "cosQueueProfileId": 0,"queue": 0,"queueSelectMode": 0,"upLinkC2CId": 0,"downLinkC2CId": 0,}, {"servicePortId": [2, "servicePortId"],
+                                                                                                                       "userVlan": [11, "userVlan"],
+                                                                                                                       "onuId": [2, "onuId"],
+                                                                                                                       "gemId": [2, "gemId"]},result="Pass",method="ADD"),
+
+)  
+
+olt_service_profile_Delete_Config = (
+    olt_service_profile(1, {"nodeId":None, "slotId":1,"shelfId":1, "onuId": 1, "servicePortId": 1},result="Pass",method="DELETE"), 
+    olt_service_profile(1, {"nodeId":None, "slotId":1,"shelfId":1, "onuId": 2, "servicePortId": 2},result="Pass",method="DELETE"), 
+    olt_service_profile(2, {"nodeId":None, "slotId":1,"shelfId":1, "onuId": 2, "servicePortId": 1},result="Pass",method="DELETE"), 
 )

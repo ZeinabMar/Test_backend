@@ -10,7 +10,7 @@ from Switch.bridge_funcs import bridge_config
 from Switch.test_vlan import vlan_config
 from Switch.test_Bridge_group_conf import switch_config
 from Switch.test_uplink_port_Vlan_conf import uplink_vlan_config
-from Pon.test_OLT_Service_profile import OLT_Service_Profile
+from Pon.test_OLT_Service import OLT_Service
 
 
 pytestmark = [pytest.mark.env_name("REST_env"), pytest.mark.rest_dev("olt_nms")]
@@ -135,7 +135,7 @@ def test_ONU_remote_Service_Profile(rest_interface_module, node_id):
         Gem_Management(rest_interface_module, node_id, gem)
 
     for service in service_profile_Data_Config:
-        OLT_Service_Profile(rest_interface_module, node_id, service)
+        OLT_Service(rest_interface_module, node_id, service)
 
 
     for remote in remote_service_profile_Data:
@@ -145,7 +145,7 @@ def test_ONU_remote_Service_Profile(rest_interface_module, node_id):
         ONU_remote_Service_Profile(rest_interface_module, node_id, remote)
 
     for service in service_profile_Data_Delete_Config:
-        OLT_Service_Profile(rest_interface_module, node_id, service)
+        OLT_Service(rest_interface_module, node_id, service)
 
     for gem in gem_profile_Data_Delete_Config:
         Gem_Management(rest_interface_module, node_id, gem)

@@ -14,32 +14,32 @@ from Switch.test_vlan import vlan_config
 pytestmark = [pytest.mark.env_name("REST_env"), pytest.mark.rest_dev("olt_nms")]
 logging.basicConfig(level=logging.DEBUG)
 
-service_profile = namedtuple('service_profile', ['index', 'expected_result_Set', 'expected_result_Get', "result", "method"])                                       
-service_profile.__new__.__defaults__ = (None, {}, {},None, None)
+service_olt = namedtuple('service_olt', ['index', 'expected_result_Set', 'expected_result_Get', "result", "method"])                                       
+service_olt.__new__.__defaults__ = (None, {}, {},None, None)
 
-service_profile_Data = (
-service_profile(1, {"nodeId":None, "slotId":1,"shelfId":1, "servicePortId": "1", "onuId": 1, "portId": 2, "gemId": 1, "userVlan": "10"},
+service_olt_Data = (
+service_olt(1, {"nodeId":None, "slotId":1,"shelfId":1, "servicePortId": "1", "onuId": 1, "portId": 2, "gemId": 1, "userVlan": "10"},
                                                            {
                                                             "gemId": [1, "gemId"],
                                                             "servicePortId": [1, "servicePortId"],
                                                             "onuId": [1, "onuId"],
                                                             "portId": [2, "portId"],
                                                             "userVlan": [10, "userVlan"],},result="Pass",method="ADD"),  
-service_profile(2, {"nodeId":None, "slotId":1,"shelfId":1, "servicePortId": "2", "onuId": 1, "portId": 2, "gemId": 1, "userVlan": "10"},
+service_olt(2, {"nodeId":None, "slotId":1,"shelfId":1, "servicePortId": "2", "onuId": 1, "portId": 2, "gemId": 1, "userVlan": "10"},
                                                            {
                                                             "gemId": [1, "gemId"],
                                                             "servicePortId": [2, "servicePortId"],
                                                             "onuId": [1, "onuId"],
                                                             "portId": [2, "portId"],
                                                             "userVlan": [10, "userVlan"],},result="Pass",method="ADD"),   
-service_profile(3, {"nodeId":None, "slotId":1,"shelfId":1, "servicePortId": "1", "onuId": 1, "portId": 3, "gemId": 1, "userVlan": "10"},
+service_olt(3, {"nodeId":None, "slotId":1,"shelfId":1, "servicePortId": "1", "onuId": 1, "portId": 3, "gemId": 1, "userVlan": "10"},
                                                            {
                                                             "gemId": [1, "gemId"],
                                                             "servicePortId": [1, "servicePortId"],
                                                             "onuId": [1, "onuId"],
                                                             "portId": [3, "portId"],
                                                             "userVlan": [10, "userVlan"],},result="Pass",method="ADD"),                                                            
-service_profile(4, {"nodeId":None, "slotId":1,"shelfId":1, "servicePortId": "2", "onuId": 1, "portId": 2, "gemId": 2, "userVlan": "10"},
+service_olt(4, {"nodeId":None, "slotId":1,"shelfId":1, "servicePortId": "2", "onuId": 1, "portId": 2, "gemId": 2, "userVlan": "10"},
                                                            {
                                                             "gemId": [1, "gemId"],
                                                             "servicePortId": [2, "servicePortId"],
@@ -47,7 +47,7 @@ service_profile(4, {"nodeId":None, "slotId":1,"shelfId":1, "servicePortId": "2",
                                                             "portId": [2, "portId"],
                                                             "userVlan": [10, "userVlan"],},result="Fail",method="ADD"), 
 
-service_profile(5, {"nodeId":None, "slotId":1,"shelfId":1, "servicePortId": "2", "onuId": 1, "portId": 2, "gemId": 1, "userVlan": "11"},
+service_olt(5, {"nodeId":None, "slotId":1,"shelfId":1, "servicePortId": "2", "onuId": 1, "portId": 2, "gemId": 1, "userVlan": "11"},
                                                            {
                                                             "gemId": [1, "gemId"],
                                                             "servicePortId": [2, "servicePortId"],
@@ -55,23 +55,23 @@ service_profile(5, {"nodeId":None, "slotId":1,"shelfId":1, "servicePortId": "2",
                                                             "portId": [2, "portId"],
                                                             "userVlan": [10, "userVlan"],},result="Fail",method="ADD"),   
                                                             
-service_profile(6, {"nodeId":None, "slotId":1,"shelfId":1, "servicePortId": "2", "onuId": 1, "portId": 2, "gemId": 1, "userVlan": 100},result="Fail",method="ADD"),                                                              
+service_olt(6, {"nodeId":None, "slotId":1,"shelfId":1, "servicePortId": "2", "onuId": 1, "portId": 2, "gemId": 1, "userVlan": 100},result="Fail",method="ADD"),                                                              
 )   
   
-service_profile_Data_Delete = (
-    service_profile(1, {"nodeId":None, "slotId":1,"shelfId":1, "servicePortId": 1, "onuId": 1, "portId": 2},result="Pass",method="DELETE"),  
-    service_profile(1, {"nodeId":None, "slotId":1,"shelfId":1, "servicePortId": 2, "onuId": 1, "portId": 2},result="Pass",method="DELETE"),  
-    service_profile(1, {"nodeId":None, "slotId":1,"shelfId":1, "servicePortId": 1, "onuId": 1, "portId": 3},result="Pass",method="DELETE"),  
+service_olt_Data_Delete = (
+    service_olt(1, {"nodeId":None, "slotId":1,"shelfId":1, "servicePortId": 1, "onuId": 1, "portId": 2},result="Pass",method="DELETE"),  
+    service_olt(1, {"nodeId":None, "slotId":1,"shelfId":1, "servicePortId": 2, "onuId": 1, "portId": 2},result="Pass",method="DELETE"),  
+    service_olt(1, {"nodeId":None, "slotId":1,"shelfId":1, "servicePortId": 1, "onuId": 1, "portId": 3},result="Pass",method="DELETE"),  
 )
 
-def OLT_Service_Profile(rest_interface_module, node_id, service_data=service_profile(), method='ADD'):
-    method = service_data.method
-    logger.info(f'SERVICE PROFILE TEST DATA ------- > {service_data.index}')
-    expected_set = service_data.expected_result_Set
+def OLT_Service(rest_interface_module, node_id, service_olt_data=service_olt(), method='ADD'):
+    method = service_olt_data.method
+    logger.info(f'SERVICE OLT TEST DATA ------- > {service_olt_data.index}')
+    expected_set = service_olt_data.expected_result_Set
     expected_set["nodeId"]= node_id
-    expected_get = service_data.expected_result_Get  
+    expected_get = service_olt_data.expected_result_Get  
 
-    logger.info(f"TRY TO {method} SERVICE PROFILE CONFIG ...")
+    logger.info(f"TRY TO {method} SERVICE OLT CONFIG ...")
     if method == 'ADD':
         url = "/api/gponconfig/service/add"
         response = rest_interface_module.post_request(url, expected_set)    
@@ -79,13 +79,13 @@ def OLT_Service_Profile(rest_interface_module, node_id, service_data=service_pro
         url = f"/api/gponconfig/service/delete/"+str(expected_set["nodeId"])+"/"+str(expected_set["shelfId"])+"/"+str(expected_set["slotId"])+"/"+str(expected_set["portId"])+"/"+str(expected_set["onuId"])+"/"+str(expected_set["servicePortId"])
         response = rest_interface_module.delete_request(url)
 
-    if service_data.result == "Pass":
-        assert response.status_code == 200, f'{method} ERROR in PROFILE DBA config {expected_set}'
+    if service_olt_data.result == "Pass":
+        assert response.status_code == 200, f'{method} ERROR in SERVICE OLT config {expected_set}'
         if response.status_code != 200:
             logger.error(response.message)
         #**********************************************************************
         if len(expected_get.keys()) !=0:
-            logger.info(f' GETTING Gem_Management (after {method} method) ... ')
+            logger.info(f' GETTING SERVICE OLT (after {method} method) ... ')
             read_data = rest_interface_module.get_request(f"/api/gponconfig/service/get/"+str(expected_set["nodeId"])+"/"+str(expected_set["shelfId"])+"/"+str(expected_set["slotId"])+"/"+str(expected_set["portId"])+"/"+str(expected_set["onuId"])+"/"+str(expected_set["servicePortId"]))
             input_data = json.loads(read_data.text)
             for key in expected_get.keys():
@@ -94,7 +94,7 @@ def OLT_Service_Profile(rest_interface_module, node_id, service_data=service_pro
             logger.info(f'check is completed in {method} method')
 
     else:
-        assert response.status_code in range(400, 505), f'{method} SET INCORRECT DATA in SERVICE PROFILE {service_data._asdict}'
+        assert response.status_code in range(400, 505), f'{method} SET INCORRECT DATA in SERVICE OLT {service_data._asdict}'
         if len(expected_get.keys()) !=0:
             read_data = rest_interface_module.get_request(f"/api/gponconfig/service/get/"+str(expected_set["nodeId"])+"/"+str(expected_set["shelfId"])+"/"+str(expected_set["slotId"])+"/"+str(expected_set["portId"])+"/"+str(expected_set["onuId"])+"/"+str(expected_set["servicePortId"]))
             input_data = json.loads(read_data.text)
@@ -106,7 +106,7 @@ def OLT_Service_Profile(rest_interface_module, node_id, service_data=service_pro
 
 
 
-def test_OLT_Service_Profile(rest_interface_module, node_id):
+def test_OLT_Service(rest_interface_module, node_id):
     bridge_config(rest_interface_module, node_id, Bridge_conf(), method='POST')
     # ****************************************************************************************************************************
     for vlan in VLAN_DATA_conf_CUSTOM:
@@ -121,11 +121,11 @@ def test_OLT_Service_Profile(rest_interface_module, node_id):
     for gem in gem_profile_Data_Config:
         Gem_Management(rest_interface_module, node_id, gem)
 
-    for service in service_profile_Data:
-        OLT_Service_Profile(rest_interface_module, node_id, service)
+    for serviceolt in service_olt_Data:
+        OLT_Service_Profile(rest_interface_module, node_id, serviceolt)
 
-    for service in service_profile_Data_Delete:
-        OLT_Service_Profile(rest_interface_module, node_id, service)
+    for serviceolt in service_olt_Data_Delete:
+        OLT_Service_Profile(rest_interface_module, node_id, serviceolt)
 
     for gem in gem_profile_Data_Delete_Config:
         Gem_Management(rest_interface_module, node_id, gem)

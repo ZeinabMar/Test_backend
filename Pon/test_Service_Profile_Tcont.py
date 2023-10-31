@@ -16,11 +16,11 @@ Tcont_service_profile.__new__.__defaults__ = (None, {}, {},None, None)
 
 Tcont_service_profile_Data = (
 Tcont_service_profile(1, {
-    "id": None,"tcontId": "1","nodeId": None,"shelfId": 1,"slotId": 1,"onuId": 3,"name": "test_tcont1",
+    "id": None,"tcontId": "1","nodeId": None,"shelfId": 1,"slotId": 1,"onuId": 1,"name": "test_tcont1",
     "bwProfileName": "dba_type1","bwProfileId": 1,"bwProfileShow": "dba_type1(1)",}, {"name": ["test_tcont1", "name"],
                                                                                                 "bwProfileName": ["dba_type1", "bwProfileName"],
                                                                                                 "bwProfileId": [1, "bwProfileId"],
-                                                                                                "onuId": [3, "onuId"]},result="Pass",method="ADD"),
+                                                                                                "onuId": [1, "onuId"]},result="Pass",method="ADD"),
 Tcont_service_profile(2, {
     "id": None,"tcontId": "1","nodeId": None,"shelfId": 1,"slotId": 1,"onuId": 2,"name": "test_tcont1",
     "bwProfileName": "dba_type1","bwProfileId": 1,"bwProfileShow": "dba_type1(1)",}, {"name": ["test_tcont1", "name"],
@@ -31,7 +31,8 @@ Tcont_service_profile(2, {
 )  
 
 Tcont_service_profile_Delete = (
-    Tcont_service_profile(1, {"nodeId":None, "slotId":1,"shelfId":1, "rmServiceId": 1, "onuId": 1, "portId": 2},result="Pass",method="DELETE"), 
+    Tcont_service_profile(1, {"nodeId":None, "slotId":1,"shelfId":1, "onuId": 1, "tcontId": 1},result="Pass",method="DELETE"), 
+    Tcont_service_profile(1, {"nodeId":None, "slotId":1,"shelfId":1, "onuId": 2, "tcontId": 1},result="Pass",method="DELETE"), 
 )
 
 def Tcont_Service_Profile(rest_interface_module, node_id, tcont_service_profile_data=Tcont_service_profile(), method='ADD'):
@@ -78,10 +79,10 @@ def Tcont_Service_Profile(rest_interface_module, node_id, tcont_service_profile_
 
 def test_Tcont_Service_Profile(rest_interface_module, node_id):
 
-    # for dba in dba_profile_Data_Config:
-    #     DBA_Profile(rest_interface_module, node_id, dba, method='ADD')
-    # for service_def in Onu_Service_Profile_Data_Config:
-    #     Service_Profile_Definition(rest_interface_module, node_id, service_def, method='ADD')
+    for dba in dba_profile_Data_Config:
+        DBA_Profile(rest_interface_module, node_id, dba, method='ADD')
+    for service_def in Onu_Service_Profile_Data_Config:
+        Service_Profile_Definition(rest_interface_module, node_id, service_def, method='ADD')
 
     for service_tcont in Tcont_service_profile_Data:
         Tcont_Service_Profile(rest_interface_module, node_id, service_tcont)
