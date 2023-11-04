@@ -116,21 +116,21 @@ def test_Remote_Service_Profile(rest_interface_module, node_id):
     # for vlan in VLAN_DATA_conf_CUSTOM:
     #     vlan_config(rest_interface_module, node_id, vlan, method='POST')  
 
-    # for dba in dba_profile_Data_Config:
-    #     DBA_Profile(rest_interface_module, node_id, dba, method='ADD')
-    # for service_def in Onu_Service_Profile_Data_Config:
-    #     Service_Profile_Definition(rest_interface_module, node_id, service_def, method='ADD')
-    # for service_tcont in Tcont_service_profile_Data_Config:
-    #     Tcont_Service_Profile(rest_interface_module, node_id, service_tcont)
-    # for service_gem in Gem_service_profile_Data_Config:
-    #     Gem_Service_Profile(rest_interface_module, node_id, service_gem)
-    # for olt_service_p in olt_service_profile_Data_Config:
-    #     Olt_Service_Profile(rest_interface_module, node_id, olt_service_p)
+    for dba in dba_profile_Data_Config:
+        DBA_Profile(rest_interface_module, node_id, dba, method='ADD')
+    for service_def in Onu_Service_Profile_Data_Config:
+        Service_Profile_Definition(rest_interface_module, node_id, service_def, method='ADD')
+    for service_tcont in Tcont_service_profile_Data_Config:
+        Tcont_Service_Profile(rest_interface_module, node_id, service_tcont)
+    for service_gem in Gem_service_profile_Data_Config:
+        Gem_Service_Profile(rest_interface_module, node_id, service_gem)
+    for olt_service_p in olt_service_profile_Data_Config:
+        Olt_Service_Profile(rest_interface_module, node_id, olt_service_p)
 
     for remote_p in remote_service_profile_Data:
         Remote_Service_Profile(rest_interface_module, node_id, remote_p)
-    for remote_p in remote_service_profile_Delete:
-        Remote_Service_Profile(rest_interface_module, node_id, remote_p)
+    # for remote_p in remote_service_profile_Delete:
+    #     Remote_Service_Profile(rest_interface_module, node_id, remote_p)
 
     # for olt_service_p in olt_service_profile_Delete_Config:
     #     Olt_Service_Profile(rest_interface_module, node_id, olt_service_p)    

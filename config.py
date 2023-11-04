@@ -471,12 +471,19 @@ Gem_service_profile(2, { "gemId": "1", "tcontId": 1,"tcontName": "", "nodeId": N
                                                                          "name": ["test_gem1", "name"],
                                                                          "onuId": [2, "onuId"],
                                                                          "gemId": [1, "gemId"]},result="Pass",method="ADD"),
+Gem_service_profile(3, { "gemId": "2", "tcontId": 1,"tcontName": "", "nodeId": None, "shelfId": 1,
+                         "slotId": 1,"onuId": 2, "name": "test_gem2",}, {"tcontId": [1, "tcontId"],
+                                                                         "name": ["test_gem2", "name"],
+                                                                         "onuId": [2, "onuId"],
+                                                                         "gemId": [2, "gemId"]},result="Pass",method="ADD"),
 
 )
 
 Gem_service_profile_Delete_Config = (
     Gem_service_profile(1, {"nodeId":None, "slotId":1,"shelfId":1, "onuId": 1, "gemId": 1},result="Pass",method="DELETE"), 
     Gem_service_profile(2, {"nodeId":None, "slotId":1,"shelfId":1, "onuId": 2, "gemId": 1},result="Pass",method="DELETE"), 
+    Gem_service_profile(2, {"nodeId":None, "slotId":1,"shelfId":1, "onuId": 2, "gemId": 2},result="Pass",method="DELETE"), 
+
 )
 #****************************************************************************************************************************
 
@@ -506,11 +513,49 @@ olt_service_profile(3, {"servicePortId": "2","nodeId": None,"shelfId": 1, "slotI
                                                                                                                        "userVlan": [11, "userVlan"],
                                                                                                                        "onuId": [2, "onuId"],
                                                                                                                        "gemId": [2, "gemId"]},result="Pass",method="ADD"),
-
 )  
 
 olt_service_profile_Delete_Config = (
     olt_service_profile(1, {"nodeId":None, "slotId":1,"shelfId":1, "onuId": 1, "servicePortId": 1},result="Pass",method="DELETE"), 
     olt_service_profile(1, {"nodeId":None, "slotId":1,"shelfId":1, "onuId": 2, "servicePortId": 2},result="Pass",method="DELETE"), 
     olt_service_profile(2, {"nodeId":None, "slotId":1,"shelfId":1, "onuId": 2, "servicePortId": 1},result="Pass",method="DELETE"), 
+)
+#*****************************************************************************
+remote_service_profile = namedtuple('remote_service_profile', ['index', 'expected_result_Set', 'expected_result_Get', "result", "method"])                                       
+remote_service_profile.__new__.__defaults__ = (None, {}, {},None, None)
+
+remote_service_profile_Data_Config = (
+remote_service_profile(1, {"nodeId": None,"shelfId": 1, "slotId": 1,"onuId": 1, "rmServiceId": "1","onuPortType": "VEIP",
+                           "onuPortId": 0,"vlanMode": "ACCESS","gemId": 1,"pvId": "10","priority": "1",}, {"rmServiceId": [1, "rmServiceId"],
+                                                                                                           "onuPortType": ["VEIP", "onuPortType"],
+                                                                                                           "vlanMode": ["ACCESS", "vlanMode"],
+                                                                                                           "priority": [1, "priority"],
+                                                                                                           "pvId": [10, "pvId"],
+                                                                                                           "onuId": [1, "onuId"],
+                                                                                                           "gemId": [1, "gemId"]},result="Pass",method="ADD"),
+
+remote_service_profile(2, {"nodeId": None,"shelfId": 1, "slotId": 1,"onuId": 2, "rmServiceId": "1","onuPortType": "ETH_UNI",
+                           "onuPortId": 0,"vlanMode": "TRUNK", "vlanList":"10", "gemId": 1,"pvId": None,"priority": "1",}, {"rmServiceId": [1, "rmServiceId"],
+                                                                                                           "onuPortType": ["ETH_UNI", "onuPortType"],
+                                                                                                           "vlanMode": ["TRUNK", "vlanMode"],
+                                                                                                           "vlanList": [10, "vlanList"],
+                                                                                                           "priority": [0, "priority"],
+                                                                                                           "pvId": [0, "pvId"],
+                                                                                                           "onuId": [2, "onuId"],
+                                                                                                           "gemId": [1, "gemId"]},result="Pass",method="ADD"),
+remote_service_profile(3, {"nodeId": None,"shelfId": 1, "slotId": 1,"onuId": 2, "rmServiceId": "2","onuPortType": "ETH_UNI",
+                           "onuPortId": 0,"vlanMode": "TRUNK", "vlanList":"11", "gemId": 2,"pvId": None,"priority": "1",}, {"rmServiceId": [2, "rmServiceId"],
+                                                                                                           "onuPortType": ["ETH_UNI", "onuPortType"],
+                                                                                                           "vlanMode": ["TRUNK", "vlanMode"],
+                                                                                                           "vlanList": [11, "vlanList"],
+                                                                                                           "priority": [0, "priority"],
+                                                                                                           "pvId": [0, "pvId"],
+                                                                                                           "onuId": [2, "onuId"],
+                                                                                                           "gemId": [2, "gemId"]},result="Pass",method="ADD"),
+)  
+
+remote_service_profile_Delete_Config = (
+    remote_service_profile(1, {"nodeId":None, "slotId":1,"shelfId":1, "onuId": 1, "rmServiceId": 1},result="Pass",method="DELETE"), 
+    remote_service_profile(2, {"nodeId":None, "slotId":1,"shelfId":1, "onuId": 2, "rmServiceId": 2},result="Pass",method="DELETE"), 
+    remote_service_profile(3, {"nodeId":None, "slotId":1,"shelfId":1, "onuId": 2, "rmServiceId": 1},result="Pass",method="DELETE"), 
 )

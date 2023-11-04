@@ -7,14 +7,36 @@ logger = logging.getLogger(__name__)
 board_ip = "192.168.9.128"
 
 
+def join_oid(url_base, *indexes):
+    suffix_url = ""
+    list_indexes = [i for i in indexes]
+    list_indexes = [i for i in list_indexes[0]]
+    for  item in list_indexes:
+        suffix_url = suffix_url+"/"+str(item[1])
+    logger.info(f'HIIIIIIII   {suffix_url}')
+    logger.info(f'looog    {list_indexes}')
+    url = url_base+suffix_url        
+    return url
+
+
+def get_rest(rest_interface_module,expected_get, url, *suffix_index):
+    if len(expected_get.keys()) !=0:
+            logger.info(f' GETTING  ')
+            url_get = join_oid(url, suffix_index)
+            read_data = rest_interface_module.get_request(f"{url_get}")
+            input_data = json.loads(read_data.text)
+            for key in expected_get.keys():
+                logger.info(f"IN {expected_get[key]}")
+                check_set_value(rest_interface_module, expected_get[key][0], expected_get[key][1],input_data)
+            logger.info(f'check is completed')
+
 
 def check_set_value(rest_interface_module, set_value, result, data):
     logger.info(f'********************************check_set_value FUNCTION****************************')
     # logger.info(f"dataaaa {data}")
     # logger.info(f"resultttt {result}")
     rest_set_result = data[result]
-    assert(rest_set_result==set_value),f"ERROR in SETTING {result} *******************************"
-    
+    assert(rest_set_result==set_value),f"ERROR in SETTING {result} *******************************"    
 
 def find_in_getall(data, item, value):
     logger.info(f"data {data}")        
