@@ -12,7 +12,7 @@ BRIDGE_DATA = (
     Bridge(1, 'IEEE', 100, 30, 1, 6, priority=4096),
     Bridge(1, 'IEEE_VLAN_BRIDGE', 1000, 29, 2, 7, priority=8192),
     Bridge(1, 'MSTP', 100, 30, maxAge=6, maxHops=1, priority=12288),
-    # Bridge(1, 'MSTPRING', 1000, 29, maxAge=7, maxHops=20, priority=16384),
+    Bridge(1, 'MSTPRING', 1000, 29, maxAge=7, maxHops=20, priority=16384),
     # Bridge(1, 'RPVSTP', 100, priority=20480),
     # Bridge(1, 'RSTP', 1000, 29, 2, 7, priority=24576),
     # Bridge(1, 'RSTP_RING', 100, 30, 1, 6, priority=28672),
@@ -34,10 +34,11 @@ BRIDGE_IDS = [f"test number :{i}, bridgeId :{bridge.bridgeId}, bridgeProtocol :{
 
 # BUG : fail tests set wrongly
 # BUG : bridge with id=2 return error but set wrongly
-@pytest.mark.parametrize('test_data', BRIDGE_DATA, ids=BRIDGE_IDS)
-def test_set_bridge(rest_interface_module, node_id, test_data):
-    bridge_config(rest_interface_module, node_id, test_data, method='POST')
-    if test_data.result == 'Pass':
-        bridge_config(rest_interface_module, node_id, test_data, method='DELETE')
+# @pytest.mark.parametrize('test_data', BRIDGE_DATA, ids=BRIDGE_IDS)
+def test_set_bridge(rest_interface_module, node_id):
+    for bridge in BRIDGE_DATA:
+        bridge_config(rest_interface_module, node_id, bridge, method='POST')
+        if bridge.result == 'Pass':
+            bridge_config(rest_interface_module, node_id, bridge, method='DELETE')
 
 

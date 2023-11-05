@@ -76,12 +76,32 @@ def test_Batch_Config(rest_interface_module, node_id):
     # for batch in batch_config_Data:
     #     Batch_Config(rest_interface_module, node_id, batch)
 
-    get_rest(rest_interface_module, {"bwProfileId": [1, "bwProfileId"],
+    get_rest(rest_interface_module, "TCONT", {"bwProfileId": [1, "bwProfileId"],
                                      "bwProfileName": ["dba_type1", "bwProfileName"],
                                      "name": ["test_tcont1", "name"],
                                      "onuId": [1, "onuId"],
                                      "portId": [2, "portId"],
-                                     "tcontId": [1, "tcontId"]}, "/api/gponconfig/tcont/get", ["nodeId", node_id],["shelfId", 1], ["shelfId", 1], ["slotId", 1], ["portId", 2], ["onuId", 1], ["tcontId", 1])    
+                                     "tcontId": [1, "tcontId"]}, "/api/gponconfig/tcont/get", ["nodeId", node_id],["shelfId", 1], ["slotId", 1], ["portId", 2], ["onuId", 1], ["tcontId", 1])    
+    get_rest(rest_interface_module, "GEM",  {"gemid": [1, "gemId"],
+                                     "name": ["test_gem1", "name"],
+                                     "onuId": [1, "onuId"],
+                                     "portId": [2, "portId"],
+                                     "tcontId": [1, "tcontId"]}, "/api//gponconfig/gem/get", ["nodeId", node_id],["shelfId", 1], ["slotId", 1], ["portId", 2], ["onuId", 1], ["gemId", 1])    
+    get_rest(rest_interface_module, "SERVICE", {"gemId": [1, "gemId"],
+                                     "servicePortId": [1, "servicePortId"],
+                                     "onuId": [1, "onuId"],
+                                     "portId": [2, "portId"],
+                                     "userVlan": [10, "userVlan"],}, "/api/gponconfig/service/get", ["nodeId", node_id],["shelfId", 1], ["slotId", 1], ["portId", 2], ["onuId", 1], ["servicePortId", 1])    
+    get_rest(rest_interface_module, "REMOTE", {"rmServiceId": [1, "rmServiceId"],
+                                     "onuPortType": ["VEIP", "onuPortType"],
+                                     "onuPortId": [0, "onuPortId"],
+                                     "onuId": [1, "onuId"],
+                                     "portId": [2, "portId"],
+                                     "gemId": [1, "gemId"],
+                                     "vlanMode": ["ACCESS", "vlanMode"],
+                                     "pvId": [10, "pvId"],
+                                     "priority": [1, "priority"],}, "/api/gponconfig/sp5100/rmonu/service/get", ["nodeId", node_id],["shelfId", 1], ["slotId", 1], ["portId", 2], ["onuId", 1], ["rmServiceId", 1])    
+
 
 
     # for batch in batch_config_Delete:

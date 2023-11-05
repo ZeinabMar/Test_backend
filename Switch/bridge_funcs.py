@@ -36,7 +36,10 @@ def bridge_config(rest_interface_module, node_id, BRIDGE_data=Bridge(), method='
         read_data = rest_interface_module.get_request(f"/api/gponconfig/sp5100/bridgeconfig/getall?nodeId={node_id}&shelfId=1&slotId=1")
         if method == 'POST':
             input_data = list(filter(lambda dic: dic["bridgeId"] == data.bridgeId, json.loads(read_data.text)))
-            assert str(input_data[0]["bridgeProtocol"]) == str(data.bridgeProtocol), f'GET ERROR in bridge config(after {method})'
+            assert (str(input_data[0]["bridgeProtocol"]) == str(data.bridgeProtocol) and
+                    input_data[0]["ageingTime"] == data.ageingTime  and
+                     input_data[0]["ageingTime"] == data.ageingTime and
+                      ), f'GET ERROR in bridge config(after {method})'
         else:  # method==DELETE
             assert not read_data.text, f'GET ERROR in bridge config (after {method})'
     else:

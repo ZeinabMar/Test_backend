@@ -19,12 +19,13 @@ def join_oid(url_base, *indexes):
     return url
 
 
-def get_rest(rest_interface_module,expected_get, url, *suffix_index):
+def get_rest(rest_interface_module, feature, expected_get, url, *suffix_index):
     if len(expected_get.keys()) !=0:
-            logger.info(f' GETTING  ')
+            logger.info(f'*********** GETTING  IN {feature}  ********')
             url_get = join_oid(url, suffix_index)
             read_data = rest_interface_module.get_request(f"{url_get}")
             input_data = json.loads(read_data.text)
+            logger.info(f'input_data {input_data}')
             for key in expected_get.keys():
                 logger.info(f"IN {expected_get[key]}")
                 check_set_value(rest_interface_module, expected_get[key][0], expected_get[key][1],input_data)
