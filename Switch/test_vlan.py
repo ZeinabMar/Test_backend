@@ -3,6 +3,7 @@ import logging
 import json
 from Switch.bridge_funcs import *
 from collections import namedtuple
+from config import Bridge_conf_service, Bridge_conf_custom
 
 pytestmark = [pytest.mark.env_name("REST_env"), pytest.mark.rest_dev("olt_nms")]
 
@@ -12,18 +13,15 @@ logger = logging.getLogger(__name__)
 Vlan = namedtuple('Vlan', ['vlanId', 'vlanTypeId', 'vlanState', 'vlanBridgeId', 'result', 'shelfId', 'slotId', 'nodeId'])
 Vlan.__new__.__defaults__ = (100, 'CUSTOMER', 1, 1, 'Pass', 1, 1, None)
 
-VLAN_DATA = [
-    Vlan(10), Vlan(20), Vlan(150), Vlan(1000), Vlan(2000), Vlan(3400),
+VLAN_Svlan_Data = [
+    
     Vlan(10, 'SERVICE_MULTIPOINT_MULTIPOINT'), Vlan(20, 'SERVICE_POINT_POINT'), Vlan(30, 'SERVICE_ROOTED_MUTLIPOINT'),
     Vlan(3500, 'SERVICE_MULTIPOINT_MULTIPOINT'), Vlan(2500, 'SERVICE_POINT_POINT'), Vlan(1100, 'SERVICE_ROOTED_MUTLIPOINT')
 ]
 
-BridgeData_SVLAN = filter(lambda x: x.bridgeProtocol in ['PROVIDER_MSTP', 'PROVIDER_RSTP', 'PROVIDER_MSTP_EDGE',
-                                                         'PROVIDER_RSTP_EDGE'], BRIDGE_DATA)
-
-BridgeData_CVLAN = filter(lambda x: x.bridgeProtocol in ['IEEE_VLAN_BRIDGE', 'MSTP', 'MSTPRING', 'RPVSTP',
-                                                   'RSTP_VLAN_BRIDGE', 'RSTP_VLAN_BRIDGE_RING',
-                                                   'PROVIDER_MSTP_EDGE', 'PROVIDER_RSTP_EDGE'], BRIDGE_DATA)
+VLAN_Cvlan_Data = [
+    Vlan(10), Vlan(20), Vlan(150), Vlan(1000), Vlan(2000), Vlan(3400),
+]
 
 
 # noinspection PyShadowingNames
@@ -55,27 +53,45 @@ def vlan_config(rest_interface_module, node_id, vlan_data=Vlan(), method='POST')
         assert response.status_code in range(400, 505), f'{method} ERROR in VLAN config {data._asdict}'
 
 
-@pytest.mark.parametrize('bridge_setup', BridgeData_CVLAN, indirect=True)
-def test_set_cvlan(rest_interface_module, node_id, bridge_setup):
-    # set all cvlan
-    for vlan in VLAN_DATA:
-        if vlan.vlanTypeId == 'CUSTOMER':
-            vlan_config(rest_interface_module, node_id, vlan, method='POST')
-    # remove all cvlan
-    for vlan in VLAN_DATA:
-        if vlan.vlanTypeId == 'CUSTOMER':
-            vlan_config(rest_interface_module, node_id, vlan, method='DELETE')
+
+def test_vlan_management(rest_interface_module, node_id):
+
+    bridge_config(rest_interface_module, node_id, Bridge_conf_service[0], method='POST')
+    for vlan in VLAN_Svlan_Data:
+        vlan_config(rest_interface_module, node_id, vlan, method='POST')
+    for vlan in VLAN_Svlan_Data:    
+        vlan_config(rest_interface_module, node_id, vlan, method='DELETE')
+
+    bridge_config(rest_interface_module, node_id, Bridge_conf_service[0], method='DLETE')
+
+    bridge_config(rest_interface_module, node_id, Bridge_conf_custom[0], method='POST')
+    for vlan in VLAN_Cvlan_Data:
+        vlan_config(rest_interface_module, node_id, vlan, method='POST')
+    for vlan in VLAN_Cvlan_Data:    
+        vlan_config(rest_interface_module, node_id, vlan, method='DELETE')
+    bridge_config(rest_interface_module, node_id, Bridge_conf_custom[0], method='DELETE')
 
 
-# service rooted multipoint has a wrote "mutlipoint" in backend ... modify it
-@pytest.mark.parametrize('bridge_setup', BridgeData_SVLAN, indirect=True)
-def test_set_svlan(rest_interface_module, node_id, bridge_setup):
-    # set all svlans together
-    for vlan in VLAN_DATA:
-        if 'SERVICE' in vlan.vlanTypeId:
-            vlan_config(rest_interface_module, node_id, vlan, method='POST')
-    # remove all svlans
-    for vlan in VLAN_DATA:
-        if 'SERVICE' in vlan.vlanTypeId:
-            vlan_config(rest_interface_module, node_id, vlan, method='DELETE')
+# @pytest.mark.parametrize('bridge_setup', BridgeData_CVLAN, indirect=True)
+# def test_set_cvlan(rest_interface_module, node_id, bridge_setup):
+#     # set all cvlan
+#     for vlan in VLAN_DATA:
+#         if vlan.vlanTypeId == 'CUSTOMER':
+#             vlan_config(rest_interface_module, node_id, vlan, method='POST')
+#     # remove all cvlan
+#     for vlan in VLAN_DATA:
+#         if vlan.vlanTypeId == 'CUSTOMER':
+#             vlan_config(rest_interface_module, node_id, vlan, method='DELETE')
 
+
+# # service rooted multipoint has a wrote "mutlipoint" in backend ... modify it
+# @pytest.mark.parametrize('bridge_setup', BridgeData_SVLAN, indirect=True)
+# def test_set_svlan(rest_interface_module, node_id, bridge_setup):
+#     # set all svlans together
+#     for vlan in VLAN_DATA:
+#         if 'SERVICE' in vlan.vlanTypeId:
+#             vlan_config(rest_interface_module, node_id, vlan, method='POST')
+#     # remove all svlans
+#     for vlan in VLAN_DATA:
+#         if 'SERVICE' in vlan.vlanTypeId:
+#             vlan_config(rest_interface_module, node_id, vlan, method='DELETE')

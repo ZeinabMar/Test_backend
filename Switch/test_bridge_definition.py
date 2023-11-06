@@ -21,7 +21,7 @@ BRIDGE_DATA = (
     # Bridge(1, 'PROVIDER_MSTP', 1000, 29, maxAge=7, maxHops=35, priority=40960),
     # Bridge(1, 'PROVIDER_MSTP_EDGE', 100, 30, maxAge=6, maxHops=39, priority=45056),
     # Bridge(1, 'PROVIDER_RSTP', 1000, 29, 2, 7, priority=49152),
-    # Bridge(1, 'PROVIDER_RSTP_EDGE', 1000, 29, 2, 7, priority=53248),
+    Bridge(1, 'PROVIDER_RSTP_EDGE', 1000, 29, 2, 7, priority=53248),
     # Bridge(1, 'PROVIDER_MSTP', 1500, helloTime=3, result='Fail'),
     # Bridge(1, 'RSTP_RING', 1600, maxHops=21, result='Fail'),
     # Bridge(1, 'RSTP', 1000, 100, 23, 6, priority=53248, result='Fail'),

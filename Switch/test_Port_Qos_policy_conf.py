@@ -17,7 +17,7 @@ logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
 Port_Qos_Policy = namedtuple('Port_Qos_Policy', ['index' ,'ifIndex', 'qosIfPolicyName','shelfId', 'slotId', 'result', 'nodeId'])
-Port_Qos_Policy.__new__.__defaults__ = (None, 1, "C", "", 1, 1, "Pass", None)
+Port_Qos_Policy.__new__.__defaults__ = (None, 1, None, 1, 1, "Pass", None)
 Port_Qos_Policy_DATA = (
     Port_Qos_Policy(1, None, "policy1", 1, 1, "Pass", None),
     Port_Qos_Policy(2, None, "policy2", 1, 1, "Pass", None),
@@ -26,7 +26,7 @@ Port_Qos_Policy_DATA = (
 def Port_Qos_Policy_config(rest_interface_module, node_id, Port_Qos_Policy_data=Port_Qos_Policy(), method='POST'):
     data = Port_Qos_Policy_data._replace(nodeId=node_id)
     logger.info(f"TRY TO {method} Port_Qos_Policy CONFIG ...")
-    if method == 'POST':  
+    if method == 'POST' or method == 'DELETE':  
         url = "/api/gponconfig/sp5100/portsqospolicyconfig/update"
         response = rest_interface_module.post_request(url, data._asdict()) 
 
@@ -41,24 +41,23 @@ def Port_Qos_Policy_config(rest_interface_module, node_id, Port_Qos_Policy_data=
         logger.info(f'data.indexxxxx {data.index}')
         #*********************************************************
         if method == 'POST': 
-            if (data.index == 3) or (data.index == 5):
-                assert len(input_data["qosIfPolicyName"]) == 0,f'IN Everythig is ok Port_Qos_Policy config(after {method} in index 3 or 5'
-            else:
-                assert (input_data["qosIfPolicyName"] == data.qosIfPolicyName and
+            assert (input_data["qosIfPolicyName"] == data.qosIfPolicyName and
                         len(input_data["qosIfPolicyName"])!=0),f'IN Everythig is ok Port_Qos_Policy config(after {method}'
-
-            logger.info(f'every thing ok after Port_Qos_Policy config(after {method} ')
+        if method == 'DELETE': 
+            assert len(input_data["qosIfPolicyName"]) == 0,f'IN Everythig is ok Port_Qos_Policy config(after {method} in index 3 or 5'       
+        logger.info(f'every thing ok after Port_Qos_Policy config(after {method} ')
+            
     else:
         assert response.status_code in range(400, 505), f'{method} SET INCORRECT DATA in Port_Qos_Policy config {data._asdict}'
 
 
 def test_Port_Qos_Policy_config(rest_interface_module, node_id):
-    bridge_config(rest_interface_module, node_id, Bridge_conf(), method='POST')
+    bridge_config(rest_interface_module, node_id, Bridge_conf_s_c[0], method='POST')
     for vlan in VLAN_DATA_conf_S_C:
         vlan_config(rest_interface_module, node_id, vlan, method='POST')  
     #**************************************************************************************************************
     Qos_Manage_config(rest_interface_module, node_id, Qos_Manage_conf()._replace(qosState=1),method='POST')
-    #*******************************************************************************************************
+    # *******************************************************************************************************
     Qos_Class_config(rest_interface_module, node_id, Qos_Class_conf_DATA[0], method='add')
     Qos_Class_config(rest_interface_module, node_id, Qos_Class_conf_DATA[1], method='add')
     #*********************************************************************************************
@@ -68,16 +67,17 @@ def test_Port_Qos_Policy_config(rest_interface_module, node_id):
     for port in range(1,2):
         for port_policy in Port_Qos_Policy_DATA:
             Port_Qos_Policy_config(rest_interface_module, node_id, port_policy._replace(ifIndex=port), method='POST')
+        Port_Qos_Policy_config(rest_interface_module, node_id, Port_Qos_Policy()._replace(ifIndex=port), method='DELETE')
     #**********************************************************************************
-    # Qos_Policy_config(rest_interface_module, node_id, Qos_Policy_Delete_Config[0], method='DELETE')
-    # Qos_Policy_config(rest_interface_module, node_id, Qos_Policy_Delete_Config[1], method='DELETE')
-    # #*********************************************************************************************            
-    # Qos_Class_config(rest_interface_module, node_id, Qos_Class_conf_DATA[2], method='DELETE')
-    # Qos_Class_config(rest_interface_module, node_id, Qos_Class_conf_DATA[3], method='DELETE')
-    # #********************************************************************************************************
-    # Qos_Manage_config(rest_interface_module, node_id, Qos_Manage_conf(),method='POST')
-    # #***************************************************************************************************************
-    # for vlan in VLAN_DATA_conf_S_C:
-        # vlan_config(rest_interface_module, node_id, vlan, method='DELETE')
-    # bridge_config(rest_interface_module, node_id, Bridge_conf(), method='DELETE')
+    Qos_Policy_config(rest_interface_module, node_id, Qos_Policy_Delete_Config[0], method='DELETE')
+    Qos_Policy_config(rest_interface_module, node_id, Qos_Policy_Delete_Config[1], method='DELETE')
+    #*********************************************************************************************            
+    Qos_Class_config(rest_interface_module, node_id, Qos_Class_conf_DATA[2], method='DELETE')
+    Qos_Class_config(rest_interface_module, node_id, Qos_Class_conf_DATA[3], method='DELETE')
+    # ********************************************************************************************************
+    Qos_Manage_config(rest_interface_module, node_id, Qos_Manage_conf(),method='DELETE')
+    #***************************************************************************************************************
+    for vlan in VLAN_DATA_conf_S_C:
+        vlan_config(rest_interface_module, node_id, vlan, method='DELETE')
+    bridge_config(rest_interface_module, node_id, Bridge_conf_s_c[0], method='DELETE')
 

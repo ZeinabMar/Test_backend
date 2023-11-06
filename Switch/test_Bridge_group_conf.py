@@ -16,7 +16,7 @@ logger = logging.getLogger(__name__)
 
 Switch = namedtuple('Switch', ['ethIfIndex', 'index', 'bridgeIfSwitchPort', 'bridgeIfBridgeGroupId', 
                     'bridgeIfStp', 'result', 'shelfId', 'slotId', 'nodeId'])
-Switch.__new__.__defaults__ = (None, 9, -1, -1, -1, "Pass", 1, 1, None)
+Switch.__new__.__defaults__ = (None, 9, 1, 1, 1, "Pass", 1, 1, None)
 Switch_DATA = (
     Switch(None, 0, 1, 1, -1),
     Switch(None, 1, 1, 1, 1),
@@ -27,7 +27,7 @@ Switch_DATA = (
     Switch(None, 6, -1 , -1, 1, "Fail"),
     Switch(None, 7, -1, 1, 1, "Fail"),
     Switch(None, 8, -1 , 1, -1, "Fail"),
-    Switch(None, 9, 1, 1, 1)
+    # Switch(None, 9, 1, 1, 1)
 )
 
 def switch_config(rest_interface_module, node_id, SWITCH_data=Switch(), method='POST'):
@@ -107,19 +107,16 @@ def delete_switch():
 
 def test_switch_config(rest_interface_module, node_id):
     bridge_config(rest_interface_module, node_id, Bridge_conf(), method='POST')
-    for vlan in VLAN_DATA_conf:
+    for vlan in VLAN_DATA_conf_CUSTOM:
         vlan_config(rest_interface_module, node_id, vlan, method='POST')  
+        
     for port in range(9,10):
-        counter=0
         for stw_data in Switch_DATA:
-            counter=counter+1  
-            if counter==10:
-                # pass
-                switch_config(rest_interface_module, node_id, stw_data._replace(ethIfIndex=port), method='DELETE')
-            else:
-                switch_config(rest_interface_module, node_id, stw_data._replace(ethIfIndex=port), method='POST')       
+            switch_config(rest_interface_module, node_id, stw_data._replace(ethIfIndex=port), method='POST')  
+    for port in range(9,10):             
+        switch_config(rest_interface_module, node_id, Switch()._replace(ethIfIndex=port), method='DELETE')
 
-    for vlan in VLAN_DATA_conf:
+    for vlan in VLAN_DATA_conf_CUSTOM:
         vlan_config(rest_interface_module, node_id, vlan, method='DELETE')
     bridge_config(rest_interface_module, node_id, Bridge_conf(), method='DELETE')
          

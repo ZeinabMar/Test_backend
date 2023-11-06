@@ -55,7 +55,7 @@ def Qos_Class_config(rest_interface_module, node_id, Qos_Class_data=Qos_Class(),
         logger.info(f'data after read input_data {input_data}')
         #*********************************************************
         if method == 'add': 
-            assert str(input_data["qosClassVlan"]).find(str(data.qosClassVlanSet)) == 1 ,f'IN Everythig is ok Qos_Class config(after {method}'
+            assert str(input_data["qosClassVlan"]).find(str(data.qosClassVlanSet)) != -1 ,f'IN Everythig is ok Qos_Class config(after {method}'
             logger.info(f'every thing ok after Qos_Class config(after {method} ')
             # check.equal(str(input_data[0]["ethIfIndex"]) ,str(data.ethIfIndex), f'IN {data.ethIfIndex} Everythig is ok switch config(after {method}')
         elif method == 'POST':
@@ -97,7 +97,7 @@ def test_Qos_Class_config(rest_interface_module, node_id):
     Qos_Class_config(rest_interface_module, node_id, Qos_Class_DATA[9], method='DELETE')
     Qos_Class_config(rest_interface_module, node_id, Qos_Class_DATA[10], method='DELETE')
     #*******************************************************************************************************
-    Qos_Manage_config(rest_interface_module, node_id, Qos_Manage_conf(),method='POST')
+    Qos_Manage_config(rest_interface_module, node_id, Qos_Manage_conf(),method='DELETE')
     #**************************************************************************************************************
     for vlan in VLAN_DATA_conf_S_C:
             vlan_config(rest_interface_module, node_id, vlan, method='DELETE')

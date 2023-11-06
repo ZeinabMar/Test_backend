@@ -17,13 +17,14 @@ Qos_Manage_DATA = (
     Qos_Manage(1, -1, 1, 1),
     Qos_Manage(1, -1, 1, 1, "FAIL"),#invalis repeated data
     Qos_Manage(1, 0, 1, 1, "FAIL"),#invalis
-    Qos_Manage(2, 1, 1, 1, "FAIL")#invalid
+    Qos_Manage(2, 1, 1, 1, "FAIL"),#invalid
+    Qos_Manage(1, 1, 1, 1)
 )
 
 def Qos_Manage_config(rest_interface_module, node_id, QoS_MANAGE_data=Qos_Manage(), method='POST'):
     data = QoS_MANAGE_data._replace(nodeId=node_id)
     logger.info(f"TRY TO {method} QoS_MANAGE CONFIG ...")
-    if method == 'POST':
+    if method == 'POST' or method == "DELETE":
         url = "/api/gponconfig/sp5100/qosmanagement/update"
         response = rest_interface_module.post_request(url, data._asdict())
 
@@ -52,4 +53,4 @@ def Qos_Manage_config(rest_interface_module, node_id, QoS_MANAGE_data=Qos_Manage
 def test_Qos_Manage_config(rest_interface_module, node_id):
     for qos in Qos_Manage_DATA:
         Qos_Manage_config(rest_interface_module, node_id, qos, method='POST')
-    Qos_Manage_config(rest_interface_module, node_id, qos, method='DELETE')
+    Qos_Manage_config(rest_interface_module, node_id, Qos_Manage(), method='DELETE')

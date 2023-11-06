@@ -26,7 +26,8 @@ uplink_vlan_DATA = (
     uplink_vlan(None, 5, "HYBRID", 10, "10-12", "10"),
     uplink_vlan(None, 6, "ACCESS", -1, "10-12", "10", "10-12", -1, "Fail"),
     uplink_vlan(None, 7, "TRUNK", 11, "10-12", "10", "10-12", -1, "Fail"),
-    uplink_vlan(None, 8, "HYBRID", 12, "", "10", "10-12", -1, "Fail")
+    uplink_vlan(None, 8, "HYBRID", 12, "", "10", "10-12", -1, "Fail"),
+    uplink_vlan(None, 9, "HYBRID", -1, "11-12", "11-12", "", -1)
     )
 
 def uplink_vlan_config(rest_interface_module, node_id, UPLINK_VLAN_data=uplink_vlan(), method='POST'):
@@ -52,6 +53,7 @@ def uplink_vlan_config(rest_interface_module, node_id, UPLINK_VLAN_data=uplink_v
 
         if method == 'POST':
             if(data.vlanMode=="ACCESS"):
+                logger.info(f'ACCESS ')
                 assert (str(input_data["ethIfIndex"]) == str(data.ethIfIndex) and
                         str(input_data["vlanMode"])=="ACCESS" and 
                         str(input_data["pvId"]) == str(data.pvId),
@@ -100,7 +102,7 @@ def test_uplink_vlan_config(rest_interface_module, node_id):
     # ****************************************************************************************************************************
     for vlan in VLAN_DATA_conf_CUSTOM:
         vlan_config(rest_interface_module, node_id, vlan, method='POST')  
-    #**********************************************************************************************************************
+    # **********************************************************************************************************************
     for port in range(4,5):
         switch_config(rest_interface_module, node_id, Switch_conf()._replace(ethIfIndex=port, index=4), method='POST')
         for up_vlan in uplink_vlan_DATA:
@@ -125,9 +127,10 @@ def test_uplink_vlan_config(rest_interface_module, node_id):
                 uplink_vlan_config(rest_interface_module, node_id, up_vlan._replace(ethIfIndex=port), method='POST') 
                 uplink_vlan_config(rest_interface_module, node_id, up_vlan._replace(ethIfIndex=port), method='DELETE')  
                 switch_config(rest_interface_module, node_id, Switch_conf()._replace(ethIfIndex=port, index=9), method='DELETE')
-                switch_config(rest_interface_module, node_id, Switch_conf()._replace(ethIfIndex=port, index=4), method='POST')
-            
-    switch_config(rest_interface_module, node_id, Switch_conf()._replace(ethIfIndex=port,index=9), method='POST')
+                switch_config(rest_interface_module, node_id, Switch_conf()._replace(ethIfIndex=port, index=4), method='POST') 
+
+    for port in range(4,5):            
+        switch_config(rest_interface_module, node_id, Switch_conf()._replace(ethIfIndex=port, index=9), method='DELETE')
     #*********************************************************************************************************************  
     for vlan in VLAN_DATA_conf_CUSTOM:
         vlan_config(rest_interface_module, node_id, vlan, method='DELETE')
