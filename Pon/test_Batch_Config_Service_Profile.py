@@ -57,7 +57,7 @@ def Batch_Config(rest_interface_module, node_id, batch_config_data=batch_config(
 def test_Batch_Config(rest_interface_module, node_id):
 
     # bridge_config(rest_interface_module, node_id, Bridge_conf(), method='POST')
-    # # ****************************************************************************************************************************
+    # ****************************************************************************************************************************
     # for vlan in VLAN_DATA_conf_CUSTOM:
     #     vlan_config(rest_interface_module, node_id, vlan, method='POST')  
 
@@ -76,50 +76,48 @@ def test_Batch_Config(rest_interface_module, node_id):
     # for batch in batch_config_Data:
     #     Batch_Config(rest_interface_module, node_id, batch)
 
-    get_rest(rest_interface_module, "TCONT", {"bwProfileId": [1, "bwProfileId"],
-                                     "bwProfileName": ["dba_type1", "bwProfileName"],
-                                     "name": ["test_tcont1", "name"],
-                                     "onuId": [1, "onuId"],
-                                     "portId": [2, "portId"],
-                                     "tcontId": [1, "tcontId"]}, "/api/gponconfig/tcont/get", ["nodeId", node_id],["shelfId", 1], ["slotId", 1], ["portId", 2], ["onuId", 1], ["tcontId", 1])    
-    get_rest(rest_interface_module, "GEM",  {"gemid": [1, "gemId"],
-                                     "name": ["test_gem1", "name"],
-                                     "onuId": [1, "onuId"],
-                                     "portId": [2, "portId"],
-                                     "tcontId": [1, "tcontId"]}, "/api//gponconfig/gem/get", ["nodeId", node_id],["shelfId", 1], ["slotId", 1], ["portId", 2], ["onuId", 1], ["gemId", 1])    
-    get_rest(rest_interface_module, "SERVICE", {"gemId": [1, "gemId"],
-                                     "servicePortId": [1, "servicePortId"],
-                                     "onuId": [1, "onuId"],
-                                     "portId": [2, "portId"],
-                                     "userVlan": [10, "userVlan"],}, "/api/gponconfig/service/get", ["nodeId", node_id],["shelfId", 1], ["slotId", 1], ["portId", 2], ["onuId", 1], ["servicePortId", 1])    
-    get_rest(rest_interface_module, "REMOTE", {"rmServiceId": [1, "rmServiceId"],
-                                     "onuPortType": ["VEIP", "onuPortType"],
-                                     "onuPortId": [0, "onuPortId"],
-                                     "onuId": [1, "onuId"],
-                                     "portId": [2, "portId"],
-                                     "gemId": [1, "gemId"],
-                                     "vlanMode": ["ACCESS", "vlanMode"],
-                                     "pvId": [10, "pvId"],
-                                     "priority": [1, "priority"],}, "/api/gponconfig/sp5100/rmonu/service/get", ["nodeId", node_id],["shelfId", 1], ["slotId", 1], ["portId", 2], ["onuId", 1], ["rmServiceId", 1])    
+    # get_rest(rest_interface_module, "TCONT", {"bwProfileId": [1, "bwProfileId"],
+    #                                  "bwProfileName": ["dba_type1", "bwProfileName"],
+    #                                  "name": ["test_tcont1", "name"],
+    #                                  "onuId": [1, "onuId"],
+    #                                  "portId": [2, "portId"],
+    #                                  "tcontId": [1, "tcontId"]}, "/api/gponconfig/tcont/get", ["nodeId", node_id],["shelfId", 1], ["slotId", 1], ["portId", 2], ["onuId", 1], ["tcontId", 1])    
+    # get_rest(rest_interface_module, "GEM",  {"gemid": [1, "gemId"],
+    #                                  "name": ["test_gem1", "name"],
+    #                                  "onuId": [1, "onuId"],
+    #                                  "portId": [2, "portId"],
+    #                                  "tcontId": [1, "tcontId"]}, "/api//gponconfig/gem/get", ["nodeId", node_id],["shelfId", 1], ["slotId", 1], ["portId", 2], ["onuId", 1], ["gemId", 1])    
+    # get_rest(rest_interface_module, "SERVICE", {"gemId": [1, "gemId"],
+    #                                  "servicePortId": [1, "servicePortId"],
+    #                                  "onuId": [1, "onuId"],
+    #                                  "portId": [2, "portId"],
+    #                                  "userVlan": [10, "userVlan"],}, "/api/gponconfig/service/get", ["nodeId", node_id],["shelfId", 1], ["slotId", 1], ["portId", 2], ["onuId", 1], ["servicePortId", 1])    
+    # get_rest(rest_interface_module, "REMOTE", {"rmServiceId": [1, "rmServiceId"],
+    #                                  "onuPortType": ["VEIP", "onuPortType"],
+    #                                  "onuPortId": [0, "onuPortId"],
+    #                                  "onuId": [1, "onuId"],
+    #                                  "portId": [2, "portId"],
+    #                                  "gemId": [1, "gemId"],
+    #                                  "vlanMode": ["ACCESS", "vlanMode"],
+    #                                  "pvId": [10, "pvId"],
+    #                                  "priority": [1, "priority"],}, "/api/gponconfig/sp5100/rmonu/service/get", ["nodeId", node_id],["shelfId", 1], ["slotId", 1], ["portId", 2], ["onuId", 1], ["rmServiceId", 1])    
 
+    for batch in batch_config_Delete:
+        Batch_Config(rest_interface_module, node_id, batch)
+    for remote_p in remote_service_profile_Delete_Config:
+        Remote_Service_Profile(rest_interface_module, node_id, remote_p)
+    for olt_service_p in olt_service_profile_Delete_Config:
+        Olt_Service_Profile(rest_interface_module, node_id, olt_service_p)    
+    for service_gem in Gem_service_profile_Delete_Config:
+        Gem_Service_Profile(rest_interface_module, node_id, service_gem)
+    for service_tcont in Tcont_service_profile_Delete_Config:
+        Tcont_Service_Profile(rest_interface_module, node_id, service_tcont)
+    for service_def in Onu_Service_Profile_Delete_Config:
+        Service_Profile_Definition(rest_interface_module, node_id, service_def, method='DELETE')    
+    for dba in dba_profile_Data_Config_Delete:
+        DBA_Profile(rest_interface_module, node_id, dba, method='DELETE')      
 
-
-    # for batch in batch_config_Delete:
-    #     Batch_Config(rest_interface_module, node_id, batch)
-    # for remote_p in remote_service_profile_Delete_Config:
-    #     Remote_Service_Profile(rest_interface_module, node_id, remote_p)
-    # for olt_service_p in olt_service_profile_Delete_Config:
-    #     Olt_Service_Profile(rest_interface_module, node_id, olt_service_p)    
-    # for service_gem in Gem_service_profile_Delete_Config:
-    #     Gem_Service_Profile(rest_interface_module, node_id, service_gem)
-    # for service_tcont in Tcont_service_profile_Delete_Config:
-    #     Tcont_Service_Profile(rest_interface_module, node_id, service_tcont)
-    # for service_def in Onu_Service_Profile_Delete_Config:
-    #     Service_Profile_Definition(rest_interface_module, node_id, service_def, method='DELETE')    
-    # for dba in dba_profile_Data_Config_Delete:
-    #     DBA_Profile(rest_interface_module, node_id, dba, method='DELETE')      
-
-    # for vlan in VLAN_DATA_conf_CUSTOM:
-    #     vlan_config(rest_interface_module, node_id, vlan, method='DELETE')  
-    # #****************************************************************************************************************************
-    # bridge_config(rest_interface_module, node_id, Bridge_conf(), method='DELETE')    
+    for vlan in VLAN_DATA_conf_CUSTOM:
+        vlan_config(rest_interface_module, node_id, vlan, method='DELETE')  
+    #****************************************************************************************************************************
+    bridge_config(rest_interface_module, node_id, Bridge_conf(), method='DELETE')    

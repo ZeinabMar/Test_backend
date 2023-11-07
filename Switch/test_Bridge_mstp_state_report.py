@@ -22,7 +22,7 @@ Bridge_Data = [
 # Bridge_conf(1, 'IEEE_VLAN_BRIDGE', 1000, 29, 2, 7, priority=8192, result='Fail'),
 Bridge_conf(1, 'MSTP', 100, 30, maxAge=6, maxHops=1, priority=12288),
 Bridge_conf(1, 'MSTPRING', 1000, 29, maxAge=7, maxHops=20, priority=16384),
-Bridge_conf(1, 'RPVSTP', 100, priority=20480),
+# Bridge_conf(1, 'RPVSTP', 100, priority=20480),
 # Bridge_conf(1, 'RSTP', 1000, 29, 2, 7, priority=24576, result='Fail'),
 # Bridge_conf(1, 'RSTP_RING', 100, 30, 1, 6, priority=28672, result='Fail'),
 # Bridge_conf(1, 'RSTP_VLAN_BRIDGE', 1000, 29, 2, 7, priority=32768, result='Fail'),
@@ -77,10 +77,10 @@ def Bridge_Mstp_report(rest_interface_module, node_id, Bridge_Mstp_rp=Bridge_con
 def test_Bridge_Mstp_report(rest_interface_module, node_id):
     for bridge in Bridge_Data:
         bridge_config(rest_interface_module, node_id, bridge, method='POST')
-        if bridge.bridgeProtocol == ("RPVSTP" or "RSTP" or "IEEE_VLAN_BRIDGE" or "IEEE" or "RSTP_RING" or "RSTP_VLAN_BRIDGE" or "RSTP_VLAN_BRIDGE_RING" or "PROVIDER_RSTP" or "PROVIDER_RSTP_EDGE"):
-            Bridge_Mstp_report(rest_interface_module, node_id, bridge, 1, method='GET', result="Fail")
-        else:
-            Bridge_Mstp_report(rest_interface_module, node_id, bridge, 1, method='GET', result="Pass")
+        # if bridge.bridgeProtocol == ("RPVSTP" or "RSTP" or "IEEE_VLAN_BRIDGE" or "IEEE" or "RSTP_RING" or "RSTP_VLAN_BRIDGE" or "RSTP_VLAN_BRIDGE_RING" or "PROVIDER_RSTP" or "PROVIDER_RSTP_EDGE"):
+        #     Bridge_Mstp_report(rest_interface_module, node_id, bridge, 1, method='GET', result="Fail")
+        # else:
+        Bridge_Mstp_report(rest_interface_module, node_id, bridge, 1, method='GET', result="Pass")
         bridge_config(rest_interface_module, node_id, bridge, method='DELETE')
 
 

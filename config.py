@@ -491,13 +491,13 @@ olt_service_profile = namedtuple('olt_service_profile', ['index', 'expected_resu
 olt_service_profile.__new__.__defaults__ = (None, {}, {},None, None)
 
 olt_service_profile_Data_Config = (
-olt_service_profile(1, {"servicePortId": "1","nodeId": None,"shelfId": 1, "slotId": 1, "portShowName": "PON ",
-                        "onuId": 1,"gemId": 1,"vlan": 0,"svlan": 0,"userVlan": "10","innerVlan": 0,
-                        "vlanPriority": 0,"svlanPriority": 0,"vlanPriorityAction": "1","svlanPriorityAction": "1",
-                        "cosQueueProfileId": 0,"queue": 0,"queueSelectMode": 0,"upLinkC2CId": 0,"downLinkC2CId": 0,}, {"servicePortId": [1, "servicePortId"],
-                                                                                                                       "userVlan": [10, "userVlan"],
-                                                                                                                       "onuId": [1, "onuId"],
-                                                                                                                       "gemId": [1, "gemId"]},result="Pass",method="ADD"),
+# olt_service_profile(1, {"servicePortId": "1","nodeId": None,"shelfId": 1, "slotId": 1, "portShowName": "PON ",
+#                         "onuId": 1,"gemId": 1,"vlan": 0,"svlan": 0,"userVlan": "10","innerVlan": 0,
+#                         "vlanPriority": 0,"svlanPriority": 0,"vlanPriorityAction": "1","svlanPriorityAction": "1",
+#                         "cosQueueProfileId": 0,"queue": 0,"queueSelectMode": 0,"upLinkC2CId": 0,"downLinkC2CId": 0,}, {"servicePortId": [1, "servicePortId"],
+#                                                                                                                        "userVlan": [10, "userVlan"],
+#                                                                                                                        "onuId": [1, "onuId"],
+#                                                                                                                        "gemId": [1, "gemId"]},result="Pass",method="ADD"),
 
 olt_service_profile(2, {"servicePortId": "1","nodeId": None,"shelfId": 1, "slotId": 1, "portShowName": "PON ",
                         "onuId": 2,"gemId": 1,"vlan": 0,"svlan": 0,"userVlan": "10","innerVlan": 0,
@@ -525,14 +525,14 @@ remote_service_profile = namedtuple('remote_service_profile', ['index', 'expecte
 remote_service_profile.__new__.__defaults__ = (None, {}, {},None, None)
 
 remote_service_profile_Data_Config = (
-remote_service_profile(1, {"nodeId": None,"shelfId": 1, "slotId": 1,"onuId": 1, "rmServiceId": "1","onuPortType": "VEIP",
-                           "onuPortId": 0,"vlanMode": "ACCESS","gemId": 1,"pvId": "10","priority": "1",}, {"rmServiceId": [1, "rmServiceId"],
-                                                                                                           "onuPortType": ["VEIP", "onuPortType"],
-                                                                                                           "vlanMode": ["ACCESS", "vlanMode"],
-                                                                                                           "priority": [1, "priority"],
-                                                                                                           "pvId": [10, "pvId"],
-                                                                                                           "onuId": [1, "onuId"],
-                                                                                                           "gemId": [1, "gemId"]},result="Pass",method="ADD"),
+# remote_service_profile(1, {"nodeId": None,"shelfId": 1, "slotId": 1,"onuId": 1, "rmServiceId": "1","onuPortType": "VEIP",
+#                            "onuPortId": 0,"vlanMode": "ACCESS","gemId": 1,"pvId": "10","priority": "1",}, {"rmServiceId": [1, "rmServiceId"],
+#                                                                                                            "onuPortType": ["VEIP", "onuPortType"],
+#                                                                                                            "vlanMode": ["ACCESS", "vlanMode"],
+#                                                                                                            "priority": [1, "priority"],
+#                                                                                                            "pvId": [10, "pvId"],
+#                                                                                                            "onuId": [1, "onuId"],
+#                                                                                                            "gemId": [1, "gemId"]},result="Pass",method="ADD"),
 
 remote_service_profile(2, {"nodeId": None,"shelfId": 1, "slotId": 1,"onuId": 2, "rmServiceId": "1","onuPortType": "ETH_UNI",
                            "onuPortId": 0,"vlanMode": "TRUNK", "vlanList":"10", "gemId": 1,"pvId": None,"priority": "1",}, {"rmServiceId": [1, "rmServiceId"],

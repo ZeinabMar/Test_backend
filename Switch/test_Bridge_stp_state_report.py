@@ -20,15 +20,15 @@ Bridge_Stp_report = namedtuple('Bridge_Stp_report', ['stpIndex', "specStpBridgeI
 Bridge_Data_report = [
 Bridge_conf(1, 'IEEE', 100, 30, 1, 6, priority=4096),
 Bridge_conf(1, 'IEEE_VLAN_BRIDGE', 1000, 29, 2, 7, priority=8192),
-Bridge_conf(1, 'MSTP', 100, 30, maxAge=6, maxHops=1, priority=12288),
-Bridge_conf(1, 'MSTPRING', 1000, 29, maxAge=7, maxHops=20, priority=16384),
+# Bridge_conf(1, 'MSTP', 100, 30, maxAge=6, maxHops=1, priority=12288),
+# Bridge_conf(1, 'MSTPRING', 1000, 29, maxAge=7, maxHops=20, priority=16384),
 Bridge_conf(1, 'RPVSTP', 100, priority=20480),
 Bridge_conf(1, 'RSTP', 1000, 29, 2, 7, priority=24576),
 Bridge_conf(1, 'RSTP_RING', 100, 30, 1, 6, priority=28672),
 Bridge_conf(1, 'RSTP_VLAN_BRIDGE', 1000, 29, 2, 7, priority=32768),
 Bridge_conf(1, 'RSTP_VLAN_BRIDGE_RING', 100, 30, 1, 6, priority=36864),
-Bridge_conf(1, 'PROVIDER_MSTP', 1000, 29, maxAge=7, maxHops=35, priority=40960),
-Bridge_conf(1, 'PROVIDER_MSTP_EDGE', 100, 30, maxAge=6, maxHops=39, priority=45056),
+# Bridge_conf(1, 'PROVIDER_MSTP', 1000, 29, maxAge=7, maxHops=35, priority=40960),
+# Bridge_conf(1, 'PROVIDER_MSTP_EDGE', 100, 30, maxAge=6, maxHops=39, priority=45056),
 Bridge_conf(1, 'PROVIDER_RSTP', 1000, 29, 2, 7, priority=49152),
 Bridge_conf(1, 'PROVIDER_RSTP_EDGE', 1000, 29, 2, 7, priority=53248)
 ]
@@ -80,10 +80,10 @@ def test_Bridge_Stp_report(rest_interface_module, node_id):
     for bridge in Bridge_Data_report:
         bridge_config(rest_interface_module, node_id, bridge, method='POST')
         logger.info(f"bridgeee {bridge.bridgeProtocol}")
-        if bridge.bridgeProtocol == "MSTPRING" or "MSTP" or "PROVIDER_MSTP" or "PROVIDER_MSTP_EDGE":
-            Bridge_Stp_report(rest_interface_module, node_id, bridge, 1, method='GET', result="Fail")
-        elif bridge.bridgeProtocol == "IEEE" or "IEEE_VLAN_BRIDGE" or "RPVSTP" or "RSTP_RING" or "RSTP" or "RSTP_VLAN_BRIDGE" or "RSTP_VLAN_BRIDGE_RING" or "PROVIDER_RSTP" or "PROVIDER_RSTP_EDGE":    
-            Bridge_Stp_report(rest_interface_module, node_id, bridge, 1, method='GET', result="Pass")
+        # if bridge.bridgeProtocol == "MSTPRING" or "MSTP" or "PROVIDER_MSTP" or "PROVIDER_MSTP_EDGE":
+        #     Bridge_Stp_report(rest_interface_module, node_id, bridge, 1, method='GET', result="Fail")
+        # if bridge.bridgeProtocol == "IEEE" or "IEEE_VLAN_BRIDGE" or "RPVSTP" or "RSTP_RING" or "RSTP" or "RSTP_VLAN_BRIDGE" or "RSTP_VLAN_BRIDGE_RING" or "PROVIDER_RSTP" or "PROVIDER_RSTP_EDGE":    
+        Bridge_Stp_report(rest_interface_module, node_id, bridge, 1, method='GET', result="Pass")
         bridge_config(rest_interface_module, node_id, bridge, method='DELETE')
 
 

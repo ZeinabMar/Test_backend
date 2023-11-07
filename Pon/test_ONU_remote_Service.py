@@ -71,7 +71,7 @@ remote_service_profile_Data_Delete = (
     remote_service_profile(3, {"nodeId":None, "slotId":1,"shelfId":1, "rmServiceId": 1, "onuId": 1, "portId": 3},result="Pass",method="DELETE"),  
 )
 
-def ONU_remote_Service_Profile(rest_interface_module, node_id, remote_service_data=remote_service_profile(), method='ADD'):
+def ONU_remote_Service(rest_interface_module, node_id, remote_service_data=remote_service_profile(), method='ADD'):
     method = remote_service_data.method
     logger.info(f'REMOTE SERVICE TEST DATA ------- > {remote_service_data.index}')
     expected_set = remote_service_data.expected_result_Set
@@ -113,7 +113,7 @@ def ONU_remote_Service_Profile(rest_interface_module, node_id, remote_service_da
 
 
 
-def test_ONU_remote_Service_Profile(rest_interface_module, node_id):
+def test_ONU_remote_Service(rest_interface_module, node_id):
     bridge_config(rest_interface_module, node_id, Bridge_conf(), method='POST')
     # ****************************************************************************************************************************
     for vlan in VLAN_DATA_conf_CUSTOM:
@@ -137,12 +137,11 @@ def test_ONU_remote_Service_Profile(rest_interface_module, node_id):
     for service in service_profile_Data_Config:
         OLT_Service(rest_interface_module, node_id, service)
 
-
     for remote in remote_service_profile_Data:
-        ONU_remote_Service_Profile(rest_interface_module, node_id, remote)
+        ONU_remote_Service(rest_interface_module, node_id, remote)
 
     for remote in remote_service_profile_Data_Delete:
-        ONU_remote_Service_Profile(rest_interface_module, node_id, remote)
+        ONU_remote_Service(rest_interface_module, node_id, remote)
 
     for service in service_profile_Data_Delete_Config:
         OLT_Service(rest_interface_module, node_id, service)
@@ -160,7 +159,7 @@ def test_ONU_remote_Service_Profile(rest_interface_module, node_id):
         uplink_vlan_config(rest_interface_module, node_id, uplink, method='DELETE') 
 
     for port in range(1,4):
-        switch_config(rest_interface_module, node_id, Switch_conf()._replace(ethIfIndex=port,index=9), method='POST')
+        switch_config(rest_interface_module, node_id, Switch_conf()._replace(ethIfIndex=port,index=9), method='DELETE')
     for vlan in VLAN_DATA_conf_CUSTOM:
         vlan_config(rest_interface_module, node_id, vlan, method='DELETE')
     #****************************************************************************************************************************

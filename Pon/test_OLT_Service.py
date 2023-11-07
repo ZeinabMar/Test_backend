@@ -122,10 +122,10 @@ def test_OLT_Service(rest_interface_module, node_id):
         Gem_Management(rest_interface_module, node_id, gem)
 
     for serviceolt in service_olt_Data:
-        OLT_Service_Profile(rest_interface_module, node_id, serviceolt)
+        OLT_Service(rest_interface_module, node_id, serviceolt)
 
     for serviceolt in service_olt_Data_Delete:
-        OLT_Service_Profile(rest_interface_module, node_id, serviceolt)
+        OLT_Service(rest_interface_module, node_id, serviceolt)
 
     for gem in gem_profile_Data_Delete_Config:
         Gem_Management(rest_interface_module, node_id, gem)

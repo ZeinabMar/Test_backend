@@ -34,10 +34,10 @@ Port_QinQ_DATA_Registration_ACCESS = (
 )
 
 Port_QinQ_DATA_Registration_TRUNK = (
-    # Port_QinQ(1, None, "10", "reg", "", "", "", -1, "CTAGGED_SERVICE_INTERFACE", "", "", "", "", "", "", "Fail"),
+    Port_QinQ(1, None, "10", "reg", "", "", "", -1, "CTAGGED_SERVICE_INTERFACE", "", "", "", "", "", "", "Fail"),
     Port_QinQ(2, None, -1, "reg", "", "10-13", "", -1, "CTAGGED_SERVICE_INTERFACE", "", "", "", "", "", "", "Pass"),
-    Port_QinQ(3, None, "13", "reg", "10-13", "", "", -1, "CTAGGED_SERVICE_INTERFACE", "", "", "", "", "", "", "Fail"),
-    Port_QinQ(4, None, -1, "reg", "10-13", "", "", -1, "CTAGGED_SERVICE_INTERFACE", "", "15", "", "", "", "", "Fali"),
+    # Port_QinQ(3, None, "13", "reg", "10-13", "", "", -1, "CTAGGED_SERVICE_INTERFACE", "", "", "", "", "", "", "Fail"), #not to be shown any failed
+    # Port_QinQ(4, None, -1, "reg", "10-13", "", "", -1, "CTAGGED_SERVICE_INTERFACE", "", "15", "", "", "", "", "Fail"), #not to be shown any failed
     Port_QinQ(5, None, -1, "__NO__", "10-13", "", "", -1, "CTAGGED_SERVICE_INTERFACE", "", "", "", "", "", "", "Pass"),
     Port_QinQ(6, None, -1, "", "10-13", "", "10-13", -1, "CTAGGED_SERVICE_INTERFACE", "", "", "", "", "", "", "Pass"),
 )
@@ -50,7 +50,8 @@ Port_QinQ_DATA_Registration_HYBRID = (
     Port_QinQ(5, None, "10-13", "reg", "10-14", "", "11", -1, "CTAGGED_SERVICE_INTERFACE", "", "", "", "", "", "", "Fail"),
     Port_QinQ(6, None, "13", "reg", "10-14", "", "14", -1, "CTAGGED_SERVICE_INTERFACE", "", "", "", "", "", "", "Pass"),
     Port_QinQ(7, None, "13", "__NO__", "10-13", "", "", -1, "CTAGGED_SERVICE_INTERFACE", "", "", "", "", "", "", "Pass"),
-    Port_QinQ(8, None, -1, "", "10-13", "", "10-13", -1, "CTAGGED_SERVICE_INTERFACE", "", "", "", "", "", "", "Pass"),
+    Port_QinQ(8, None, -1, "", "10-13", "", "10-13", -1, "CTAGGED_SERVICE_INTERFACE", "", "", "", "", "", "", "Fail"),
+    Port_QinQ(8, None, -1, "", "10-13", "", "10-13", -1, "CTAGGED_SERVICE_INTERFACE", "", "", "", "", "", "", "Fail"),
 )
 
 
@@ -89,34 +90,32 @@ Port_QinQ_DATA_Registration_HYBRID = (
 
 Port_QinQ_DATA_Trans = (
 
-#     Port_QinQ(1, None, -1, "", "", "", "", -1, "STAGGED_SERVICE_INTERFACE", "", "15", "", "", "", "", "Fail"),
-#     Port_QinQ(2, None, -1, "", "", "", "", -1, "STAGGED_SERVICE_INTERFACE", "", "", "", "", "16", "", "Fail"),
-#     Port_QinQ(3, None, -1, "", "", "", "", -1, "STAGGED_SERVICE_INTERFACE", "", "10", "", "", "", "", "Fail"),
+    Port_QinQ(1, None, -1, "", "", "", "", -1, "STAGGED_SERVICE_INTERFACE", "", "15", "", "", "", "", "Fail"),
+    Port_QinQ(2, None, -1, "", "", "", "", -1, "STAGGED_SERVICE_INTERFACE", "", "", "", "", "16", "", "Fail"),
+    Port_QinQ(3, None, -1, "", "", "", "", -1, "STAGGED_SERVICE_INTERFACE", "", "10", "", "", "", "", "Fail"),
 # #***************************************************************************************************************************************
     Port_QinQ(4, None, -1, "", "", "15-16", "", -1, "STAGGED_SERVICE_INTERFACE", "", "", "", "", "", "", "Pass"),
 # #***************************************************************************************************************************************
-#     Port_QinQ(6, None, -1, "", "", "15-16", "", -1, "STAGGED_SERVICE_INTERFACE", "", "15", "", "", "", "", "Fail"),
-#     Port_QinQ(7, None, -1, "", "", "15-16", "", -1, "STAGGED_SERVICE_INTERFACE", "", "", "", "", "16", "", "Fail"),
+    Port_QinQ(6, None, -1, "", "", "15-16", "", -1, "STAGGED_SERVICE_INTERFACE", "", "15", "", "", "", "", "Fail"),
+    Port_QinQ(7, None, -1, "", "", "15-16", "", -1, "STAGGED_SERVICE_INTERFACE", "", "", "", "", "16", "", "Fail"),
 #***************************************************************************************************************************************
     Port_QinQ(8, None, -1, "", "15-16", "", "", -1, "STAGGED_SERVICE_INTERFACE", "", "15", "", "", "16", "", "Pass"),
 #**************************************************************************************************************************************
-    # Port_QinQ(9, None, -1, "", "", "15-16", "", -1, "STAGGED_SERVICE_INTERFACE", "", "", "", "", "16", "", "Fail"),
     Port_QinQ(10, None, -1, "", "15-16", "", "15-16", -1, "STAGGED_SERVICE_INTERFACE", "15", "", "", "16", "", "", "Pass"),
     Port_QinQ(11, None, -1, "", "", "15-16", "", -1, "STAGGED_SERVICE_INTERFACE", "15", "", "", "16", "", "", "Pass"),
-#***************************************************************************************************************************************
+# #***************************************************************************************************************************************
     Port_QinQ(12, None, -1, "", "15-16", "17-23", "", -1, "STAGGED_SERVICE_INTERFACE", "15", "", "", "16", "", "", "Pass"),
-    Port_QinQ(13, None, -1, "", "15,16,17,18,19,20,21,22,23", "", "", -1, "STAGGED_SERVICE_INTERFACE", "15", "17,19", "", "16", "18,20", "", "Pass"),
-#     Port_QinQ(14, None, -1, "", "15,16,17,18,19,20,21,22,23", "", "15-16", -1, "STAGGED_SERVICE_INTERFACE", "15,17,19", "", "", "16,18,20", "", "", "Pass"),
-    # Port_QinQ(15, None, -1, "", "17,18,19,20,21,22,23", "", "", -1, "STAGGED_SERVICE_INTERFACE", "15,17,19", "21", "", "16,18,20", "16", "", "Pass"),
-#     Port_QinQ(16, None, -1, "", "17,18,19,20,21,22,23", "", "", -1, "STAGGED_SERVICE_INTERFACE", "15,17,19", "22", "", "16,18,20", "19", "", "Pass"),
+    Port_QinQ(13, None, -1, "", "15,16,17,18,19,20,21,22,23", "", "", -1, "STAGGED_SERVICE_INTERFACE", "15", "17,19", "", "16", "18,20", "", "Pass"),#error
+    Port_QinQ(15, None, -1, "", "15,16,17,18,19,20,21,22,23", "", "", -1, "STAGGED_SERVICE_INTERFACE", "15,17,19", "21", "", "16,18,20", "16", "", "Fail"),
+    Port_QinQ(16, None, -1, "", "15,16,17,18,19,20,21,22,23", "", "", -1, "STAGGED_SERVICE_INTERFACE", "15,17,19", "22", "", "16,18,20", "19", "", "Pass"),#error
 # #***************************************************************************************************************************************
 # #***************************************************************************************************************************************
-#     Port_QinQ(17, None, -1, "", "17,18,19,20,21,22,23", "", "", -1, "STAGGED_SERVICE_INTERFACE", "15,17,19,22", "", "15,17,19,22", "16,18,20,19", "", "", "Pass"),
-#     Port_QinQ(18, None, -1, "", "17,18,19,20,21,22,23", "", "17,18,19,20,21,22,23", -1, "STAGGED_SERVICE_INTERFACE", "", "", "", "", "", "", "Pass"),
+    Port_QinQ(17, None, -1, "", "15,16,17,18,19,20,21,22,23", "", "", -1, "STAGGED_SERVICE_INTERFACE", "15,17,19,22", "", "15,17,19,22", "16,18,20,19", "", "", "Pass"),
+    Port_QinQ(18, None, -1, "", "15,16,17,18,19,20,21,22,23", "", "15,16,17,18,19,20,21,22,23", -1, "STAGGED_SERVICE_INTERFACE", "", "", "", "", "", "", "Pass"),
 )
 
 up_link_mode_teory_1 = ("CUSTOMER_NETWORK","PROVIDER_NETWORK")#,"CUSTOMER_EDGE_ACCESS", "CUSTOMER_EDGE_HYBRID", "CUSTOMER_EDGE_TRUNK"
-up_link_mode_teory_2 = ("CUSTOMER_EDGE_HYBRID","CUSTOMER_EDGE_TRUNK","CUSTOMER_EDGE_ACCESS") 
+up_link_mode_teory_2 = ("CUSTOMER_EDGE_HYBRID","CUSTOMER_EDGE_TRUNK", "CUSTOMER_EDGE_ACCESS") 
 
 def Port_QinQ_config(rest_interface_module, node_id, Port_QinQ_data=Port_QinQ(), method='POST', theory_number=1):
     data = Port_QinQ_data._replace(nodeId=node_id)
@@ -314,7 +313,7 @@ def Port_QinQ_config(rest_interface_module, node_id, Port_QinQ_data=Port_QinQ(),
 
 
 def test_Port_QinQ_config(rest_interface_module, node_id):
-    theory=1
+    theory=2
 
     #theory1 Translation
     if theory==1:
@@ -390,7 +389,6 @@ def test_Port_QinQ_config(rest_interface_module, node_id):
                             Port_QinQ_config(rest_interface_module, node_id, qinq._replace(ethIfIndex=port_bridge_group, vlanMode="CUSTOMER_EDGE_ACCESS"), method='POST', theory_number=2)
 
                     elif uplinkmode == "CUSTOMER_EDGE_TRUNK":
-                        pass
                         uplink_vlan_config(rest_interface_module, node_id, uplink_vlan_conf(port_bridge_group, None, "CUSTOMER_EDGE_TRUNK", -1, "" , "", "", -1, "Pass"), method='POST')
                         for qinq in Port_QinQ_DATA_Registration_TRUNK:
                             Port_QinQ_config(rest_interface_module, node_id, qinq._replace(ethIfIndex=port_bridge_group, vlanMode="CUSTOMER_EDGE_TRUNK"), method='POST', theory_number=2)

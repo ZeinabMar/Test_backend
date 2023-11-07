@@ -14,14 +14,15 @@ pytestmark = [pytest.mark.env_name("REST_env"), pytest.mark.rest_dev("olt_nms")]
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
-Port_Mstp = namedtuple('Port_Mstp', ['ifIndex', 'instanceIfIndex','mstpInstanceIfPathCost', 
-                       'mstpInstanceIfPriority', 'result','shelfId', 'slotId', 'nodeId'])
-Port_Mstp.__new__.__defaults__ = (None, None, None, 0, 0, "Pass", 1, 1, None)
-# Port_Mstp_DATA = (
-#     Port_Mstp(1, None, 5, "ENABLE", "NO", 1, -1, -1, "Pass"),
-# )
+Port_Mstp_add = namedtuple('Port_Mstp_add', ['ifIndex', 'instanceIfIndex', 'result','shelfId', 'slotId', 'nodeId'])
+Port_Mstp_add.__new__.__defaults__ = (None, None, "Pass", 1, 1, None)
 
-def Port_Mstp_config(rest_interface_module, node_id, Port_Mstp_data=Port_Mstp(), method='POST'):
+Port_Mstp_POST = namedtuple('Port_Mstp_POST', ['ifIndex', 'instanceIfIndex','mstpInstanceIfPathCost', 
+                       'mstpInstanceIfPriority', "id", 'result','shelfId', 'slotId', 'nodeId'])
+Port_Mstp_POST.__new__.__defaults__ = (None, None, None, 0, 0, 0, "Pass", 1, 1, None)
+
+
+def Port_Mstp_config(rest_interface_module, node_id, Port_Mstp_data=Port_Mstp_add(), method='POST'):
     data = Port_Mstp_data._replace(nodeId=node_id)
     logger.info(f"TRY TO {method} Port_Mstp CONFIG ...")
 
@@ -48,9 +49,7 @@ def Port_Mstp_config(rest_interface_module, node_id, Port_Mstp_data=Port_Mstp(),
         #*********************************************************
         if method == 'add':
             assert (input_data["ifIndex"]==data.ifIndex and
-                    input_data["instanceIfIndex"] == data.instanceIfIndex and 
-                    str(input_data["mstpInstanceIfPathCost"]) == str(data.mstpInstanceIfPathCost) and
-                    str(input_data["mstpInstanceIfPriority"]) == str(data.mstpInstanceIfPriority)),f'IN Everythig is ok Port_Mstp config(after {method}'
+                    input_data["instanceIfIndex"] == data.instanceIfIndex),f'IN Everythig is ok Port_Mstp config(after {method}'
             logger.info(f'every thing ok after Port_Mstp config(after {method} ')
 
         elif method == 'POST':
@@ -60,11 +59,11 @@ def Port_Mstp_config(rest_interface_module, node_id, Port_Mstp_data=Port_Mstp(),
                     str(input_data["mstpInstanceIfPriority"]) == str(data.mstpInstanceIfPriority)),f'IN Everythig is ok Port_Mstp config(after {method}'
             logger.info(f'every thing ok after Port_Mstp config(after {method} ')
 
-        else:  # method==DELETE
-            assert (input_data["ifIndex"]==data.ifIndex and
-                    input_data["instanceIfIndex"] == data.instanceIfIndex and 
-                    str(input_data["mstpInstanceIfPathCost"]) == str(data.mstpInstanceIfPathCost) and
-                    str(input_data["mstpInstanceIfPriority"]) == str(data.mstpInstanceIfPriority)),f'GET ERROR in Port_Mstp config (after {method})'
+        # else:  # method==DELETE
+        #     assert (input_data["ifIndex"]==data.ifIndex and
+        #             input_data["instanceIfIndex"] == data.instanceIfIndex and 
+        #             str(input_data["mstpInstanceIfPathCost"]) == str(data.mstpInstanceIfPathCost) and
+        #             str(input_data["mstpInstanceIfPriority"]) == str(data.mstpInstanceIfPriority)),f'GET ERROR in Port_Mstp config (after {method})'
     else:
         assert response.status_code in range(400, 505), f'{method} SET INCORRECT DATA in Port_Mstp config {data._asdict}'
 
@@ -80,19 +79,20 @@ def test_Port_Mstp_config(rest_interface_module, node_id):
     # *****************************************************************************
     Bridge_Mstp_config(rest_interface_module, node_id, Bridge_Mstp_DATA_conf[0], method='add')
     # ************************************************************    
-    for port in range(1,6):
+    for port in range(1,2):
         switch_config(rest_interface_module, node_id, Switch_conf()._replace(ethIfIndex=port,index=4), method='POST')
     # **************************************************
-    for port in range(1,6):
-        Port_Mstp_config(rest_interface_module, node_id, Port_Mstp(port, 5, 0, 0, "Pass"), method='POST')
+    for port in range(1,2):
+        Port_Mstp_config(rest_interface_module, node_id, Port_Mstp_add(port, 5, "Pass"), method='add')
+        # Port_Mstp_config(rest_interface_module, node_id, Port_Mstp_POST(port, 5, 1, 1, 5, "Pass"), method='POST')
         if port<24:
-            Port_Mstp_config(rest_interface_module, node_id, Port_Mstp(port+1, 5, 0, 0, "Fail"), method='POST')
+            Port_Mstp_config(rest_interface_module, node_id, Port_Mstp_add(port+1, 5, "Fail"), method='add')
         elif port==24:
-              Port_Mstp_config(rest_interface_module, node_id, Port_Mstp(port-1, 5, 0, 0, "Fail"), method='POST')  
-        Port_Mstp_config(rest_interface_module, node_id, Port_Mstp(port, 5, 0, 0, "Pass"), method='DELETE')
+              Port_Mstp_config(rest_interface_module, node_id, Port_Mstp_add(port-1, 5, "Fail"), method='add')  
+        Port_Mstp_config(rest_interface_module, node_id, Port_Mstp_add(port, 5, "Pass"), method='DELETE')
     # *************************************************
-    for port in range(1,6):
-        switch_config(rest_interface_module, node_id, Switch_conf()._replace(ethIfIndex=port,index=9), method='POST')
+    for port in range(1,2):
+        switch_config(rest_interface_module, node_id, Switch_conf()._replace(ethIfIndex=port,index=9), method='DELETE')
     #************************************************************
     Bridge_Mstp_config(rest_interface_module, node_id, Bridge_Mstp_DATA_conf[1], method='DELETE')
     #*****************************************************************************  

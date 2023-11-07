@@ -132,5 +132,5 @@ def DBA_Profile(rest_interface_module, node_id, dba_profile_data=dba_profile(), 
 def test_DBA_Profile(rest_interface_module, node_id):
     for dba in dba_profile_Data:
         DBA_Profile(rest_interface_module, node_id, dba, method='ADD')
-    # for dba in dba_profile_Data_Delete:
-    #     DBA_Profile(rest_interface_module, node_id, dba, method='DELETE')    
+    for dba in dba_profile_Data_Delete:
+        DBA_Profile(rest_interface_module, node_id, dba, method='DELETE')    

@@ -87,11 +87,11 @@ def test_Tcont_Service_Profile(rest_interface_module, node_id):
     for service_tcont in Tcont_service_profile_Data:
         Tcont_Service_Profile(rest_interface_module, node_id, service_tcont)
 
-    # for service_tcont in Tcont_service_profile_Delete:
-    #     Tcont_Service_Profile(rest_interface_module, node_id, service_tcont)
+    for service_tcont in Tcont_service_profile_Delete:
+        Tcont_Service_Profile(rest_interface_module, node_id, service_tcont)
 
-    # for service_def in Onu_Service_Profile_Delete_Config:
-    #     Service_Profile_Definition(rest_interface_module, node_id, service_def, method='DELETE')    
+    for service_def in Onu_Service_Profile_Delete_Config:
+        Service_Profile_Definition(rest_interface_module, node_id, service_def, method='DELETE')    
 
-    # for dba in dba_profile_Data_Config_Delete:
-    #     DBA_Profile(rest_interface_module, node_id, dba, method='DELETE')       
+    for dba in dba_profile_Data_Config_Delete:
+        DBA_Profile(rest_interface_module, node_id, dba, method='DELETE')       
