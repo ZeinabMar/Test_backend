@@ -95,7 +95,7 @@ def DBA_Profile(rest_interface_module, node_id, dba_profile_data=dba_profile(), 
     expected_set["nodeId"]= node_id
     expected_get = dba_profile_data.expected_result_Get  
 
-    logger.info(f"TRY TO {method} Qos_Policy CONFIG ...")
+    logger.info(f"TRY TO {method} DBA PROFILE CONFIG ...")
     if method == 'ADD':
         url = "/api/gponconfig/dbaProfile/add"
         response = rest_interface_module.post_request(url, expected_set) 
@@ -108,7 +108,7 @@ def DBA_Profile(rest_interface_module, node_id, dba_profile_data=dba_profile(), 
         if response.status_code != 200:
             logger.error(response.message)
         if len(expected_get.keys()) !=0:
-            logger.info(f' GETTING Gem_Management (after {method} method) ... ')
+            logger.info(f' GETTING DBA PROFILE (after {method} method) ... ')
             read_data = rest_interface_module.get_request(f"/api/gponconfig/dbaProfile/getall?nodeId="+str(expected_set["nodeId"])+"&shelfId="+str(expected_set["shelfId"])+"&slotId="+str(expected_set["slotId"]))
             input_data_getall = json.loads(read_data.text)
             input_data = find_in_getall(input_data_getall, "name", expected_get["namedba"][0])
@@ -119,7 +119,7 @@ def DBA_Profile(rest_interface_module, node_id, dba_profile_data=dba_profile(), 
     else:
         assert response.status_code in range(400, 505), f'{method} SET INCORRECT DATA in GEM MANAGE {expected_set}'
         if len(expected_get.keys()) !=0:
-            logger.info(f' GETTING Gem_Management (after {method} method) ... ')
+            logger.info(f' GETTING DBA PROFILE (after {method} method) ... ')
             read_data = rest_interface_module.get_request(f"/api/gponconfig/dbaProfile/getall?nodeId="+str(expected_set["nodeId"])+"&shelfId="+str(expected_set["shelfId"])+"&slotId="+str(expected_set["slotId"]))
             input_data_getall = json.loads(read_data.text)
             input_data = find_in_getall(input_data_getall, "name", expected_get["namedba"][0])
