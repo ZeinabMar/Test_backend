@@ -559,3 +559,41 @@ remote_service_profile_Delete_Config = (
     remote_service_profile(2, {"nodeId":None, "slotId":1,"shelfId":1, "onuId": 2, "rmServiceId": 2},result="Pass",method="DELETE"), 
     remote_service_profile(3, {"nodeId":None, "slotId":1,"shelfId":1, "onuId": 2, "rmServiceId": 1},result="Pass",method="DELETE"), 
 )
+#*********************************************************************************
+pon_init_info = namedtuple('pon_init_info', ['index', 'expected_result_Set', 'expected_result_Get', "result", "method"])                                       
+pon_init_info.__new__.__defaults__ = (None, {}, {},None, None)
+  
+
+
+pon_init_info_Enable_Multicast = pon_init_info(1, {"nodeId": None,"shelfId": 1,"slotId": 1,"portId": 2,"ifIndex": 2,"adminState": "DISABLE",
+    "ponServiceEnable5100": "DISABLE","ponOnuAutoDiscovery": "ENABLE","ifModuleState5100": "DISABLED",
+    "sfpModuleState5100": "DISABLED",   "ponMulticastState5100": 1,
+    "operationalState": None,"scbPort": None,"modulePresent": 4,
+    "scbMaxBw": None,"autoLearn": "ENABLE","operationalStateStr": "act_working","modulePresentStr": "Disabled"},{
+                                                                                                            "portId": [2, "portId"],
+                                                                                                            "ifIndex": [2, "ifIndex"],
+                                                                                                            "adminState": ["DISABLE", "adminState"],
+                                                                                                            "ponServiceEnable5100": ["DISABLE", "ponServiceEnable5100"],
+                                                                                                            "ponOnuAutoDiscovery": ["ENABLE", "ponOnuAutoDiscovery"],
+                                                                                                            "sfpModuleState5100": ["DISABLED", "sfpModuleState5100"],
+                                                                                                            "ifModuleState5100": ["DISABLED", "ifModuleState5100"],
+                                                                                                            "ponMulticastState5100": [1, "ponMulticastState5100"],
+                                                                                                            "autoLearn": ["ENABLE", "autoLearn"],
+                                                                                                            "operationalStateStr": ["inactive", "operationalStateStr"],
+                                                                                                            "modulePresentStr": ["Disabled", "modulePresentStr"],},result="Pass",method="UPDATE"),                                                          
+pon_init_info_Disable_Multicast = pon_init_info(1, {"nodeId": None,"shelfId": 1,"slotId": 1,"portId": 2,"ifIndex": 2,"adminState": "DISABLE",
+    "ponServiceEnable5100": "DISABLE","ponOnuAutoDiscovery": "ENABLE","ifModuleState5100": "DISABLED",
+    "sfpModuleState5100": "DISABLED",   "ponMulticastState5100": 0,
+    "operationalState": None,"scbPort": None,"modulePresent": 4,
+    "scbMaxBw": None,"autoLearn": "ENABLE","operationalStateStr": "act_working","modulePresentStr": "Disabled"},{
+                                                                                                            "portId": [2, "portId"],
+                                                                                                            "ifIndex": [2, "ifIndex"],
+                                                                                                            "adminState": ["DISABLE", "adminState"],
+                                                                                                            "ponServiceEnable5100": ["DISABLE", "ponServiceEnable5100"],
+                                                                                                            "ponOnuAutoDiscovery": ["ENABLE", "ponOnuAutoDiscovery"],
+                                                                                                            "sfpModuleState5100": ["DISABLED", "sfpModuleState5100"],
+                                                                                                            "ifModuleState5100": ["DISABLED", "ifModuleState5100"],
+                                                                                                            "ponMulticastState5100": [0, "ponMulticastState5100"],
+                                                                                                            "autoLearn": ["ENABLE", "autoLearn"],
+                                                                                                            "operationalStateStr": ["inactive", "operationalStateStr"],
+                                                                                                            "modulePresentStr": ["Disabled", "modulePresentStr"],},result="Pass",method="UPDATE"),                                                          

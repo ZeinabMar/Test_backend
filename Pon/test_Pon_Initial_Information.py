@@ -9,13 +9,13 @@ logging.basicConfig(level=logging.DEBUG)
 
 pon_init_info = namedtuple('pon_init_info', ['index', 'expected_result_Set', 'expected_result_Get', "result", "method"])                                       
 pon_init_info.__new__.__defaults__ = (None, {}, {},None, None)
-
+  
 
 
 pon_init_info_Data = (
 pon_init_info(1, {"nodeId": None,"shelfId": 1,"slotId": 1,"portId": 2,"ifIndex": 2,"adminState": "DISABLE",
     "ponServiceEnable5100": "DISABLE","ponOnuAutoDiscovery": "ENABLE","ifModuleState5100": "DISABLED",
-    "sfpModuleState5100": "DISABLED","operationalState": None,"scbPort": None,"modulePresent": 4,
+    "sfpModuleState5100": "DISABLED",   "ponMulticastState5100": 0,"operationalState": None,"scbPort": None,"modulePresent": 4,
     "scbMaxBw": None,"autoLearn": "ENABLE","operationalStateStr": "act_working","modulePresentStr": "Disabled"},{
                                                                                                             "portId": [2, "portId"],
                                                                                                             "ifIndex": [2, "ifIndex"],
@@ -24,12 +24,13 @@ pon_init_info(1, {"nodeId": None,"shelfId": 1,"slotId": 1,"portId": 2,"ifIndex":
                                                                                                             "ponOnuAutoDiscovery": ["ENABLE", "ponOnuAutoDiscovery"],
                                                                                                             "sfpModuleState5100": ["DISABLED", "sfpModuleState5100"],
                                                                                                             "ifModuleState5100": ["DISABLED", "ifModuleState5100"],
+                                                                                                            "ponMulticastState5100": [0, "ponMulticastState5100"],
                                                                                                             "autoLearn": ["ENABLE", "autoLearn"],
                                                                                                             "operationalStateStr": ["inactive", "operationalStateStr"],
                                                                                                             "modulePresentStr": ["Disabled", "modulePresentStr"],},result="Pass",method="UPDATE"),                                                          
 pon_init_info(2, {"nodeId": None,"shelfId": 1,"slotId": 1,"portId": 2,"ifIndex": 2,"adminState": "DISABLE",
     "ponServiceEnable5100": "ENABLE","ponOnuAutoDiscovery": "ENABLE","ifModuleState5100": "DISABLED",
-    "sfpModuleState5100": "DISABLED","operationalState": None,"scbPort": None,"modulePresent": 4,
+    "sfpModuleState5100": "DISABLED", "ponMulticastState5100": 0,"operationalState": None,"scbPort": None,"modulePresent": 4,
     "scbMaxBw": None,"autoLearn": "ENABLE","operationalStateStr": "act_working","modulePresentStr": "Disabled"},{
                                                                                                             "portId": [2, "portId"],
                                                                                                             "ifIndex": [2, "ifIndex"],
@@ -38,12 +39,13 @@ pon_init_info(2, {"nodeId": None,"shelfId": 1,"slotId": 1,"portId": 2,"ifIndex":
                                                                                                             "ponOnuAutoDiscovery": ["ENABLE", "ponOnuAutoDiscovery"],
                                                                                                             "sfpModuleState5100": ["DISABLED", "sfpModuleState5100"],
                                                                                                             "ifModuleState5100": ["DISABLED", "ifModuleState5100"],
+                                                                                                            "ponMulticastState5100": [0, "ponMulticastState5100"],
                                                                                                             "autoLearn": ["ENABLE", "autoLearn"],
                                                                                                             "operationalStateStr": ["act_working", "operationalStateStr"],
                                                                                                             "modulePresentStr": ["Disabled", "modulePresentStr"],},result="Pass",method="UPDATE"),                                                          
 pon_init_info(3, {"nodeId": None,"shelfId": 1,"slotId": 1,"portId": 2,"ifIndex": 2,"adminState": "ENABLE",
     "ponServiceEnable5100": "ENABLE","ponOnuAutoDiscovery": "ENABLE","ifModuleState5100": "DISABLED",
-    "sfpModuleState5100": "DISABLED","operationalState": None,"scbPort": None,"modulePresent": 4,
+    "sfpModuleState5100": "DISABLED", "ponMulticastState5100": 0,"operationalState": None,"scbPort": None,"modulePresent": 4,
     "scbMaxBw": None,"autoLearn": "ENABLE","operationalStateStr": "act_working","modulePresentStr": "Disabled"},{
                                                                                                             "portId": [2, "portId"],
                                                                                                             "ifIndex": [2, "ifIndex"],
@@ -52,6 +54,7 @@ pon_init_info(3, {"nodeId": None,"shelfId": 1,"slotId": 1,"portId": 2,"ifIndex":
                                                                                                             "ponOnuAutoDiscovery": ["ENABLE", "ponOnuAutoDiscovery"],
                                                                                                             "sfpModuleState5100": ["ENABLED", "sfpModuleState5100"],
                                                                                                             "ifModuleState5100": ["ENABLED", "ifModuleState5100"],
+                                                                                                            "ponMulticastState5100": [0, "ponMulticastState5100"],
                                                                                                             "autoLearn": ["ENABLE", "autoLearn"],
                                                                                                             "operationalStateStr": ["act_working", "operationalStateStr"],
                                                                                                             "modulePresentStr": ["Enabled", "modulePresentStr"],},result="Pass",method="UPDATE"),                                                          
@@ -102,4 +105,4 @@ def Pon_Initial_Information(rest_interface_module, node_id, pon_init_info_data=p
 def test_Pon_Initial_Information(rest_interface_module, node_id):
 
     for pon_init in pon_init_info_Data:
-        Pon_Initial_Information(rest_interface_module, node_id, pon_init, method='UPDATE')       
+        Pon_Initial_Information(rest_interface_module, node_id, pon_init)       
