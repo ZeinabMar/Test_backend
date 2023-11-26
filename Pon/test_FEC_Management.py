@@ -3,6 +3,8 @@ import logging
 import json
 from config import *
 from conftest import *
+from Pon.test_Pon_Initial_Information import Pon_Initial_Information
+
 
 pytestmark = [pytest.mark.env_name("REST_env"), pytest.mark.rest_dev("olt_nms")]
 logging.basicConfig(level=logging.DEBUG)
@@ -24,15 +26,14 @@ fec_management(2, { "nodeId": None, "shelfId": 1,  "slotId": 1, "portId": 2,  "i
                                                               "dsFec": ["DISABLE", "dsFec"],},result="Pass",method="UPDATE"),                                                                                                                       
 )
 
+
 fec_management_Data_Onu = (
 fec_management(1, { "nodeId": None, "shelfId": 1,  "slotId": 1, "portId": 2,  "onuId": 1, 
-                    "upstreamFec": "ENABLE"},{
-                                                              "portId": [2, "portId"],
+                    "upstreamFec": "ENABLE"},{"portId": [2, "portId"],
                                                               "onuId": [1, "onuId"],
                                                               "upstreamFec": ["ENABLE", "upstreamFec"],},result="Pass",method="UPDATE"),
 fec_management(2, { "nodeId": None, "shelfId": 1,  "slotId": 1, "portId": 2,  "onuId": 1, 
-                    "upstreamFec": "DISABLE"},{
-                                                              "portId": [2, "portId"],
+                    "upstreamFec": "DISABLE"},{"portId": [2, "portId"],
                                                               "onuId": [1, "onuId"],
                                                               "upstreamFec": ["DISABLE", "upstreamFec"],},result="Pass",method="UPDATE"),                                                                                                                         
 )
@@ -44,12 +45,12 @@ def FEC_Management(rest_interface_module, node_id, fec_management_data=fec_manag
     expected_set["nodeId"]= node_id
     expected_get = fec_management_data.expected_result_Get  
 
-    logger.info(f"TRY TO {method} FEC_Management ...")
+    logger.info(f"TRY TO {method} FEC_Management in {Operator} ...")
     if method == "UPDATE":
         if Operator == "Pon":
             url = "/api/gponconfig/pon/savefec"
         else: 
-            url = "api/gponconfig/onu/savefec"   
+            url = "/api/gponconfig/onu/savefec"   
         response = rest_interface_module.post_request(url, expected_set)     
     
     if fec_management_data.result == "Pass":
@@ -62,7 +63,7 @@ def FEC_Management(rest_interface_module, node_id, fec_management_data=fec_manag
             if Operator == "Pon":
                 read_data = rest_interface_module.get_request(f"/api/gponconfig/pon/getfec/"+str(expected_set["nodeId"])+"/"+str(expected_set["shelfId"])+"/"+str(expected_set["slotId"])+"/"+str(expected_set["portId"])+"/"+str(expected_set["ifIndex"]))
             else:    
-                read_data = rest_interface_module.get_request(f"/api/gponconfig/onu/getFec/"+str(expected_set["nodeId"])+"/"+str(expected_set["shelfId"])+"/"+str(expected_set["slotId"])+"/"+str(expected_set["portId"])+"/"+str(expected_set["onuId"]))
+                read_data = rest_interface_module.get_request(f"/api/gponconfig/onu/getfec/"+str(expected_set["nodeId"])+"/"+str(expected_set["shelfId"])+"/"+str(expected_set["slotId"])+"/"+str(expected_set["portId"])+"/"+str(expected_set["onuId"]))
             input_data = json.loads(read_data.text)
             #**********************************************************************
             for key in expected_get.keys():
@@ -77,7 +78,7 @@ def FEC_Management(rest_interface_module, node_id, fec_management_data=fec_manag
             if Operator == "Pon":
                 read_data = rest_interface_module.get_request(f"/api/gponconfig/pon/getfec/"+str(expected_set["nodeId"])+"/"+str(expected_set["shelfId"])+"/"+str(expected_set["slotId"])+"/"+str(expected_set["portId"])+"/"+str(expected_set["ifIndex"]))
             else:    
-                read_data = rest_interface_module.get_request(f"/api/gponconfig/onu/getFec/"+str(expected_set["nodeId"])+"/"+str(expected_set["shelfId"])+"/"+str(expected_set["slotId"])+"/"+str(expected_set["portId"])+"/"+str(expected_set["onuId"]))
+                read_data = rest_interface_module.get_request(f"/api/gponconfig/onu/getfec/"+str(expected_set["nodeId"])+"/"+str(expected_set["shelfId"])+"/"+str(expected_set["slotId"])+"/"+str(expected_set["portId"])+"/"+str(expected_set["onuId"]))
             input_data = json.loads(read_data.text)
             #**********************************************************************
             for key in expected_get.keys():
@@ -88,8 +89,10 @@ def FEC_Management(rest_interface_module, node_id, fec_management_data=fec_manag
 
 
 def test_FEC_Management(rest_interface_module, node_id):
-
+    # Pon_Initial_Information(rest_interface_module, node_id, pon_init_info_shutdown, method='UPDATE')       
     for fec_pon in fec_management_Data_Pon:
         FEC_Management(rest_interface_module, node_id, fec_pon, method='UPDATE', Operator= "Pon")       
     for fec_onu in fec_management_Data_Onu:
-        FEC_Management(rest_interface_module, node_id, fec_onu, method='UPDATE', operator= "Onu")           
+        FEC_Management(rest_interface_module, node_id, fec_onu, method='UPDATE', Operator= "Onu")  
+    # Pon_Initial_Information(rest_interface_module, node_id, pon_init_info_no_shutdown, method='UPDATE')       
+             
