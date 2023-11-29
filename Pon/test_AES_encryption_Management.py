@@ -96,8 +96,8 @@ def test_AES_encryption_Management(rest_interface_module, node_id):
     #     DBA_Profile(rest_interface_module, node_id, dba, method='ADD')
     # for tcont in tcont_Data_Config:
     #     Tcont_Management(rest_interface_module, node_id, tcont)
-    # for gem in gem_profile_Data_Config:
-    #     Gem_Management(rest_interface_module, node_id, gem)
+    for gem in gem_profile_Data_Config:
+        Gem_Management(rest_interface_module, node_id, gem)
 
 
     for aes_pon in Aes_Management_Pon_Data:

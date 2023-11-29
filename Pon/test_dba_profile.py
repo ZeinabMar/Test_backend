@@ -117,7 +117,7 @@ def DBA_Profile(rest_interface_module, node_id, dba_profile_data=dba_profile(), 
                 check_set_value(rest_interface_module, expected_get[key][0], expected_get[key][1],input_data)
             logger.info(f'check is completed in {method} method')
     else:
-        assert response.status_code in range(400, 505), f'{method} SET INCORRECT DATA in GEM MANAGE {expected_set}'
+        assert response.status_code in range(400, 505), f'{method} SET INCORRECT DATA in DBA PROFILE {expected_set}'
         if len(expected_get.keys()) !=0:
             logger.info(f' GETTING DBA PROFILE (after {method} method) ... ')
             read_data = rest_interface_module.get_request(f"/api/gponconfig/dbaProfile/getall?nodeId="+str(expected_set["nodeId"])+"&shelfId="+str(expected_set["shelfId"])+"&slotId="+str(expected_set["slotId"]))
