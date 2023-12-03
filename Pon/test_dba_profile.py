@@ -13,7 +13,6 @@ dba_profile.__new__.__defaults__ = (None, {}, {},None)
 
 dba_profile_Data = (
 
-
 dba_profile(1, {"nodeId":None, "slotId":1,"shelfId":1,"dbaId":1,"name": "dba_test1", "dbaType": 1, "fixedBwValue": 32000, "assureBwValue": None, "maxBwValue": None},
                                                            {
                                                             "namedba": ["dba_test1", "name"],

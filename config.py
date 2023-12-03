@@ -598,22 +598,6 @@ pon_init_info_Disable_Multicast = pon_init_info(1, {"nodeId": None,"shelfId": 1,
                                                                                                             "operationalStateStr": ["inactive", "operationalStateStr"],
                                                                                                             "modulePresentStr": ["Disabled", "modulePresentStr"],},result="Pass",method="UPDATE")                                                         
 
-pon_init_info_Disable_Multicast = pon_init_info(1, {"nodeId": None,"shelfId": 1,"slotId": 1,"portId": 2,"ifIndex": 2,"adminState": "DISABLE",
-    "ponServiceEnable5100": "DISABLE","ponOnuAutoDiscovery": "ENABLE","ifModuleState5100": "DISABLED",
-    "sfpModuleState5100": "DISABLED",   "ponMulticastState5100": 0,
-    "operationalState": None,"scbPort": None,"modulePresent": 4,
-    "scbMaxBw": None,"autoLearn": "ENABLE","operationalStateStr": "act_working","modulePresentStr": "Disabled"},{
-                                                                                                            "portId": [2, "portId"],
-                                                                                                            "ifIndex": [2, "ifIndex"],
-                                                                                                            "adminState": ["DISABLE", "adminState"],
-                                                                                                            "ponServiceEnable5100": ["DISABLE", "ponServiceEnable5100"],
-                                                                                                            "ponOnuAutoDiscovery": ["ENABLE", "ponOnuAutoDiscovery"],
-                                                                                                            "sfpModuleState5100": ["DISABLED", "sfpModuleState5100"],
-                                                                                                            "ifModuleState5100": ["DISABLED", "ifModuleState5100"],
-                                                                                                            "ponMulticastState5100": [0, "ponMulticastState5100"],
-                                                                                                            "autoLearn": ["ENABLE", "autoLearn"],
-                                                                                                            "operationalStateStr": ["inactive", "operationalStateStr"],
-                                                                                                            "modulePresentStr": ["Disabled", "modulePresentStr"],},result="Pass",method="UPDATE")                                                          
 pon_init_info_no_shutdown = pon_init_info(3, {"nodeId": None,"shelfId": 1,"slotId": 1,"portId": 2,"ifIndex": 2,"adminState": "ENABLE",
     "ponServiceEnable5100": "ENABLE","ponOnuAutoDiscovery": "ENABLE","ifModuleState5100": "DISABLED",
     "sfpModuleState5100": "DISABLED", "ponMulticastState5100": 0,"operationalState": None,"scbPort": None,"modulePresent": 4,
@@ -645,3 +629,35 @@ pon_init_info_shutdown = pon_init_info(1, {"nodeId": None,"shelfId": 1,"slotId":
                                                                                                             "autoLearn": ["ENABLE", "autoLearn"],
                                                                                                             "operationalStateStr": ["inactive", "operationalStateStr"],
                                                                                                             "modulePresentStr": ["Disabled", "modulePresentStr"],},result="Pass",method="UPDATE")                                                         
+#*********************************************************************************************************************************
+
+pon_protection = namedtuple('pon_protection', ['index', 'expected_result_Set', 'expected_result_Get', "result", "method"])                                       
+pon_protection.__new__.__defaults__ = (None, {}, {},None, None)
+
+Pon_Protection_Add = pon_protection(1, {"nodeId": 11,"shelfId": 1,"slotId": 1,"groupIndex": 1,"groupName": "group1","workingPort": 2,
+                        "protectionPort": 3,"activePort": 2,"groupState": 1,"groupSwitchOver": "W2P"}, {"groupIndex": [1, "groupIndex"],
+                                                                                                        "groupName": ["group1", "groupName"],
+                                                                                                        "workingPort": [2, "workingPort"],
+                                                                                                        "protectionPort" :[3,"protectionPort"],
+                                                                                                        "activePort" :[2,"activePort"],
+                                                                                                        "groupState" :[1,"groupState"],
+                                                                                                        "groupSwitchOver" :["W2P","groupSwitchOver"],    
+                                                                                                        "gemId": [1, "gemId"]},result="Pass",method="ADD"),
+  
+
+Pon_Protection_Delete = pon_protection(1, {"nodeId": 11,"shelfId": 1,"slotId": 1,"groupIndex": 1}, result="Pass",method="DELETE"),
+
+def replace_dictionary(data = pon_init_info(), Method = "set", dict_replace=None):
+    if Method == "set":
+        dict = data.expected_result_Set
+    else:
+        dict = data.expected_result_Get  
+
+    for key,value in dict.items():
+        for key2,value2 in dict_replace.items():
+            if key==key2:
+                dict[key]=value2
+    return data            
+
+
+    

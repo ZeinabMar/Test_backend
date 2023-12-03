@@ -94,8 +94,6 @@ def Olt_Service_Profile(rest_interface_module, node_id, olt_service_profile_data
 
 
 
-
-
 def test_Olt_Service_Profile(rest_interface_module, node_id):
 
     bridge_config(rest_interface_module, node_id, Bridge_conf(), method='POST')

@@ -117,9 +117,19 @@ def onu_auto_learn(rest_interface_module, node_id, ONU_data=onu_general(), metho
         assert 500 == response.status_code
  
 
+def read_only_Onu_State(rest_interface_module, node_Id, shelfId, slotId, portId, active = None):
+    input_data_getall = rest_interface_module.get_request(f"/api/gponconfig/onu/getallauthenticated?nodeId="+f"{node_Id}"+"&shelfId="+f"{shelfId}"+"&slotId="+f"{slotId}"+"&portId="+f"{portId}")
+    logger.info(f"input_data_getall {input_data_getall}")
+    input_data_getall = json.loads(input_data_getall.text)
+    input_data = find_in_getall(input_data_getall, "portId", portId)
+    logger.info(f"input_data {input_data}")
+    logger.info("third")
+    if input_data["onuState"] == "OPERATION_STATE":
+        return "OPERATION_STATE"
+    elif input_data["onuState"] == "ADDED":
+        return "ADDED"
 
- 
+
 def test_onu_authentication(rest_interface_module, node_id):
-
     for data in onu_general_Data:
         onu_auto_learn(rest_interface_module, node_id, data, "ADD")
