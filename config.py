@@ -190,6 +190,17 @@ Reg_QinQ_Table_conf.__new__.__defaults__ = (None, 1, "__NO__", 1, "", "", "", ""
 Reg_QinQ_Table_conf_DATA = (
     Reg_QinQ_Table_conf(1, 1, "reg", 1, "", "", "10,11,12,13", "", "15,16,17,18", "Pass", 1, 1, None),#reg for all except access
     Reg_QinQ_Table_conf(1, 1, "reg", 1, "", "", "10", "", "15", "Pass", 1, 1, None))#reg for access
+
+#*****************************************************************************************************************************
+mapping = namedtuple('mapping', ['index', 'expected_result_Set', 'expected_result_Get', "result", "method"])                                       
+mapping.__new__.__defaults__ = (None, {}, {},None, None)
+
+Mapping_Add = mapping(1, {"nodeId": None,"shelfId": 1,"slotId": 1, "ifIndex": 1, "vlanId": 10,"vlanTranslatedId": 11},{"ifIndex": [1, "ifIndex"],
+                                                                                                         "vlanId": [10, "vlanId"],
+                                                                                                         "vlanTranslatedId": [11, "vlanTranslatedId"]},result="Pass", method="ADD")
+
+Mapping_Delete = mapping(1, {"nodeId": None,"shelfId": 1,"slotId": 1, "ifIndex": 1, "vlanId": 10,"vlanTranslatedId": 11},result="Pass", method="DELETE")
+   
 #*****************************************************************************************************************************
 d_string ={"nodeId": 17,
             "shelfId": 1,

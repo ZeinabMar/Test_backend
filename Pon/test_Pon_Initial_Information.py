@@ -92,7 +92,7 @@ def Pon_Initial_Information(rest_interface_module, node_id, pon_init_info_data=p
     else:
         assert response.status_code in range(400, 505), f'{method} SET INCORRECT DATA in PON INITIAL INFORMATION {tcont_data._asdict}'
         if len(expected_get.keys()) !=0:
-            read_data = rest_interface_module.get_request(f"/api/gponconfig/pon/getprimaryinfo/"+str(expected_set["nodeId"])+"/"+str(expected_set["shelfId"])+"/"+str(expected_set["slotId"])+"/"+str(expected_set["portId"])+"/"+str(expected_set["ifIndex"]))
+            read_data = rest_interface_module.get_request(f"c"+str(expected_set["nodeId"])+"/"+str(expected_set["shelfId"])+"/"+str(expected_set["slotId"])+"/"+str(expected_set["portId"])+"/"+str(expected_set["ifIndex"]))
             input_data = json.loads(read_data.text)
             for key in expected_get.keys():
                 logger.info(f"set steeep IN {expected_get[key]}")

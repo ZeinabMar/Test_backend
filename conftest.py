@@ -89,6 +89,11 @@ def node_id(rest_interface_module, get_zone_tree):
 
 
 
+def getall_and_update_condition(rest_interface_module, url=None):
+    logger.info(f"TRY GETTTING ALL IN ORDER TO BECOMING UPDATE ...")
+    read_data = rest_interface_module.get_request(url)
+    logger.info(f"dataaa {read_data}")
+    assert(read_data.status_code == 200)   
 
 
 
