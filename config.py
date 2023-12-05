@@ -653,22 +653,20 @@ Pon_Protection_Add = pon_protection(1, {"nodeId": 11,"shelfId": 1,"slotId": 1,"g
                                                                                                         "activePort" :[2,"activePort"],
                                                                                                         "groupState" :[1,"groupState"],
                                                                                                         "groupSwitchOver" :["W2P","groupSwitchOver"],    
-                                                                                                        "gemId": [1, "gemId"]},result="Pass",method="ADD"),
+                                                                                                        "gemId": [1, "gemId"]},result="Pass",method="ADD")
   
 
-Pon_Protection_Delete = pon_protection(1, {"nodeId": 11,"shelfId": 1,"slotId": 1,"groupIndex": 1}, result="Pass",method="DELETE"),
-
-def replace_dictionary(data = pon_init_info(), Method = "set", dict_replace=None):
-    if Method == "set":
-        dict = data.expected_result_Set
-    else:
-        dict = data.expected_result_Get  
-
-    for key,value in dict.items():
-        for key2,value2 in dict_replace.items():
-            if key==key2:
-                dict[key]=value2
-    return data            
+Pon_Protection_Delete = pon_protection(1, {"nodeId": 11,"shelfId": 1,"slotId": 1,"groupIndex": 1}, result="Pass",method="DELETE")
+#*********************************************************************************************************************************
+dict_ONU_Vlan_Priority = {"UTEL20FD749E":[111,0], "HWTC20b3c380":[112,1],"ESGP0C005730":[113,2], "UTEL20FC5178":[114,2],
+                          "HWTCF448E19E":[115,3], "UTEL20FC4D18":[116,3], "UTEL20FD827E":[117,4],"HWTC5A93CF3F":[118,5],
+                          "ELTX74004b9c":[119,6], "HWTC20B3DAF0":[220,6], "HWTC20F3C478":[221,7],"ELTX7400A540":[222,7],
+                          "HWTC1A74B09C":[223,0], "HWTCA3A8E09C":[224,1], "HWTCA67EDEA4":[225,2],"HWTC96610DA3":[226,3],
+                          "HWTCD2099E7C":[227,3], "UTEL20FC5410":[228,3], "HWTC20B3E9E8":[229,4], "HWTCA4C5349C":[330,5],
+                          "HWTC41D47EAC":[331,6], "HWTC7758307C":[332,6], "HWTC20B3CC30":[333,7], "HWTC20B3E9D8":[334,7],
+                          "ELTX6C0016E8":[335,0], "ELTX6C001AF0":[336,1], "ELTX7400d898":[337,2],"ELTX740082f0":[338,2]
+                            }
+           
 
 
     

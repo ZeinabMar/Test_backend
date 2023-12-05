@@ -93,7 +93,7 @@ def test_Pon_Protection(rest_interface_module, node_id):
     # Pon_Initial_Information(rest_interface_module, node_id, pon_init, method='UPDATE')       
     active = "ADDED"
     while("OPERATION_STATE"!=active):
-        active = read_only_Onu_State(rest_interface_module, node_id ,1,1,2)       
+        active = read_only_Onu_State(rest_interface_module, node_id ,1,1,2,1)       
     # ****************************************************************************************************************************
     for pon_protection in Pon_Protection_Data:
         Pon_Protection(rest_interface_module, node_id, pon_protection)  

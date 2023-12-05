@@ -93,7 +93,29 @@ def getall_and_update_condition(rest_interface_module, url=None):
     logger.info(f"TRY GETTTING ALL IN ORDER TO BECOMING UPDATE ...")
     read_data = rest_interface_module.get_request(url)
     logger.info(f"dataaa {read_data}")
-    assert(read_data.status_code == 200)   
+    assert(read_data.status_code == 200)  
+
+
+def get_check(rest_interface_module, data=None, url=None):
+    logger.info(f' GETTING ONUs INITIAL INFORMATION (after {method} method) ... ')
+    read_data = rest_interface_module.get_request(url)
+    input_data = json.loads(read_data.text)
+    #**********************************************************************
+    for key in data.keys():
+        logger.info(f"{method} IN {data[key]}")
+        check_set_value(rest_interface_module, data[key][0], data[key][1],input_data)
+        logger.info(f'check is completed in {method} method')
+
+def replace_dictionary(data = None, Method = "set", dict_replace=None):
+    if Method == "set":
+        dict = data.expected_result_Set
+    else:
+        dict = data.expected_result_Get  
+    for key,value in dict.items():
+        for key2,value2 in dict_replace.items():
+            if key==key2:
+                dict[key]=value2
+    return data      
 
 
 
