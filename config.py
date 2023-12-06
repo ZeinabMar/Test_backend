@@ -262,6 +262,7 @@ def set_and_clear_data(input_data=d_string):
 
 dba_profile = namedtuple('dba_profile', ['index', 'expected_result_Set', 'expected_result_Get', "result"])                                       
 dba_profile.__new__.__defaults__ = (None, {}, {},None)
+
 dba_profile_Data_Config = (
 dba_profile(1, {"nodeId":None, "slotId":1,"shelfId":1,"dbaId":None,"name": "dba_type1", "dbaType": 1, "fixedBwValue": 32000, "assureBwValue": None, "maxBwValue": None},
                                                           {
