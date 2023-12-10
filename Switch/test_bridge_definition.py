@@ -2,6 +2,9 @@ import pytest
 import logging
 import json
 from Switch.bridge_funcs import *
+from conftest import *
+from config import *
+
 pytestmark = [pytest.mark.env_name("REST_env"), pytest.mark.rest_dev("olt_nms")]
 
 logging.basicConfig(level=logging.DEBUG)
@@ -36,6 +39,7 @@ BRIDGE_IDS = [f"test number :{i}, bridgeId :{bridge.bridgeId}, bridgeProtocol :{
 # BUG : bridge with id=2 return error but set wrongly
 # @pytest.mark.parametrize('test_data', BRIDGE_DATA, ids=BRIDGE_IDS)
 def test_set_bridge(rest_interface_module, node_id):
+    response = getall_and_update_condition(rest_interface_module,"/api/gponconfig/sp5100/bridgeconfig/getall?nodeId=31&shelfId=1&slotId=1")
     for bridge in BRIDGE_DATA:
         bridge_config(rest_interface_module, node_id, bridge, method='POST')
         if bridge.result == 'Pass':

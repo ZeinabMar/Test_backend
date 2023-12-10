@@ -1,6 +1,7 @@
 import pytest
 import logging
 import json
+from conftest import *
 from config import *
 # from pytest-check import check
 
@@ -57,7 +58,7 @@ def Static_Route_config(rest_interface_module, node_id, Static_Rout_data=Static_
 
 
 def test_Static_Route_config(rest_interface_module, node_id):
-    
+    response = getall_and_update_condition(rest_interface_module,"/api/gponconfig/sp5100/staticrouteconfig/getall?nodeId=17&shelfId=1&slotId=1")
     Static_Route_config(rest_interface_module, node_id, Static_Rout_DATA[0], method='add')
     Static_Route_config(rest_interface_module, node_id, Static_Rout_DATA[1], method='add')
     Static_Route_config(rest_interface_module, node_id, Static_Rout_DATA[2], method='add')

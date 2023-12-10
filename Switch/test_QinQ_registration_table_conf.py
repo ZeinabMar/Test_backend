@@ -1,6 +1,7 @@
 import pytest
 import logging
 import json
+from conftest import *
 from config import *
 from Switch.bridge_funcs import bridge_config
 from Switch.test_Bridge_group_conf import switch_config
@@ -141,17 +142,22 @@ def QinQ_registration_table_config(rest_interface_module, node_id, Reg_QinQ_Tabl
 
 def test_QinQ_registration_table_config(rest_interface_module, node_id):
     # for bridge in Bridge_conf_s_c:
+    response = getall_and_update_condition(rest_interface_module,"/api/gponconfig/sp5100/bridgeconfig/getall?nodeId=11&shelfId=1&slotId=1")
     bridge_config(rest_interface_module, node_id, Bridge_conf_s_c[0], method='POST')
-
+    response = getall_and_update_condition(rest_interface_module,"/api/gponconfig/sp5100/vlan/getall?nodeId=11&shelfId=1&slotId=1")
     for vlan in VLAN_DATA_conf_service:
-        vlan_config(rest_interface_module, node_id, vlan, method='POST')   
+        vlan_config(rest_interface_module, node_id, vlan, method='POST')  
+    response = getall_and_update_condition(rest_interface_module,"/api/gponconfig/sp5100/vlan/getall?nodeId=11&shelfId=1&slotId=1")     
     for vlan in VLAN_DATA_conf_CUSTOM:
         vlan_config(rest_interface_module, node_id, vlan, method='POST')   
 
 
+    response = getall_and_update_condition(rest_interface_module,"/api/gponconfig/sp5100/qinqregistration/getall?nodeId=11&shelfId=1&slotId=1")     
     QinQ_registration_table_config(rest_interface_module, node_id, Reg_QinQ_Table_1_Data[0], method='ADD')    
+    response = getall_and_update_condition(rest_interface_module,"/api/gponconfig/sp5100/qinqregistration/getall?nodeId=11&shelfId=1&slotId=1")     
     QinQ_registration_table_config(rest_interface_module, node_id, Reg_QinQ_Table_1_Data[1], method='ADD') 
-    QinQ_registration_table_config(rest_interface_module, node_id, Reg_QinQ_Table_1_Data[2], method='Post') 
+    response = getall_and_update_condition(rest_interface_module,"/api/gponconfig/sp5100/qinqregistration/getall?nodeId=11&shelfId=1&slotId=1")     
+    QinQ_registration_table_config(rest_interface_module, node_id, Reg_QinQ_Table_1_Data[2], method='Post')     
     QinQ_registration_table_config(rest_interface_module, node_id, Reg_QinQ_Table_1_Data[3], method='Post') 
     QinQ_registration_table_config(rest_interface_module, node_id, Reg_QinQ_Table_1_Data[4], method='Post') 
     QinQ_registration_table_config(rest_interface_module, node_id, Reg_QinQ_Table_1_Data[5], method='Post') 
@@ -160,8 +166,11 @@ def test_QinQ_registration_table_config(rest_interface_module, node_id):
     QinQ_registration_table_config(rest_interface_module, node_id, Reg_QinQ_Table_1_Data[8], method='Post')
 
 
+    response = getall_and_update_condition(rest_interface_module,"/api/gponconfig/sp5100/qinqregistration/getall?nodeId=11&shelfId=1&slotId=1")     
     QinQ_registration_table_config(rest_interface_module, node_id, Reg_QinQ_Table_2_Data[0], method='ADD') 
+    response = getall_and_update_condition(rest_interface_module,"/api/gponconfig/sp5100/qinqregistration/getall?nodeId=11&shelfId=1&slotId=1")     
     QinQ_registration_table_config(rest_interface_module, node_id, Reg_QinQ_Table_2_Data[1], method='ADD') 
+    response = getall_and_update_condition(rest_interface_module,"/api/gponconfig/sp5100/qinqregistration/getall?nodeId=11&shelfId=1&slotId=1")     
     QinQ_registration_table_config(rest_interface_module, node_id, Reg_QinQ_Table_2_Data[2], method='Post') 
     QinQ_registration_table_config(rest_interface_module, node_id, Reg_QinQ_Table_2_Data[3], method='Post') 
     QinQ_registration_table_config(rest_interface_module, node_id, Reg_QinQ_Table_2_Data[4], method='Post') 
@@ -170,9 +179,12 @@ def test_QinQ_registration_table_config(rest_interface_module, node_id):
     QinQ_registration_table_config(rest_interface_module, node_id, Reg_QinQ_Table_2_Data[7], method='Post') 
     QinQ_registration_table_config(rest_interface_module, node_id, Reg_QinQ_Table_2_Data[8], method='Post') 
 
+    response = getall_and_update_condition(rest_interface_module,"/api/gponconfig/sp5100/qinqregistration/getall?nodeId=11&shelfId=1&slotId=1")     
     QinQ_registration_table_config(rest_interface_module, node_id, Reg_QinQ_Table(None, 1, "reg"), method='DELETE') 
+    response = getall_and_update_condition(rest_interface_module,"/api/gponconfig/sp5100/qinqregistration/getall?nodeId=11&shelfId=1&slotId=1")         
     QinQ_registration_table_config(rest_interface_module, node_id, Reg_QinQ_Table(None, 2, "reg2"), method='DELETE') 
 
+    response = getall_and_update_condition(rest_interface_module,"/api/gponconfig/sp5100/vlan/getall?nodeId=11&shelfId=1&slotId=1")     
     for vlan in VLAN_DATA_conf_CUSTOM:
         vlan_config(rest_interface_module, node_id, vlan, method='DELETE')   
     for vlan in VLAN_DATA_conf_service:

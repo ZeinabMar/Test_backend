@@ -4,7 +4,7 @@ import logging
 
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
-board_ip = "192.168.9.128"
+board_ip = "192.168.9.125"
 
 
 def join_oid(url_base, *indexes):

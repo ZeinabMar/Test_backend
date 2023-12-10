@@ -1,6 +1,7 @@
 import pytest
 import logging
 import json
+from conftest import *
 from config import *
 from Switch.bridge_funcs import bridge_config
 from Switch.test_QinQ_registration_table_conf import QinQ_registration_table_config
@@ -114,7 +115,7 @@ Port_QinQ_DATA_Trans = (
     Port_QinQ(18, None, -1, "", "15,16,17,18,19,20,21,22,23", "", "15,16,17,18,19,20,21,22,23", -1, "STAGGED_SERVICE_INTERFACE", "", "", "", "", "", "", "Pass"),
 )
 
-up_link_mode_teory_1 = ("CUSTOMER_NETWORK","PROVIDER_NETWORK")#,"CUSTOMER_EDGE_ACCESS", "CUSTOMER_EDGE_HYBRID", "CUSTOMER_EDGE_TRUNK"
+up_link_mode_teory_1 = ("CUSTOMER_NETWORK","PROVIDER_NETWORK")
 up_link_mode_teory_2 = ("CUSTOMER_EDGE_HYBRID","CUSTOMER_EDGE_TRUNK", "CUSTOMER_EDGE_ACCESS") 
 
 def Port_QinQ_config(rest_interface_module, node_id, Port_QinQ_data=Port_QinQ(), method='POST', theory_number=1):
@@ -313,102 +314,115 @@ def Port_QinQ_config(rest_interface_module, node_id, Port_QinQ_data=Port_QinQ(),
 
 
 def test_Port_QinQ_config(rest_interface_module, node_id):
-    theory=2
+    theory=1
 
     #theory1 Translation
     if theory==1:
         for bridge in Bridge_conf_service:
+            response = getall_and_update_condition(rest_interface_module,"/api/gponconfig/sp5100/bridgeconfig/getall?nodeId=11&shelfId=1&slotId=1")
             bridge_config(rest_interface_module, node_id, bridge, method='POST')
 
+            response = getall_and_update_condition(rest_interface_module,"/api/gponconfig/sp5100/vlan/getall?nodeId=11&shelfId=1&slotId=1")
             for vlan in VLAN_DATA_conf_service:
                 vlan_config(rest_interface_module, node_id, vlan, method='POST')   
             if bridge.bridgeProtocol == "PROVIDER_MSTP_EDGE" or bridge.bridgeProtocol == "PROVIDER_RSTP_EDGE":
+                response = getall_and_update_condition(rest_interface_module,"/api/gponconfig/sp5100/vlan/getall?nodeId=11&shelfId=1&slotId=1")
                 for vlan in VLAN_DATA_conf_CUSTOM:
                     vlan_config(rest_interface_module, node_id, vlan, method='POST')   
 
             for uplinkmode in up_link_mode_teory_1:   
                 for port_bridge_group in range(2,3):
+                    response = getall_and_update_condition(rest_interface_module,"/api/gponconfig/sp5100/bridgegroupconfig/getall?nodeId=11&shelfId=1&slotId=1")
                     switch_config(rest_interface_module, node_id, Switch_conf()._replace(ethIfIndex=port_bridge_group,index=4), method='POST') 
                     if uplinkmode == "CUSTOMER_NETWORK":
+                        response = getall_and_update_condition(rest_interface_module,"/api/gponconfig/sp5100/portvlan/getall?nodeId=11&shelfId=1&slotId=1")
                         uplink_vlan_config(rest_interface_module, node_id, uplink_vlan_conf(port_bridge_group, None, "CUSTOMER_NETWORK", -1, "" , "", "", -1, "Pass"), method='POST')
                         if bridge.bridgeProtocol == "PROVIDER_MSTP_EDGE" or bridge.bridgeProtocol == "PROVIDER_RSTP_EDGE":
                             for qinq in Port_QinQ_DATA_Trans_Edge:
+                                response = getall_and_update_condition(rest_interface_module,"/api/gponconfig/sp5100/portqinqconfig/getall?nodeId=11&shelfId=1&slotId=1")
                                 Port_QinQ_config(rest_interface_module, node_id, qinq._replace(ethIfIndex=port_bridge_group, vlanMode="CUSTOMER_NETWORK"), method='POST', theory_number=1)
                         else:
                             for qinq in Port_QinQ_DATA_Trans:
+                                response = getall_and_update_condition(rest_interface_module,"/api/gponconfig/sp5100/portqinqconfig/getall?nodeId=11&shelfId=1&slotId=1")
                                 Port_QinQ_config(rest_interface_module, node_id, qinq._replace(ethIfIndex=port_bridge_group, vlanMode="CUSTOMER_NETWORK"), method='POST', theory_number=1)
 
                     if uplinkmode == "PROVIDER_NETWORK":
+                        response = getall_and_update_condition(rest_interface_module,"/api/gponconfig/sp5100/portvlan/getall?nodeId=11&shelfId=1&slotId=1")
                         uplink_vlan_config(rest_interface_module, node_id, uplink_vlan_conf(port_bridge_group, None, "PROVIDER_NETWORK", -1, "" , "", "", -1, "Pass"), method='POST')
                         if bridge.bridgeProtocol == "PROVIDER_MSTP_EDGE" or bridge.bridgeProtocol == "PROVIDER_RSTP_EDGE":
                             for qinq in Port_QinQ_DATA_Trans_Edge:
+                                response = getall_and_update_condition(rest_interface_module,"/api/gponconfig/sp5100/portqinqconfig/getall?nodeId=11&shelfId=1&slotId=1")
                                 Port_QinQ_config(rest_interface_module, node_id, qinq._replace(ethIfIndex=port_bridge_group, vlanMode="PROVIDER_NETWORK"), method='POST', theory_number=1)
                         else:
                             for qinq in Port_QinQ_DATA_Trans:
+                                response = getall_and_update_condition(rest_interface_module,"/api/gponconfig/sp5100/portqinqconfig/getall?nodeId=11&shelfId=1&slotId=1")
                                 Port_QinQ_config(rest_interface_module, node_id, qinq._replace(ethIfIndex=port_bridge_group, vlanMode="PROVIDER_NETWORK"), method='POST', theory_number=1)
-
-                    elif uplinkmode == "CUSTOMER_EDGE_ACCESS":
-                        uplink_vlan_config(rest_interface_module, node_id, uplink_vlan_conf(port_bridge_group, None, "CUSTOMER_EDGE_ACCESS", -1, "" , "", "", -1, "Pass"), method='POST')
-                        Port_QinQ_config(rest_interface_module, node_id, Port_QinQ(3, port_bridge_group, -1, "", "", "15-16", "", -1, "CUSTOMER_EDGE_ACCESS", "", "", "", "", "", "", "Fail"), method='POST', theory_number=1)
-
-                    elif uplinkmode == "CUSTOMER_EDGE_HYBRID":
-                        uplink_vlan_config(rest_interface_module, node_id, uplink_vlan_conf(port_bridge_group, None, "CUSTOMER_EDGE_HYBRID", -1, "" , "", "", -1, "Pass"), method='POST')
-                        Port_QinQ_config(rest_interface_module, node_id, Port_QinQ(3, port_bridge_group, -1, "", "", "15-16", "", -1, "CUSTOMER_EDGE_HYBRID", "", "", "", "", "", "", "Fail"), method='POST', theory_number=1)
-
-                    elif uplinkmode == "CUSTOMER_EDGE_TRUNK":
-                        uplink_vlan_config(rest_interface_module, node_id, uplink_vlan_conf(port_bridge_group, None, "CUSTOMER_EDGE_TRUNK", -1, "" , "", "", -1, "Pass"), method='POST')
-                        Port_QinQ_config(rest_interface_module, node_id, Port_QinQ(3, port_bridge_group, -1, "", "", "15-16", "", -1, "CUSTOMER_EDGE_TRUNK", "", "", "", "", "", "", "Fail"), method='POST', theory_number=1)
+                    response = getall_and_update_condition(rest_interface_module,"/api/gponconfig/sp5100/bridgegroupconfig/getall?nodeId=11&shelfId=1&slotId=1")
                     switch_config(rest_interface_module, node_id, Switch_conf()._replace(ethIfIndex=port_bridge_group,index=9), method='DELETE')  
 
+            response = getall_and_update_condition(rest_interface_module,"/api/gponconfig/sp5100/bridgegroupconfig/getall?nodeId=11&shelfId=1&slotId=1")
             for vlan in VLAN_DATA_conf_CUSTOM:
                 vlan_config(rest_interface_module, node_id, vlan, method='DELETE')   
             for vlan in VLAN_DATA_conf_service:
                 vlan_config(rest_interface_module, node_id, vlan, method='DELETE')   
             bridge_config(rest_interface_module, node_id, bridge(), method='DELETE')    
-
+    theory = 2
     #theory2 Registration                    
     if theory==2:
         for bridge in Bridge_conf_s_c:
+            response = getall_and_update_condition(rest_interface_module,"/api/gponconfig/sp5100/bridgeconfig/getall?nodeId=11&shelfId=1&slotId=1")
             bridge_config(rest_interface_module, node_id, bridge, method='POST')
+            response = getall_and_update_condition(rest_interface_module,"/api/gponconfig/sp5100/vlan/getall?nodeId=11&shelfId=1&slotId=1")
             for vlan in VLAN_DATA_conf_service:
                 vlan_config(rest_interface_module, node_id, vlan, method='POST')   
+            response = getall_and_update_condition(rest_interface_module,"/api/gponconfig/sp5100/vlan/getall?nodeId=11&shelfId=1&slotId=1")
             for vlan in VLAN_DATA_conf_CUSTOM:
                 vlan_config(rest_interface_module, node_id, vlan, method='POST')   
             for uplinkmode in up_link_mode_teory_2:  
                 if uplinkmode ==  "CUSTOMER_EDGE_ACCESS":
+                    response = getall_and_update_condition(rest_interface_module,"/api/gponconfig/sp5100/qinqregistration/getall?nodeId=11&shelfId=1&slotId=1")     
                     QinQ_registration_table_config(rest_interface_module, node_id, Reg_QinQ_Table_conf_DATA[1], method='ADD') 
                 else :
-                   QinQ_registration_table_config(rest_interface_module, node_id, Reg_QinQ_Table_conf_DATA[0], method='ADD')  
+                    response = getall_and_update_condition(rest_interface_module,"/api/gponconfig/sp5100/qinqregistration/getall?nodeId=11&shelfId=1&slotId=1")     
+                    QinQ_registration_table_config(rest_interface_module, node_id, Reg_QinQ_Table_conf_DATA[0], method='ADD')  
 
                 for port_bridge_group in range(1,2):
+                    response = getall_and_update_condition(rest_interface_module,"/api/gponconfig/sp5100/bridgegroupconfig/getall?nodeId=17&shelfId=1&slotId=1")
                     switch_config(rest_interface_module, node_id, Switch_conf()._replace(ethIfIndex=port_bridge_group,index=4), method='POST') 
                     if uplinkmode == "CUSTOMER_EDGE_ACCESS":
-                        pass
+                        response = getall_and_update_condition(rest_interface_module,"/api/gponconfig/sp5100/portvlan/getall?nodeId=17&shelfId=1&slotId=1")
                         uplink_vlan_config(rest_interface_module, node_id, uplink_vlan_conf(port_bridge_group, None, "CUSTOMER_EDGE_ACCESS", -1, "" , "", "", -1, "Pass"), method='POST')
                         for qinq in Port_QinQ_DATA_Registration_ACCESS:
+                            response = getall_and_update_condition(rest_interface_module,"/api/gponconfig/sp5100/portqinqconfig/getall?nodeId=11&shelfId=1&slotId=1")
                             Port_QinQ_config(rest_interface_module, node_id, qinq._replace(ethIfIndex=port_bridge_group, vlanMode="CUSTOMER_EDGE_ACCESS"), method='POST', theory_number=2)
 
                     elif uplinkmode == "CUSTOMER_EDGE_TRUNK":
+                        response = getall_and_update_condition(rest_interface_module,"/api/gponconfig/sp5100/portvlan/getall?nodeId=17&shelfId=1&slotId=1")
                         uplink_vlan_config(rest_interface_module, node_id, uplink_vlan_conf(port_bridge_group, None, "CUSTOMER_EDGE_TRUNK", -1, "" , "", "", -1, "Pass"), method='POST')
                         for qinq in Port_QinQ_DATA_Registration_TRUNK:
+                            response = getall_and_update_condition(rest_interface_module,"/api/gponconfig/sp5100/portqinqconfig/getall?nodeId=11&shelfId=1&slotId=1")
                             Port_QinQ_config(rest_interface_module, node_id, qinq._replace(ethIfIndex=port_bridge_group, vlanMode="CUSTOMER_EDGE_TRUNK"), method='POST', theory_number=2)
 
                     elif uplinkmode == "CUSTOMER_EDGE_HYBRID":
+                        response = getall_and_update_condition(rest_interface_module,"/api/gponconfig/sp5100/portvlan/getall?nodeId=17&shelfId=1&slotId=1")
                         uplink_vlan_config(rest_interface_module, node_id, uplink_vlan_conf(port_bridge_group, None, "CUSTOMER_EDGE_HYBRID", -1, "" , "", "", -1, "Pass"), method='POST')
                         for qinq in Port_QinQ_DATA_Registration_HYBRID:
+                            response = getall_and_update_condition(rest_interface_module,"/api/gponconfig/sp5100/portqinqconfig/getall?nodeId=11&shelfId=1&slotId=1")
                             Port_QinQ_config(rest_interface_module, node_id, qinq._replace(ethIfIndex=port_bridge_group, vlanMode="CUSTOMER_EDGE_HYBRID"), method='POST', theory_number=2)
 
                     elif uplinkmode == "PROVIDER_NETWORK":
+                        response = getall_and_update_condition(rest_interface_module,"/api/gponconfig/sp5100/portvlan/getall?nodeId=17&shelfId=1&slotId=1")
                         uplink_vlan_config(rest_interface_module, node_id, uplink_vlan_conf(port_bridge_group, None, "PROVIDER_NETWORK", -1, "" , "", "", -1, "Pass"), method='POST')
+                        response = getall_and_update_condition(rest_interface_module,"/api/gponconfig/sp5100/portqinqconfig/getall?nodeId=11&shelfId=1&slotId=1")
                         Port_QinQ_config(rest_interface_module, node_id, Port_QinQ(3, port_bridge_group, -1, "", "", "15-16", "", -1, "PROVIDER_NETWORK", "", "", "", "", "", "", "Fail"), method='POST', theory_number=2)
 
-                    elif uplinkmode == "CUSTOMER_NETWORK":
-                        uplink_vlan_config(rest_interface_module, node_id, uplink_vlan_conf(port_bridge_group, None, "CUSTOMER_NETWORK", -1, "" , "", "", -1, "Pass"), method='POST')
-                        Port_QinQ_config(rest_interface_module, node_id, Port_QinQ(3, port_bridge_group, -1, "", "", "15-16", "", -1, "CUSTOMER_NETWORK", "", "", "", "", "", "", "Fail"), method='POST', theory_number=2)
-                        
+                    
+                    response = getall_and_update_condition(rest_interface_module,"/api/gponconfig/sp5100/bridgegroupconfig/getall?nodeId=17&shelfId=1&slotId=1")
                     switch_config(rest_interface_module, node_id, Switch_conf()._replace(ethIfIndex=port_bridge_group,index=9), method='DELETE') 
+                    response = getall_and_update_condition(rest_interface_module,"/api/gponconfig/sp5100/qinqregistration/getall?nodeId=11&shelfId=1&slotId=1")     
                     QinQ_registration_table_config(rest_interface_module, node_id, Reg_QinQ_Table_conf(None, 1, "reg"), method='DELETE') 
 
+            response = getall_and_update_condition(rest_interface_module,"/api/gponconfig/sp5100/vlan/getall?nodeId=11&shelfId=1&slotId=1")
             for vlan in VLAN_DATA_conf_CUSTOM:
                 vlan_config(rest_interface_module, node_id, vlan, method='DELETE')   
             for vlan in VLAN_DATA_conf_service:

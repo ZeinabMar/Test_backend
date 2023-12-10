@@ -1,6 +1,7 @@
 import pytest
 import logging
 import json
+from conftest import *
 from config import *
 from Switch.bridge_funcs import bridge_config
 from Switch.test_Bridge_group_conf import switch_config
@@ -65,9 +66,10 @@ def Bridge_Stp_config(rest_interface_module, node_id, Bridge_Stp_data=Bridge_Stp
 
 
 def test_Bridge_Stp_config(rest_interface_module, node_id):
-
+    response = getall_and_update_condition(rest_interface_module,"/api/gponconfig/sp5100/bridgeconfig/getall?nodeId=11&shelfId=1&slotId=1")
     bridge_config(rest_interface_module, node_id, Bridge_conf(), method='POST')
     for b_stp in Bridge_Stp_DATA:
+        response = getall_and_update_condition(rest_interface_module,"/api/gponconfig/sp5100/bridgestpconfig/getall?nodeId=11&shelfId=1&slotId=1")
         if b_stp.index == 7:
             Bridge_Stp_config(rest_interface_module, node_id, b_stp, method='DELETE')
         else:

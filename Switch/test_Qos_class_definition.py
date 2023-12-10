@@ -1,6 +1,7 @@
 import pytest
 import logging
 import json
+from conftest import *
 from config import *
 from Switch.test_Qos_management import Qos_Manage_config
 from Switch.bridge_funcs import bridge_config
@@ -78,14 +79,20 @@ def Qos_Class_config(rest_interface_module, node_id, Qos_Class_data=Qos_Class(),
 
 
 def test_Qos_Class_config(rest_interface_module, node_id):
+    response = getall_and_update_condition(rest_interface_module,"/api/gponconfig/sp5100/bridgeconfig/getall?nodeId=11&shelfId=1&slotId=1")
     bridge_config(rest_interface_module, node_id, Bridge_conf(1, "PROVIDER_MSTP_EDGE"), method='POST')
+    response = getall_and_update_condition(rest_interface_module,"/api/gponconfig/sp5100/vlan/getall?nodeId=11&shelfId=1&slotId=1")
     for vlan in VLAN_DATA_conf_S_C:
         vlan_config(rest_interface_module, node_id, vlan, method='POST')  
     # **************************************************************************************************************
+    response = getall_and_update_condition(rest_interface_module,"/api/gponconfig/sp5100/qosmanagement/get/11/1/1")
     Qos_Manage_config(rest_interface_module, node_id, Qos_Manage_conf()._replace(qosState=1),method='POST')
     #*******************************************************************************************************
+    response = getall_and_update_condition(rest_interface_module,"/api/gponconfig/sp5100/qosclassdef/getall?nodeId=17&shelfId=1&slotId=1")
     Qos_Class_config(rest_interface_module, node_id, Qos_Class_DATA[0], method='add')
+    response = getall_and_update_condition(rest_interface_module,"/api/gponconfig/sp5100/qosclassdef/getall?nodeId=17&shelfId=1&slotId=1")
     Qos_Class_config(rest_interface_module, node_id, Qos_Class_DATA[1], method='add')
+    response = getall_and_update_condition(rest_interface_module,"/api/gponconfig/sp5100/qosclassdef/getall?nodeId=17&shelfId=1&slotId=1")
     Qos_Class_config(rest_interface_module, node_id, Qos_Class_DATA[2], method='POST')
     Qos_Class_config(rest_interface_module, node_id, Qos_Class_DATA[3], method='POST')
     Qos_Class_config(rest_interface_module, node_id, Qos_Class_DATA[4], method='POST')
@@ -94,7 +101,9 @@ def test_Qos_Class_config(rest_interface_module, node_id):
     Qos_Class_config(rest_interface_module, node_id, Qos_Class_DATA[7], method='POST')
     Qos_Class_config(rest_interface_module, node_id, Qos_Class_DATA[8], method='POST')
     # Qos_Class_config(rest_interface_module, node_id, Qos_Class_DATA[7], method='POST')
+    response = getall_and_update_condition(rest_interface_module,"/api/gponconfig/sp5100/qosclassdef/getall?nodeId=17&shelfId=1&slotId=1")
     Qos_Class_config(rest_interface_module, node_id, Qos_Class_DATA[9], method='DELETE')
+    response = getall_and_update_condition(rest_interface_module,"/api/gponconfig/sp5100/qosclassdef/getall?nodeId=17&shelfId=1&slotId=1")
     Qos_Class_config(rest_interface_module, node_id, Qos_Class_DATA[10], method='DELETE')
     #*******************************************************************************************************
     Qos_Manage_config(rest_interface_module, node_id, Qos_Manage_conf(),method='DELETE')

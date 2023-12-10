@@ -1,6 +1,7 @@
 import pytest
 import logging
 import json
+from conftest import *
 from config import *
 # from pytest-check import check
 
@@ -57,10 +58,10 @@ def Port_L3_config(rest_interface_module, node_id, Port_L3_data=Port_L3(), metho
 
 
 def test_Port_L3_config(rest_interface_module, node_id):
-
     for port in range(1,2):
         if port == 25:
             for portl3 in Port_L3_DATA:
+                response = getall_and_update_condition(rest_interface_module,"/api/gponconfig/sp5100/portl3/getall?nodeId=11&shelfId=1&slotId=1")
                 if portl3.index==3:
                     Port_L3_config(rest_interface_module, node_id, portl3._replace(ifIndex=port-1), method='POST')
                 elif (portl3.index==1) or (portl3.index==2):
@@ -70,6 +71,7 @@ def test_Port_L3_config(rest_interface_module, node_id):
                     Port_L3_config(rest_interface_module, node_id, portl3._replace(ifIndex=port-1), method='DELETE')     
         else :            
             for portl3 in Port_L3_DATA:
+                response = getall_and_update_condition(rest_interface_module,"/api/gponconfig/sp5100/portl3/getall?nodeId=11&shelfId=1&slotId=1")
                 if portl3.index==3:
                     Port_L3_config(rest_interface_module, node_id, portl3._replace(ifIndex=port+1), method='POST')
                 elif (portl3.index==1) or (portl3.index==2):

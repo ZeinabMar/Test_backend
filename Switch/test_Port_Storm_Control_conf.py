@@ -1,6 +1,7 @@
 import pytest
 import logging
 import json
+from conftest import *
 from config import *
 from Switch.bridge_funcs import bridge_config
 from collections import namedtuple
@@ -55,18 +56,22 @@ def Port_Storm_config(rest_interface_module, node_id, Port_Storm_data=Port_Storm
 
 
 def test_Port_Storm_config(rest_interface_module, node_id):
+    response = getall_and_update_condition(rest_interface_module,"/api/gponconfig/sp5100/bridgeconfig/getall?nodeId=11&shelfId=1&slotId=1")
     bridge_config(rest_interface_module, node_id, Bridge_conf(), method='POST')
-    for port in range(1,25):   
+    for port in range(1,25): 
+        response = getall_and_update_condition(rest_interface_module,"/api/gponconfig/sp5100/bridgegroupconfig/getall?nodeId=17&shelfId=1&slotId=1")
         switch_config(rest_interface_module, node_id, Switch_conf._replace(ethIfIndex=port,index=9), method='POST')
 
     for port in range(1,7):
         for storm in Port_Storm_DATA:
+            response = getall_and_update_condition(rest_interface_module,"/api/gponconfig/sp5100/portstormcontrolconfig/getall?nodeId=11&shelfId=1&slotId=1")
             if storm.index==6:
                 Port_Storm_config(rest_interface_module, node_id, storm._replace(ethIfIndex=port), method='DELETE')
             else:
                 Port_Storm_config(rest_interface_module, node_id, storm._replace(ethIfIndex=port), method='POST')
 
-    for port in range(1,25):   
+    for port in range(1,25):  
+        response = getall_and_update_condition(rest_interface_module,"/api/gponconfig/sp5100/bridgegroupconfig/getall?nodeId=17&shelfId=1&slotId=1")
         switch_config(rest_interface_module, node_id, Switch_conf._replace(ethIfIndex=port,index=10), method='DELETE')
     bridge_config(rest_interface_module, node_id, Bridge_conf(), method='DELETE')
 

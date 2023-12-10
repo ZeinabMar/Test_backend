@@ -1,6 +1,7 @@
 import pytest
 import logging
 import json
+from conftest import *
 from config import *
 from Switch.test_vlan import vlan_config
 from Switch.bridge_funcs import bridge_config
@@ -69,20 +70,24 @@ def Port_Mstp_config(rest_interface_module, node_id, Port_Mstp_data=Port_Mstp_ad
 
 
 def test_Port_Mstp_config(rest_interface_module, node_id):
-
+    response = getall_and_update_condition(rest_interface_module,"/api/gponconfig/sp5100/bridgeconfig/getall?nodeId=11&shelfId=1&slotId=1")
     bridge_config(rest_interface_module, node_id, Bridge_conf(1, 'PROVIDER_MSTP_EDGE', 100, 30, maxAge=6, maxHops=1, priority=12288), method='POST')
     # *********************************************************************************************
+    response = getall_and_update_condition(rest_interface_module,"/api/gponconfig/sp5100/vlan/getall?nodeId=11&shelfId=1&slotId=1")
     for vlan in VLAN_DATA_conf_service:
         vlan_config(rest_interface_module, node_id, vlan, method='POST')  
     for vlan in VLAN_DATA_conf_CUSTOM:
         vlan_config(rest_interface_module, node_id, vlan, method='POST')  
     # *****************************************************************************
+    response = getall_and_update_condition(rest_interface_module,"/api/gponconfig/sp5100/bridgemstpinstanceconfig/getall?nodeId=11&shelfId=1&slotId=1")
     Bridge_Mstp_config(rest_interface_module, node_id, Bridge_Mstp_DATA_conf[0], method='add')
     # ************************************************************    
     for port in range(1,2):
+        response = getall_and_update_condition(rest_interface_module,"/api/gponconfig/sp5100/bridgegroupconfig/getall?nodeId=11&shelfId=1&slotId=1")
         switch_config(rest_interface_module, node_id, Switch_conf()._replace(ethIfIndex=port,index=4), method='POST')
     # **************************************************
     for port in range(1,2):
+        response = getall_and_update_condition(rest_interface_module,"/api/gponconfig/sp5100/portmstpconfig/getall?nodeId=11&shelfId=1&slotId=1")
         Port_Mstp_config(rest_interface_module, node_id, Port_Mstp_add(port, 5, "Pass"), method='add')
         # Port_Mstp_config(rest_interface_module, node_id, Port_Mstp_POST(port, 5, 1, 1, 5, "Pass"), method='POST')
         if port<24:
@@ -94,8 +99,10 @@ def test_Port_Mstp_config(rest_interface_module, node_id):
     for port in range(1,2):
         switch_config(rest_interface_module, node_id, Switch_conf()._replace(ethIfIndex=port,index=9), method='DELETE')
     #************************************************************
+    response = getall_and_update_condition(rest_interface_module,"/api/gponconfig/sp5100/bridgemstpinstanceconfig/getall?nodeId=11&shelfId=1&slotId=1")
     Bridge_Mstp_config(rest_interface_module, node_id, Bridge_Mstp_DATA_conf[1], method='DELETE')
     #*****************************************************************************  
+    response = getall_and_update_condition(rest_interface_module,"/api/gponconfig/sp5100/vlan/getall?nodeId=11&shelfId=1&slotId=1")
     for vlan in VLAN_DATA_conf_CUSTOM:
         vlan_config(rest_interface_module, node_id, vlan, method='DELETE')  
     for vlan in VLAN_DATA_conf_service:

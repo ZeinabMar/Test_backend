@@ -3,7 +3,8 @@ import logging
 import json
 from Switch.bridge_funcs import *
 from collections import namedtuple
-from config import Bridge_conf_service, Bridge_conf_custom
+from conftest import *
+from config import *
 
 pytestmark = [pytest.mark.env_name("REST_env"), pytest.mark.rest_dev("olt_nms")]
 
@@ -55,13 +56,13 @@ def vlan_config(rest_interface_module, node_id, vlan_data=Vlan(), method='POST')
 
 
 def test_vlan_management(rest_interface_module, node_id):
-
+    response = getall_and_update_condition(rest_interface_module,"/api/gponconfig/sp5100/bridgeconfig/getall?nodeId=31&shelfId=1&slotId=1")
     bridge_config(rest_interface_module, node_id, Bridge_conf_service[0], method='POST')
+    response = getall_and_update_condition(rest_interface_module,"/api/gponconfig/sp5100/vlan/getall?nodeId=31&shelfId=1&slotId=1")
     for vlan in VLAN_Svlan_Data:
         vlan_config(rest_interface_module, node_id, vlan, method='POST')
     for vlan in VLAN_Svlan_Data:    
         vlan_config(rest_interface_module, node_id, vlan, method='DELETE')
-
     bridge_config(rest_interface_module, node_id, Bridge_conf_service[0], method='DLETE')
 
     bridge_config(rest_interface_module, node_id, Bridge_conf_custom[0], method='POST')

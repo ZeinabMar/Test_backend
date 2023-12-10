@@ -1,6 +1,7 @@
 import pytest
 import logging
 import json
+from conftest import *
 from config import *
 from Switch.bridge_funcs import bridge_config
 from Switch.test_Bridge_group_conf import switch_config
@@ -64,14 +65,17 @@ def interface_Stp_report(rest_interface_module, node_id, interface_Stp=interface
 def test_interface_Stp_report(rest_interface_module, node_id):
 
     for bridge in Bridge_Data:
+        response = getall_and_update_condition(rest_interface_module,"/api/gponconfig/sp5100/bridgeconfig/getall?nodeId=11&shelfId=1&slotId=1")
         bridge_config(rest_interface_module, node_id, bridge, method='POST')
 
         for port in range(1,6):  
             for switch in Switch_conf_Data: 
                 if switch.index==4:
+                    response = getall_and_update_condition(rest_interface_module,"/api/gponconfig/sp5100/bridgegroupconfig/getall?nodeId=11&shelfId=1&slotId=1")
                     switch_config(rest_interface_module, node_id, switch._replace(ethIfIndex=port), method='POST')
 
         for port in range(1,6):
+            response = getall_and_update_condition(rest_interface_module,"/api/gponconfig/sp5100/portstpconfig/getall?nodeId=11&shelfId=1&slotId=1")
             Port_Stp_config(rest_interface_module, node_id, Port_Stp_conf(port,1,"ENABLE","ENABLE",-1,1,-1), method='POST')
             interface_Stp_report(rest_interface_module, node_id, interface_Stp(), port=port, method='GET')
             Port_Stp_config(rest_interface_module, node_id, Port_Stp_conf(port), method='DELETE')
@@ -79,7 +83,9 @@ def test_interface_Stp_report(rest_interface_module, node_id):
         for port in range(1,6):  
             for switch in Switch_conf_Data: 
                 if switch.index==9:
+                    response = getall_and_update_condition(rest_interface_module,"/api/gponconfig/sp5100/bridgegroupconfig/getall?nodeId=11&shelfId=1&slotId=1")
                     switch_config(rest_interface_module, node_id, switch._replace(index=9,ethIfIndex=port), method='DELETE')
+        response = getall_and_update_condition(rest_interface_module,"/api/gponconfig/sp5100/bridgeconfig/getall?nodeId=11&shelfId=1&slotId=1")
         bridge_config(rest_interface_module, node_id, bridge, method='DELETE')
         
                 

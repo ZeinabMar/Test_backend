@@ -3,8 +3,9 @@ import logging
 import json
 from config import *
 from conftest import *
-from Pon.test_Pon_Initial_Information import Pon_Initial_Information
-
+from Switch.bridge_funcs import bridge_config
+from Switch.test_vlan import vlan_config
+from Switch.test_Bridge_group_conf import switch_config
 
 pytestmark = [pytest.mark.env_name("REST_env"), pytest.mark.rest_dev("olt_nms")]
 logging.basicConfig(level=logging.DEBUG)
@@ -37,7 +38,7 @@ IGMP_Delete = (
     IGMP(2, {"nodeId":None, "slotId":1,"shelfId":1, "vlanId": 11},result="Pass",method="DELETE"), 
 )
 
-def IGMP_Configuration(rest_interface_module, node_id, IGMP_data=IPTIGMPIGMPIGMPV(), method='ADD'):
+def IGMP_Configuration(rest_interface_module, node_id, IGMP_data=IGMP(), method='ADD'):
     method = IGMP_data.method
     logger.info(f'IGMP CONFIGURATION TEST DATA ------- > {IGMP_data.index}')
     expected_set = IGMP_data.expected_result_Set
@@ -82,12 +83,16 @@ def IGMP_Configuration(rest_interface_module, node_id, IGMP_data=IPTIGMPIGMPIGMP
 
 
 def test_IGMP_Configuration(rest_interface_module, node_id):
+    response = getall_and_update_condition(rest_interface_module,"/api/gponconfig/sp5100/bridgeconfig/getall?nodeId=11&shelfId=1&slotId=1")
     bridge_config(rest_interface_module, node_id, Bridge_conf(), method='POST')
     # ****************************************************************************************************************************
+    response = getall_and_update_condition(rest_interface_module,"/api/gponconfig/sp5100/vlan/getall?nodeId=11&shelfId=1&slotId=1")
     for vlan in VLAN_DATA_conf_CUSTOM:
         vlan_config(rest_interface_module, node_id, vlan, method='POST')  
     for port in range(1,3):
+        response = getall_and_update_condition(rest_interface_module,"/api/gponconfig/sp5100/bridgegroupconfig/getall?nodeId=17&shelfId=1&slotId=1")
         switch_config(rest_interface_module, node_id, Switch_conf()._replace(ethIfIndex=port, index=4), method='POST')
+        response = getall_and_update_condition(rest_interface_module,"/api/gponconfig/sp5100/portvlan/getall?nodeId=17&shelfId=1&slotId=1")
         uplink_vlan_config(rest_interface_module, node_id, uplink_vlan_conf_DATA[1]._replace(ethIfIndex=port), method='POST')  
 
 
@@ -96,9 +101,13 @@ def test_IGMP_Configuration(rest_interface_module, node_id):
     for igmp in IGMP_Delete:
         IGMP_Configuration(rest_interface_module, node_id, igmp)
 
-    for port in range(1,3):    
+    for port in range(1,3):  
+        response = getall_and_update_condition(rest_interface_module,"/api/gponconfig/sp5100/portvlan/getall?nodeId=17&shelfId=1&slotId=1")
         uplink_vlan_config(rest_interface_module, node_id, uplink_vlan_conf_DATA[1]._replace(ethIfIndex=port), method='DELETE')   
+        response = getall_and_update_condition(rest_interface_module,"/api/gponconfig/sp5100/bridgegroupconfig/getall?nodeId=17&shelfId=1&slotId=1")
         switch_config(rest_interface_module, node_id, Switch_conf()._replace(ethIfIndex=port, index=9), method='DELETE')
+    
+    response = getall_and_update_condition(rest_interface_module,"/api/gponconfig/sp5100/vlan/getall?nodeId=11&shelfId=1&slotId=1")
     for vlan in VLAN_DATA_conf_CUSTOM:
         vlan_config(rest_interface_module, node_id, vlan, method='DELETE')
     #****************************************************************************************************************************

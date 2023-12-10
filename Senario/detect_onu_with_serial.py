@@ -10,7 +10,7 @@ from Switch.test_vlan import vlan_config
 pytestmark = [pytest.mark.env_name("REST_env"), pytest.mark.rest_dev("olt_nms")]
 logging.basicConfig(level=logging.DEBUG)
 
-def detect_onu_with_Serial_number(port,ONU, node_id):
+def detect_onu_with_Serial_number(rest_interface_module,port,ONU, node_id):
     dict_sn_onu = {}
     for port in range(port,port+1):
         response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/pon/getprimaryinfo/11/1/1/{port}/{port}")
@@ -21,10 +21,11 @@ def detect_onu_with_Serial_number(port,ONU, node_id):
             active = "ADDED"
             while("OPERATION_STATE"!=active):
                 active = read_only_Onu_State(rest_interface_module, node_id ,1,1,port,onu) 
+            SN = read_only_Onu_SN(rest_interface_module, node_id ,1,1,port,onu)     
             dict_sn_onu[f"{SN}"]= onu
     vlan =[]
     priority = []        
-    for key,value in dict:
+    for key,value in dict_sn_onu:
         for key2, value in dict_ONU_Vlan_Priority:
             if key==key2:
                 vlan.append(dict_ONU_Vlan_Priority[key2][0])

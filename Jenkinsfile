@@ -6,7 +6,7 @@ pipeline {
     agent {label 'qms'}
     
     parameters {
-        string(name: 'test_suit_path', defaultValue: '.', description: 'which test(s) do you want to run? default is to run all tests (.)')
+        string(name: 'test_suit_path', defaultValue: 'Switch/test_total.py', description: 'which test(s) do you want to run? default is to run all tests (.)')
         choice(name: 'revision_type', choices: ['branch', 'hash', 'tag'], description: 'git revision type')
         string(name: 'revision_value', defaultValue: 'master', description: 'git revision value')
     }
