@@ -132,28 +132,28 @@ def Bridge_Mstp_config(rest_interface_module, node_id, Bridge_Mstp_data=Bridge_M
 
 
 def test_Bridge_Mstp_config(rest_interface_module, node_id):
-    response = getall_and_update_condition(rest_interface_module,"/api/gponconfig/sp5100/bridgeconfig/getall?nodeId=11&shelfId=1&slotId=1")
+    response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/sp5100/bridgeconfig/getall?nodeId={node_id}&shelfId=1&slotId=1")
     bridge_config(rest_interface_module, node_id, Bridge_conf(1, 'PROVIDER_MSTP_EDGE', 100, 30, maxAge=6, maxHops=1, priority=12288), method='POST')
     # ***************************************************************************
-    response = getall_and_update_condition(rest_interface_module,"/api/gponconfig/sp5100/vlan/getall?nodeId=11&shelfId=1&slotId=1")
+    response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/sp5100/vlan/getall?nodeId={node_id}&shelfId=1&slotId=1")
     for vlan in VLAN_DATA_conf_service:
         vlan_config(rest_interface_module, node_id, vlan, method='POST')  
-    response = getall_and_update_condition(rest_interface_module,"/api/gponconfig/sp5100/vlan/getall?nodeId=11&shelfId=1&slotId=1")
+    response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/sp5100/vlan/getall?nodeId={node_id}&shelfId=1&slotId=1")
     for vlan in VLAN_DATA_conf_CUSTOM:
         vlan_config(rest_interface_module, node_id, vlan, method='POST')   
     #******************************************************************  
-    response = getall_and_update_condition(rest_interface_module,"/api/gponconfig/sp5100/bridgemstpinstanceconfig/getall?nodeId=11&shelfId=1&slotId=1")
+    response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/sp5100/bridgemstpinstanceconfig/getall?nodeId={node_id}&shelfId=1&slotId=1")
     Bridge_Mstp_config(rest_interface_module, node_id, Bridge_Mstp_DATA[0], method='add')
-    response = getall_and_update_condition(rest_interface_module,"/api/gponconfig/sp5100/bridgemstpinstanceconfig/getall?nodeId=11&shelfId=1&slotId=1")
+    response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/sp5100/bridgemstpinstanceconfig/getall?nodeId={node_id}&shelfId=1&slotId=1")
     Bridge_Mstp_config(rest_interface_module, node_id, Bridge_Mstp_DATA[1], method='add')
     Bridge_Mstp_config(rest_interface_module, node_id, Bridge_Mstp_DATA[2], method='POST')
     Bridge_Mstp_config(rest_interface_module, node_id, Bridge_Mstp_DATA[3], method='POST')
     Bridge_Mstp_config(rest_interface_module, node_id, Bridge_Mstp_DATA[4], method='POST')
-    response = getall_and_update_condition(rest_interface_module,"/api/gponconfig/sp5100/bridgemstpinstanceconfig/getall?nodeId=11&shelfId=1&slotId=1")
+    response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/sp5100/bridgemstpinstanceconfig/getall?nodeId={node_id}&shelfId=1&slotId=1")
     Bridge_Mstp_config(rest_interface_module, node_id, Bridge_Mstp_DATA[5], method='DELETE')
     Bridge_Mstp_config(rest_interface_module, node_id, Bridge_Mstp_DATA[6], method='DELETE')
     # ******************************************************************
-    response = getall_and_update_condition(rest_interface_module,"/api/gponconfig/sp5100/vlan/getall?nodeId=11&shelfId=1&slotId=1")
+    response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/sp5100/vlan/getall?nodeId={node_id}&shelfId=1&slotId=1")
     for vlan in VLAN_DATA_conf_service:
         vlan_config(rest_interface_module, node_id, vlan, method='DELETE')  
     for vlan in VLAN_DATA_conf_CUSTOM:

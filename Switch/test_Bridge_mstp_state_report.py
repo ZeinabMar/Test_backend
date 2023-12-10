@@ -77,7 +77,7 @@ def Bridge_Mstp_report(rest_interface_module, node_id, Bridge_Mstp_rp=Bridge_con
 
 def test_Bridge_Mstp_report(rest_interface_module, node_id):
     for bridge in Bridge_Data:
-        response = getall_and_update_condition(rest_interface_module,"/api/gponconfig/sp5100/bridgeconfig/getall?nodeId=11&shelfId=1&slotId=1")
+        response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/sp5100/bridgeconfig/getall?nodeId={node_id}&shelfId=1&slotId=1")
         bridge_config(rest_interface_module, node_id, bridge, method='POST')
         # if bridge.bridgeProtocol == ("RPVSTP" or "RSTP" or "IEEE_VLAN_BRIDGE" or "IEEE" or "RSTP_RING" or "RSTP_VLAN_BRIDGE" or "RSTP_VLAN_BRIDGE_RING" or "PROVIDER_RSTP" or "PROVIDER_RSTP_EDGE"):
         #     Bridge_Mstp_report(rest_interface_module, node_id, bridge, 1, method='GET', result="Fail")

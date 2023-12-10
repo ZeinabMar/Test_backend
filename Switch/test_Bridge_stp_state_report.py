@@ -79,7 +79,7 @@ def Bridge_Stp_report(rest_interface_module, node_id, Bridge_Stp_rp=Bridge_conf(
 
 def test_Bridge_Stp_report(rest_interface_module, node_id):
     for bridge in Bridge_Data_report:
-        response = getall_and_update_condition(rest_interface_module,"/api/gponconfig/sp5100/bridgeconfig/getall?nodeId=11&shelfId=1&slotId=1")
+        response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/sp5100/bridgeconfig/getall?nodeId={node_id}&shelfId=1&slotId=1")
         bridge_config(rest_interface_module, node_id, bridge, method='POST')
         logger.info(f"bridgeee {bridge.bridgeProtocol}")
         # if bridge.bridgeProtocol == "MSTPRING" or "MSTP" or "PROVIDER_MSTP" or "PROVIDER_MSTP_EDGE":

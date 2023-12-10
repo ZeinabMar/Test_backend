@@ -71,10 +71,10 @@ def Port_L2_config(rest_interface_module, node_id, Port_L2_data=Port_L2(), metho
 def test_Port_L2_config(rest_interface_module, node_id):
     for port in range(1,3):
         for l2 in Port_L2_DATA:
-            response = getall_and_update_condition(rest_interface_module,"/api/gponconfig/sp5100/portl2/getall?nodeId=31&shelfId=1&slotId=1")
+            response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/sp5100/portl2/getall?nodeId={node_id}&shelfId=1&slotId=1")
             if l2.index != 7:
                 Port_L2_config(rest_interface_module, node_id, l2._replace(ethIfIndex=port), method='POST')
-    response = getall_and_update_condition(rest_interface_module,"/api/gponconfig/sp5100/portl2/getall?nodeId=31&shelfId=1&slotId=1")
+    response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/sp5100/portl2/getall?nodeId={node_id}&shelfId=1&slotId=1")
     for port in range(1,3):
             Port_L2_config(rest_interface_module, node_id, Port_L2_DATA[6]._replace(ethIfIndex=port), method='DELETE')
 

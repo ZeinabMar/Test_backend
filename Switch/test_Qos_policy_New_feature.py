@@ -426,40 +426,40 @@ def Qos_Policy_config(rest_interface_module, node_id, Qos_Policy_data=Qos_Policy
 
 
 def test_Qos_Policy_config(rest_interface_module, node_id):
-    response = getall_and_update_condition(rest_interface_module,"/api/gponconfig/sp5100/bridgeconfig/getall?nodeId=11&shelfId=1&slotId=1")
+    response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/sp5100/bridgeconfig/getall?nodeId={node_id}&shelfId=1&slotId=1")
     bridge_config(rest_interface_module, node_id, Bridge_conf(1, 'PROVIDER_MSTP_EDGE', 100, 30, maxAge=6, maxHops=1, priority=12288), method='POST')
-    response = getall_and_update_condition(rest_interface_module,"/api/gponconfig/sp5100/vlan/getall?nodeId=11&shelfId=1&slotId=1")
+    response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/sp5100/vlan/getall?nodeId={node_id}&shelfId=1&slotId=1")
     for vlan in VLAN_DATA_conf_S_C:
         vlan_config(rest_interface_module, node_id, vlan, method='POST')  
     # **************************************************************************************************************
-    response = getall_and_update_condition(rest_interface_module,"/api/gponconfig/sp5100/qosmanagement/get/11/1/1")
+    response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/sp5100/qosmanagement/get/{node_id}/1/1")
     Qos_Manage_config(rest_interface_module, node_id, Qos_Manage_conf()._replace(qosState=1),method='POST')
     # *******************************************************************************************************
-    response = getall_and_update_condition(rest_interface_module,"/api/gponconfig/sp5100/qosclassdef/getall?nodeId=17&shelfId=1&slotId=1")
+    response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/sp5100/qosclassdef/getall?nodeId={node_id}&shelfId=1&slotId=1")
     Qos_Class_config(rest_interface_module, node_id, Qos_Class_conf_DATA[0], method='add')
-    response = getall_and_update_condition(rest_interface_module,"/api/gponconfig/sp5100/qosclassdef/getall?nodeId=17&shelfId=1&slotId=1")
+    response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/sp5100/qosclassdef/getall?nodeId={node_id}&shelfId=1&slotId=1")
     Qos_Class_config(rest_interface_module, node_id, Qos_Class_conf_DATA[1], method='add')
     # *************************************************************************************************
     for policy in Qos_Policy_DATA_1:
-        response = getall_and_update_condition(rest_interface_module,"/api/gponconfig/sp5100/qospolicyconfig/getall?nodeId=17&shelfId=1&slotId=1")
+        response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/sp5100/qospolicyconfig/getall?nodeId={node_id}&shelfId=1&slotId=1")
         if policy.index == 1:
             Qos_Policy_config(rest_interface_module, node_id, policy, method='add')
         else:
-            response = getall_and_update_condition(rest_interface_module,"/api/gponconfig/sp5100/qospolicyconfig/getall?nodeId=17&shelfId=1&slotId=1")
+            response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/sp5100/qospolicyconfig/getall?nodeId={node_id}&shelfId=1&slotId=1")
             Qos_Policy_config(rest_interface_module, node_id, policy, method='update')
-    response = getall_and_update_condition(rest_interface_module,"/api/gponconfig/sp5100/qospolicyconfig/getall?nodeId=17&shelfId=1&slotId=1")
+    response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/sp5100/qospolicyconfig/getall?nodeId={node_id}&shelfId=1&slotId=1")
     Qos_Policy_config(rest_interface_module, node_id, Qos_Policy_DATA_2[0], method='add')
-    response = getall_and_update_condition(rest_interface_module,"/api/gponconfig/sp5100/qospolicyconfig/getall?nodeId=17&shelfId=1&slotId=1")
+    response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/sp5100/qospolicyconfig/getall?nodeId={node_id}&shelfId=1&slotId=1")
     Qos_Policy_config(rest_interface_module, node_id, Qos_Policy_DATA_2[1], method='add')
-    response = getall_and_update_condition(rest_interface_module,"/api/gponconfig/sp5100/qospolicyconfig/getall?nodeId=17&shelfId=1&slotId=1")
+    response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/sp5100/qospolicyconfig/getall?nodeId={node_id}&shelfId=1&slotId=1")
     Qos_Policy_config(rest_interface_module, node_id, Qos_Policy_DATA_2[2], method='add')
 
     for policy in Qos_Policy_Delete:
-        response = getall_and_update_condition(rest_interface_module,"/api/gponconfig/sp5100/qospolicyconfig/getall?nodeId=17&shelfId=1&slotId=1")
+        response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/sp5100/qospolicyconfig/getall?nodeId={node_id}&shelfId=1&slotId=1")
         Qos_Policy_config(rest_interface_module, node_id, policy, method='Delete')
 
     #*************************************************************************************************
-    response = getall_and_update_condition(rest_interface_module,"/api/gponconfig/sp5100/qosclassdef/getall?nodeId=17&shelfId=1&slotId=1")
+    response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/sp5100/qosclassdef/getall?nodeId={node_id}&shelfId=1&slotId=1")
     Qos_Class_config(rest_interface_module, node_id, Qos_Class_conf_DATA[2], method='DELETE')
     Qos_Class_config(rest_interface_module, node_id, Qos_Class_conf_DATA[3], method='DELETE')
     #********************************************************************************************************

@@ -52,7 +52,7 @@ def Qos_Manage_config(rest_interface_module, node_id, QoS_MANAGE_data=Qos_Manage
 
 
 def test_Qos_Manage_config(rest_interface_module, node_id):
-    response = getall_and_update_condition(rest_interface_module,"/api/gponconfig/sp5100/qosmanagement/get/11/1/1")
+    response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/sp5100/qosmanagement/get/{node_id}/1/1")
     for qos in Qos_Manage_DATA:
         Qos_Manage_config(rest_interface_module, node_id, qos, method='POST')
     Qos_Manage_config(rest_interface_module, node_id, Qos_Manage(), method='DELETE')

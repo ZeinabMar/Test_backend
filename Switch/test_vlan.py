@@ -56,9 +56,9 @@ def vlan_config(rest_interface_module, node_id, vlan_data=Vlan(), method='POST')
 
 
 def test_vlan_management(rest_interface_module, node_id):
-    response = getall_and_update_condition(rest_interface_module,"/api/gponconfig/sp5100/bridgeconfig/getall?nodeId=31&shelfId=1&slotId=1")
+    response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/sp5100/bridgeconfig/getall?nodeId={node_id}&shelfId=1&slotId=1")
     bridge_config(rest_interface_module, node_id, Bridge_conf_service[0], method='POST')
-    response = getall_and_update_condition(rest_interface_module,"/api/gponconfig/sp5100/vlan/getall?nodeId=31&shelfId=1&slotId=1")
+    response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/sp5100/vlan/getall?nodeId={node_id}&shelfId=1&slotId=1")
     for vlan in VLAN_Svlan_Data:
         vlan_config(rest_interface_module, node_id, vlan, method='POST')
     for vlan in VLAN_Svlan_Data:    

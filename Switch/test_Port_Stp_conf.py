@@ -67,17 +67,17 @@ def Port_Stp_config(rest_interface_module, node_id, Port_Stp_data=Port_Stp(), me
 
 
 def test_Port_Stp_config(rest_interface_module, node_id):
-    response = getall_and_update_condition(rest_interface_module,"/api/gponconfig/sp5100/bridgeconfig/getall?nodeId=11&shelfId=1&slotId=1")
+    response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/sp5100/bridgeconfig/getall?nodeId={node_id}&shelfId=1&slotId=1")
     bridge_config(rest_interface_module, node_id, Bridge_conf(), method='POST')
     for port in range(9,10):  
         for switch in Switch_conf_Data: 
-            response = getall_and_update_condition(rest_interface_module,"/api/gponconfig/sp5100/bridgegroupconfig/getall?nodeId=11&shelfId=1&slotId=1")
+            response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/sp5100/bridgegroupconfig/getall?nodeId={node_id}&shelfId=1&slotId=1")
             if switch.index==4:
                 switch_config(rest_interface_module, node_id, switch._replace(ethIfIndex=port), method='POST')
     
     for port in range(9,10):
         for stp in Port_Stp_DATA:
-            response = getall_and_update_condition(rest_interface_module,"/api/gponconfig/sp5100/portstpconfig/getall?nodeId=11&shelfId=1&slotId=1")
+            response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/sp5100/portstpconfig/getall?nodeId={node_id}&shelfId=1&slotId=1")
             if stp.index == 6:
                 Port_Stp_config(rest_interface_module, node_id, stp._replace(stpIndex=port), method='DELETE')
             else:
@@ -86,7 +86,7 @@ def test_Port_Stp_config(rest_interface_module, node_id):
     for port in range(9,10):  
         for switch in Switch_conf_Data: 
             if switch.index==9:
-                response = getall_and_update_condition(rest_interface_module,"/api/gponconfig/sp5100/bridgegroupconfig/getall?nodeId=11&shelfId=1&slotId=1")
+                response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/sp5100/bridgegroupconfig/getall?nodeId={node_id}&shelfId=1&slotId=1")
                 switch_config(rest_interface_module, node_id, switch._replace(index=9,ethIfIndex=port), method='DELETE')
     bridge_config(rest_interface_module, node_id, Bridge_conf(), method='DELETE')
 

@@ -99,48 +99,48 @@ def uplink_vlan_config(rest_interface_module, node_id, UPLINK_VLAN_data=uplink_v
 
 
 def test_uplink_vlan_config(rest_interface_module, node_id):
-    response = getall_and_update_condition(rest_interface_module,"/api/gponconfig/sp5100/bridgeconfig/getall?nodeId=31&shelfId=1&slotId=1")
+    response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/sp5100/bridgeconfig/getall?nodeId={node_id}&shelfId=1&slotId=1")
     bridge_config(rest_interface_module, node_id, Bridge_conf(), method='POST')
     # ****************************************************************************************************************************
-    response = getall_and_update_condition(rest_interface_module,"/api/gponconfig/sp5100/vlan/getall?nodeId=31&shelfId=1&slotId=1")
+    response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/sp5100/vlan/getall?nodeId={node_id}&shelfId=1&slotId=1")
     for vlan in VLAN_DATA_conf_CUSTOM:
         vlan_config(rest_interface_module, node_id, vlan, method='POST')  
     # **********************************************************************************************************************
     for port in range(4,5):
-        response = getall_and_update_condition(rest_interface_module,"/api/gponconfig/sp5100/bridgegroupconfig/getall?nodeId=31&shelfId=1&slotId=1")
+        response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/sp5100/bridgegroupconfig/getall?nodeId={node_id}&shelfId=1&slotId=1")
         switch_config(rest_interface_module, node_id, Switch_conf()._replace(ethIfIndex=port, index=4), method='POST')
         for up_vlan in uplink_vlan_DATA:
             if up_vlan.index == 1:
-                response = getall_and_update_condition(rest_interface_module,"/api/gponconfig/sp5100/portvlan/getall?nodeId=31&shelfId=1&slotId=1")
+                response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/sp5100/portvlan/getall?nodeId={node_id}&shelfId=1&slotId=1")
                 uplink_vlan_config(rest_interface_module, node_id, up_vlan._replace(ethIfIndex=port), method='POST') 
                 uplink_vlan_config(rest_interface_module, node_id, up_vlan._replace(ethIfIndex=port), method='DELETE')   
-                response = getall_and_update_condition(rest_interface_module,"/api/gponconfig/sp5100/bridgegroupconfig/getall?nodeId=31&shelfId=1&slotId=1")
+                response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/sp5100/bridgegroupconfig/getall?nodeId={node_id}&shelfId=1&slotId=1")
                 switch_config(rest_interface_module, node_id, Switch_conf()._replace(ethIfIndex=port, index=9), method='DELETE')
-                response = getall_and_update_condition(rest_interface_module,"/api/gponconfig/sp5100/bridgegroupconfig/getall?nodeId=31&shelfId=1&slotId=1")
+                response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/sp5100/bridgegroupconfig/getall?nodeId={node_id}&shelfId=1&slotId=1")
                 switch_config(rest_interface_module, node_id, Switch_conf()._replace(ethIfIndex=port, index=4), method='POST')
             elif up_vlan.index == 2 or 3:
-                response = getall_and_update_condition(rest_interface_module,"/api/gponconfig/sp5100/portvlan/getall?nodeId=31&shelfId=1&slotId=1")
+                response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/sp5100/portvlan/getall?nodeId={node_id}&shelfId=1&slotId=1")
                 uplink_vlan_config(rest_interface_module, node_id, up_vlan._replace(ethIfIndex=port), method='POST') 
                 if up_vlan.index == 3:
-                    response = getall_and_update_condition(rest_interface_module,"/api/gponconfig/sp5100/portvlan/getall?nodeId=31&shelfId=1&slotId=1")
+                    response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/sp5100/portvlan/getall?nodeId={node_id}&shelfId=1&slotId=1")
                     uplink_vlan_config(rest_interface_module, node_id, up_vlan._replace(ethIfIndex=port), method='DELETE')   
                     switch_config(rest_interface_module, node_id, Switch_conf()._replace(ethIfIndex=port, index=9), method='DELETE')
                     switch_config(rest_interface_module, node_id, Switch_conf()._replace(ethIfIndex=port, index=4), method='POST')
             elif up_vlan.index == 4 or 5:
-                response = getall_and_update_condition(rest_interface_module,"/api/gponconfig/sp5100/portvlan/getall?nodeId=31&shelfId=1&slotId=1")
+                response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/sp5100/portvlan/getall?nodeId={node_id}&shelfId=1&slotId=1")
                 uplink_vlan_config(rest_interface_module, node_id, up_vlan._replace(ethIfIndex=port), method='POST') 
                 if up_vlan.index == 5:
-                    response = getall_and_update_condition(rest_interface_module,"/api/gponconfig/sp5100/portvlan/getall?nodeId=31&shelfId=1&slotId=1")
+                    response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/sp5100/portvlan/getall?nodeId={node_id}&shelfId=1&slotId=1")
                     uplink_vlan_config(rest_interface_module, node_id, up_vlan._replace(ethIfIndex=port), method='DELETE')   
                     switch_config(rest_interface_module, node_id, Switch_conf()._replace(ethIfIndex=port, index=9), method='DELETE')
-                    response = getall_and_update_condition(rest_interface_module,"/api/gponconfig/sp5100/bridgegroupconfig/getall?nodeId=17&shelfId=1&slotId=1")
+                    response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/sp5100/bridgegroupconfig/getall?nodeId=17&shelfId=1&slotId=1")
                     switch_config(rest_interface_module, node_id, Switch_conf()._replace(ethIfIndex=port, index=4), method='POST')
             else:
-                response = getall_and_update_condition(rest_interface_module,"/api/gponconfig/sp5100/portvlan/getall?nodeId=31&shelfId=1&slotId=1")
+                response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/sp5100/portvlan/getall?nodeId={node_id}&shelfId=1&slotId=1")
                 uplink_vlan_config(rest_interface_module, node_id, up_vlan._replace(ethIfIndex=port), method='POST') 
                 uplink_vlan_config(rest_interface_module, node_id, up_vlan._replace(ethIfIndex=port), method='DELETE')  
                 switch_config(rest_interface_module, node_id, Switch_conf()._replace(ethIfIndex=port, index=9), method='DELETE')
-                response = getall_and_update_condition(rest_interface_module,"/api/gponconfig/sp5100/bridgegroupconfig/getall?nodeId=31&shelfId=1&slotId=1")
+                response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/sp5100/bridgegroupconfig/getall?nodeId={node_id}&shelfId=1&slotId=1")
                 switch_config(rest_interface_module, node_id, Switch_conf()._replace(ethIfIndex=port, index=4), method='POST') 
 
     for port in range(4,5):            
