@@ -129,6 +129,7 @@ def DBA_Profile(rest_interface_module, node_id, dba_profile_data=dba_profile(), 
 
 
 def test_DBA_Profile(rest_interface_module, node_id):
+    response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/dbaProfile/getall?nodeId={node_id}&shelfId=1&slotId=1")
     for dba in dba_profile_Data:
         DBA_Profile(rest_interface_module, node_id, dba, method='ADD')
     for dba in dba_profile_Data_Delete:

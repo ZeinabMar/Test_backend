@@ -669,5 +669,4 @@ dict_ONU_Vlan_Priority = {"UTEL20FD749E":[111,0], "HWTC20b3c380":[112,1],"ESGP0C
                           "HWTC8f30f67c":[800,0]}
            
 
-
-    
+Port_Onu = {2:[1],3:[1]}
