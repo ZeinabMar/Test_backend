@@ -6,6 +6,7 @@ from conftest import *
 from Switch.bridge_funcs import bridge_config
 from Switch.test_vlan import vlan_config
 from Switch.test_Bridge_group_conf import switch_config
+from Switch.test_uplink_port_Vlan_conf import uplink_vlan_config
 
 pytestmark = [pytest.mark.env_name("REST_env"), pytest.mark.rest_dev("olt_nms")]
 logging.basicConfig(level=logging.DEBUG)
