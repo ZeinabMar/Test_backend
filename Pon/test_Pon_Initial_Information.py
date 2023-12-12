@@ -103,6 +103,6 @@ def Pon_Initial_Information(rest_interface_module, node_id, pon_init_info_data=p
 
 
 def test_Pon_Initial_Information(rest_interface_module, node_id):
-
+    response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/pon/getprimaryinfo/{node_id}/1/1/2/2")
     for pon_init in pon_init_info_Data:
         Pon_Initial_Information(rest_interface_module, node_id, pon_init)       

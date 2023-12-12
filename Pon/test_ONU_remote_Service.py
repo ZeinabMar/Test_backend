@@ -114,52 +114,63 @@ def ONU_remote_Service(rest_interface_module, node_id, remote_service_data=remot
 
 
 def test_ONU_remote_Service(rest_interface_module, node_id):
+    response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/sp5100/bridgeconfig/getall?nodeId={node_id}&shelfId=1&slotId=1")
     bridge_config(rest_interface_module, node_id, Bridge_conf(), method='POST')
     # ****************************************************************************************************************************
+    response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/sp5100/vlan/getall?nodeId={node_id}&shelfId=1&slotId=1")
     for vlan in VLAN_DATA_conf_CUSTOM:
         vlan_config(rest_interface_module, node_id, vlan, method='POST')  
-
+    response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/sp5100/bridgegroupconfig/getall?nodeId={node_id}&shelfId=1&slotId=1")
     for port in range(1,4):
         switch_config(rest_interface_module, node_id, Switch_conf()._replace(ethIfIndex=port, index=4), method='POST')
-
+    response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/sp5100/portvlan/getall?nodeId={node_id}&shelfId=1&slotId=1")
     for uplink in uplink_vlan_conf_DATA:    
         uplink_vlan_config(rest_interface_module, node_id, uplink, method='POST') 
-
+    response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/dbaProfile/getall?nodeId={node_id}&shelfId=1&slotId=1")
     for dba in dba_profile_Data_Config:
         DBA_Profile(rest_interface_module, node_id, dba, method='ADD')
- 
+    response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/tcont/getall?nodeId={node_id}&shelfId=1&slotId=1&portId=2&onuId=-1")
+    response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/tcont/getall?nodeId={node_id}&shelfId=1&slotId=1&portId=3&onuId=-1")
     for tcont in tcont_Data_Config:
         Tcont_Management(rest_interface_module, node_id, tcont)
-    
+    response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/gem/getall?nodeId={node_id}&shelfId=1&slotId=1&portId=2&onuId=1")
+    response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/gem/getall?nodeId={node_id}&shelfId=1&slotId=1&portId=3&onuId=1")
     for gem in gem_profile_Data_Config:
         Gem_Management(rest_interface_module, node_id, gem)
-
+    response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/service/getall?nodeId={node_id}&shelfId=1&slotId=1&portId=2&onuId=1")
+    response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/service/getall?nodeId={node_id}&shelfId=1&slotId=1&portId=3&onuId=1")
     for service in service_profile_Data_Config:
         OLT_Service(rest_interface_module, node_id, service)
-
+    response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/sp5100/rmonu/service/getall?nodeId={node_id}&shelfId=1&slotId=1&onuId=1&portId=2")
+    response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/sp5100/rmonu/service/getall?nodeId={node_id}&shelfId=1&slotId=1&onuId=1&portId=3")
     for remote in remote_service_profile_Data:
         ONU_remote_Service(rest_interface_module, node_id, remote)
 
     for remote in remote_service_profile_Data_Delete:
         ONU_remote_Service(rest_interface_module, node_id, remote)
 
+    response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/service/getall?nodeId={node_id}&shelfId=1&slotId=1&portId=2&onuId=1")
+    response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/service/getall?nodeId={node_id}&shelfId=1&slotId=1&portId=3&onuId=1")
     for service in service_profile_Data_Delete_Config:
         OLT_Service(rest_interface_module, node_id, service)
-
+    response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/gem/getall?nodeId={node_id}&shelfId=1&slotId=1&portId=2&onuId=1")
+    response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/gem/getall?nodeId={node_id}&shelfId=1&slotId=1&portId=3&onuId=1")
     for gem in gem_profile_Data_Delete_Config:
         Gem_Management(rest_interface_module, node_id, gem)
-
+    response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/tcont/getall?nodeId={node_id}&shelfId=1&slotId=1&portId=2&onuId=-1")
+    response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/tcont/getall?nodeId={node_id}&shelfId=1&slotId=1&portId=3&onuId=-1")
     for tcont in tcont_Data_Delete_Config:
         Tcont_Management(rest_interface_module, node_id, tcont)
-
+    response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/dbaProfile/getall?nodeId={node_id}&shelfId=1&slotId=1")
     for dba in dba_profile_Data_Config_Delete:
         DBA_Profile(rest_interface_module, node_id, dba, method='DELETE')       
-
+    response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/sp5100/portvlan/getall?nodeId={node_id}&shelfId=1&slotId=1")
     for uplink in uplink_vlan_conf_DATA:    
         uplink_vlan_config(rest_interface_module, node_id, uplink, method='DELETE') 
-
+    response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/sp5100/bridgegroupconfig/getall?nodeId={node_id}&shelfId=1&slotId=1")
     for port in range(1,4):
         switch_config(rest_interface_module, node_id, Switch_conf()._replace(ethIfIndex=port,index=9), method='DELETE')
+    response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/sp5100/vlan/getall?nodeId={node_id}&shelfId=1&slotId=1")
     for vlan in VLAN_DATA_conf_CUSTOM:
         vlan_config(rest_interface_module, node_id, vlan, method='DELETE')
     #****************************************************************************************************************************

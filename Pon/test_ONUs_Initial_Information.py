@@ -71,6 +71,6 @@ def ONUs_Initial_Information(rest_interface_module, node_id, onus_init_info_data
 
 
 def test_ONUs_Initial_Information(rest_interface_module, node_id):
-
+    response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/onu/getallauthenticated?nodeId={node_id}&shelfId=1&slotId=1&portId=2")
     for onu_init in ONUs_Init_Info_Data:
         ONUs_Initial_Information(rest_interface_module, node_id, onu_init)       

@@ -68,6 +68,7 @@ def Service_Profile_Definition(rest_interface_module, node_id, Onu_Service=Onu_S
 
 
 def test_Service_Profile_Definition(rest_interface_module, node_id):
+    response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/onuserviceprofile/getall?nodeId={node_id}&shelfId=1&slotId=1")
     for service_def in Onu_Service_Profile_Data:
         Service_Profile_Definition(rest_interface_module, node_id, service_def, method='ADD')
     for service_def in Onu_Service_Profile_Delete:

@@ -93,10 +93,9 @@ def Onu_Type_Profile(rest_interface_module, node_id, onu_type_data=onu_type(), m
 
 
 def test_Onu_Type_Profile(rest_interface_module, node_id):
-
+    response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/onuProfile/getall?nodeId={node_id}&shelfId=1&slotId=1")
     for onu_t_p in onu_type_Data:
         Onu_Type_Profile(rest_interface_module, node_id, onu_t_p)
-
     for onu_t_p in onu_type_Delete:
         Onu_Type_Profile(rest_interface_module, node_id, onu_t_p)
 

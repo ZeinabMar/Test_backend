@@ -74,25 +74,27 @@ def Gem_Service_Profile(rest_interface_module, node_id, gem_service_profile_data
 
 
 
-
-
 def test_Gem_Service_Profile(rest_interface_module, node_id):
-
+    response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/dbaProfile/getall?nodeId={node_id}&shelfId=1&slotId=1")
     for dba in dba_profile_Data_Config:
         DBA_Profile(rest_interface_module, node_id, dba, method='ADD')
+    response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/onuserviceprofile/getall?nodeId={node_id}&shelfId=1&slotId=1")
     for service_def in Onu_Service_Profile_Data_Config:
         Service_Profile_Definition(rest_interface_module, node_id, service_def, method='ADD')
+    response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/tcontserviceprofile/getall?nodeId={node_id}&shelfId=1&slotId=1&onuServiceProfileId=-1")    
     for service_tcont in Tcont_service_profile_Data_Config:
         Tcont_Service_Profile(rest_interface_module, node_id, service_tcont)
-
+    response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/gemserviceprofile/getall?nodeId={node_id}&shelfId=1&slotId=1&portId=undefined&onuServiceProfileId=-1")    
     for service_gem in Gem_service_profile_Data:
         Gem_Service_Profile(rest_interface_module, node_id, service_gem)
     for service_gem in Gem_service_profile_Delete:
         Gem_Service_Profile(rest_interface_module, node_id, service_gem)
-
+    response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/tcontserviceprofile/getall?nodeId={node_id}&shelfId=1&slotId=1&onuServiceProfileId=-1")    
     for service_tcont in Tcont_service_profile_Delete_Config:
         Tcont_Service_Profile(rest_interface_module, node_id, service_tcont)
+    response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/onuserviceprofile/getall?nodeId={node_id}&shelfId=1&slotId=1")
     for service_def in Onu_Service_Profile_Delete_Config:
         Service_Profile_Definition(rest_interface_module, node_id, service_def, method='DELETE')    
+    response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/dbaProfile/getall?nodeId={node_id}&shelfId=1&slotId=1")
     for dba in dba_profile_Data_Config_Delete:
         DBA_Profile(rest_interface_module, node_id, dba, method='DELETE')       

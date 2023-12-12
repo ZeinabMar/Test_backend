@@ -139,5 +139,6 @@ def read_only_Onu_SN(rest_interface_module, node_Id, shelfId, slotId, portId, on
 
 
 def test_onu_authentication(rest_interface_module, node_id):
+    response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/onu/getallauthenticated?nodeId={node_id}&shelfId=1&slotId=1&portId=2")
     for data in onu_general_Data:
         onu_auto_learn(rest_interface_module, node_id, data, "ADD")

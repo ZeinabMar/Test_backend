@@ -124,12 +124,12 @@ def test_Tcont_Management(rest_interface_module, node_id):
     response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/dbaProfile/getall?nodeId={node_id}&shelfId=1&slotId=1")
     for dba in dba_profile_Data_Config:
         DBA_Profile(rest_interface_module, node_id, dba, method='ADD')
-    for key in Port_Onu.keys():
-        response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/tcont/getall?nodeId={node_id}&shelfId=1&slotId=1&portId={key}&onuId=-1")
+    response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/tcont/getall?nodeId={node_id}&shelfId=1&slotId=1&portId=2&onuId=-1")
+    response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/tcont/getall?nodeId={node_id}&shelfId=1&slotId=1&portId=3&onuId=-1")
     for tcont in tcont_Data:
         Tcont_Management(rest_interface_module, node_id, tcont)
-    for key in Port_Onu.keys():
-        response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/tcont/getall?nodeId={node_id}&shelfId=1&slotId=1&portId={key}&onuId=-1")
+    response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/tcont/getall?nodeId={node_id}&shelfId=1&slotId=1&portId=2&onuId=-1")
+    response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/tcont/getall?nodeId={node_id}&shelfId=1&slotId=1&portId=3&onuId=-1")    
     for tcont in tcont_Data_Delete:
         Tcont_Management(rest_interface_module, node_id, tcont)
     for dba in dba_profile_Data_Config_Delete:
