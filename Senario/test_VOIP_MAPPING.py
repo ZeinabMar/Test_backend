@@ -20,49 +20,54 @@ from Pon.test_ONU_remote_Service import ONU_remote_Service
 pytestmark = [pytest.mark.env_name("REST_env"), pytest.mark.rest_dev("olt_nms")]
 logging.basicConfig(level=logging.DEBUG)
 
-priority = [7,0,2,5,7,4,2,7,3,2,2,1,1,0,6,4,3,5,3,2,1,0,6,6,6,2,3,7]
-Vlan = [334,111,337,118,333,229,113,221,115,226,338,112,336,335,220,117,116,330,228,114,224,223,119,331,332,225,227,222]
+
+priority = [0,0,0,0,1,0,0,0,2,0,3,0,7,0,3,0,2,0,0,3,0,0,5,6,6,2,0,0] #
+Vlan = [333,330,229,112,224,334,338,313,226,335,227,111,221,223,115,220,114,336,110,228,117,337,118,332,331,225,119,222]#
 def test_Shut_Down_On(rest_interface_module, node_id):
     # response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/sp5100/bridgeconfig/getall?nodeId={node_id}&shelfId=1&slotId=1")
     # bridge_config(rest_interface_module, node_id, Bridge_conf(1,"RSTP_VLAN_BRIDGE"), method='POST')
-    # read_data = rest_interface_module.get_request("/api/gponconfig/onu/getallonunumber?nodeId=11&shelfId=1&slotId=1")
-    # read_onu = json.loads(read_data.text)
-    # assert read_onu["totalOnu"] == 2
-    # Vlan,priority,dict_sn_onu = detect_onu_with_Serial_number(rest_interface_module,3, 1, node_id)
-    # vlan_string = ""
-    # for v in Vlan:
-    #     vlan_string = f"{v}"+vlan_string
-    # # ****************************************************************************************************************************
-    # for i in len(Vlan):
-    #     response = getall_and_update_condition(rest_interface_module,"/api/gponconfig/sp5100/vlan/getall?nodeId=11&shelfId=1&slotId=1")
-    #     vlan_config(rest_interface_module, node_id, Vlan_conf(Vlan[i], 'CUSTOMER'), method='POST')    
+    # # read_data = rest_interface_module.get_request("/api/gponconfig/onu/getallonunumber?nodeId=11&shelfId=1&slotId=1")
+    # # read_onu = json.loads(read_data.text)
+    # # assert read_onu["totalOnu"] == 2
+    # # Vlan,priority,dict_sn_onu = detect_onu_with_Serial_number(rest_interface_module,3, 1, node_id)
+    # # vlan_string = ""
+    # # for v in Vlan:
+    # #     vlan_string = f"{v}"+vlan_string
+    # # # ****************************************************************************************************************************
+    # # for i in len(Vlan):
+    # #     response = getall_and_update_condition(rest_interface_module,"/api/gponconfig/sp5100/vlan/getall?nodeId=11&shelfId=1&slotId=1")
+    # #     vlan_config(rest_interface_module, node_id, Vlan_conf(Vlan[i], 'CUSTOMER'), method='POST')    
     # response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/sp5100/vlan/getall?nodeId={node_id}&shelfId=1&slotId=1")
     # vlan_config(rest_interface_module, node_id, Vlan_conf(700, 'CUSTOMER'), method='POST')  
     # for i in range(len(Vlan)):
     #     response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/sp5100/vlan/getall?nodeId={node_id}&shelfId=1&slotId=1")
     #     vlan_config(rest_interface_module, node_id, Vlan_conf(Vlan[i], 'CUSTOMER'), method='POST')  
     
-    # for port in range(1,2):
-    #     response = getall_and_update_condition(rest_interface_module, f"/api/gponconfig/sp5100/bridgegroupconfig/getall?nodeId={node_id}&shelfId=1&slotId=1")
-    #     switch_config(rest_interface_module, node_id, Switch_conf()._replace(ethIfIndex=port, index=4), method='POST')
-    #     response = getall_and_update_condition(rest_interface_module, f"/api/gponconfig/sp5100/portvlan/getall?nodeId={node_id}&shelfId=1&slotId=1")
-    #     uplink_vlan_config(rest_interface_module, node_id, uplink_vlan_conf_DATA[1]._replace(ethIfIndex=port,taggedVlanSet="700"), method='POST') 
+#     for port in range(1,2):
+#         response = getall_and_update_condition(rest_interface_module, f"/api/gponconfig/sp5100/bridgegroupconfig/getall?nodeId={node_id}&shelfId=1&slotId=1")
+#         switch_config(rest_interface_module, node_id, Switch_conf()._replace(ethIfIndex=port, index=4), method='POST')
+#         response = getall_and_update_condition(rest_interface_module, f"/api/gponconfig/sp5100/portvlan/getall?nodeId={node_id}&shelfId=1&slotId=1")
+#         uplink_vlan_config(rest_interface_module, node_id, uplink_vlan_conf_DATA[1]._replace(ethIfIndex=port,taggedVlanSet="700,333,330,229,112,224,334,338,313,226"), method='POST') 
+#         uplink_vlan_config(rest_interface_module, node_id, uplink_vlan_conf_DATA[1]._replace(ethIfIndex=port,taggedVlanSet="335,227,111,221,223,115,220,114,336,110"), method='POST') 
+#         uplink_vlan_config(rest_interface_module, node_id, uplink_vlan_conf_DATA[1]._replace(ethIfIndex=port,taggedVlanSet="228,117,337,118,332,331,225,119,222"), method='POST') 
 
-    #     mapping_add_1 = replace_dictionary(Mapping_Add, "set",{"ifIndex": 1, "vlanId": 10,"vlanTranslatedId": 11})
-    #     mapping_add_1 = replace_dictionary(mapping_add_1,"get", {"ifIndex":[1,"ifIndex"],"vlanId":[10,"vlanId"],"vlanTranslatedId":[11,"vlanTranslatedId"]})     
-    #     Mapping(rest_interface_module, node_id, mapping_add_1, method='ADD')
+#     #     mapping_add_1 = replace_dictionary(Mapping_Add, "set",{"ifIndex": 1, "vlanId": 10,"vlanTranslatedId": 11})
+#     #     mapping_add_1 = replace_dictionary(mapping_add_1,"get", {"ifIndex":[1,"ifIndex"],"vlanId":[10,"vlanId"],"vlanTranslatedId":[11,"vlanTranslatedId"]})     
+#     #     Mapping(rest_interface_module, node_id, mapping_add_1, method='ADD')
 
-    #     mapping_add_2 = replace_dictionary(Mapping_Add, "set",{"ifIndex": 1, "vlanId": 12,"vlanTranslatedId": 13})
-    #     mapping_add_2 = replace_dictionary(mapping_add_2,"get", {"ifIndex":[1,"ifIndex"],"vlanId":[12,"vlanId"],"vlanTranslatedId":[13,"vlanTranslatedId"]})     
-    #     Mapping(rest_interface_module, node_id, mapping_add_2, method='ADD')
+#     #     mapping_add_2 = replace_dictionary(Mapping_Add, "set",{"ifIndex": 1, "vlanId": 12,"vlanTranslatedId": 13})
+#     #     mapping_add_2 = replace_dictionary(mapping_add_2,"get", {"ifIndex":[1,"ifIndex"],"vlanId":[12,"vlanId"],"vlanTranslatedId":[13,"vlanTranslatedId"]})     
+#     #     Mapping(rest_interface_module, node_id, mapping_add_2, method='ADD')
 
-#**********************************PON Config ****************************************
-    # for port in range(1,2):
-    #     response = getall_and_update_condition(rest_interface_module, f"/api/gponconfig/sp5100/bridgegroupconfig/getall?nodeId={node_id}&shelfId=1&slotId=1")
-    #     switch_config(rest_interface_module, node_id, Switch_conf()._replace(ethIfIndex=port+8, index=4), method='POST')
-    #     response = getall_and_update_condition(rest_interface_module, f"/api/gponconfig/sp5100/portvlan/getall?nodeId={node_id}&shelfId=1&slotId=1")
-    #     uplink_vlan_config(rest_interface_module, node_id, uplink_vlan_conf_DATA[1]._replace(ethIfIndex=port+8, taggedVlanSet="700"), method='POST') 
-    
+# #**********************************PON Config ****************************************
+#     for port in range(1,2):
+#         response = getall_and_update_condition(rest_interface_module, f"/api/gponconfig/sp5100/bridgegroupconfig/getall?nodeId={node_id}&shelfId=1&slotId=1")
+#         switch_config(rest_interface_module, node_id, Switch_conf()._replace(ethIfIndex=port+8, index=4), method='POST')
+#         response = getall_and_update_condition(rest_interface_module, f"/api/gponconfig/sp5100/portvlan/getall?nodeId={node_id}&shelfId=1&slotId=1")
+#         uplink_vlan_config(rest_interface_module, node_id, uplink_vlan_conf_DATA[1]._replace(ethIfIndex=port+8, taggedVlanSet="700,333,330,229,112,224,334,338,313,226"), method='POST') 
+#         uplink_vlan_config(rest_interface_module, node_id, uplink_vlan_conf_DATA[1]._replace(ethIfIndex=port+8, taggedVlanSet="335,227,111,221,223,115,220,114,336,110"), method='POST') 
+#         uplink_vlan_config(rest_interface_module, node_id, uplink_vlan_conf_DATA[1]._replace(ethIfIndex=port+8, taggedVlanSet="700"), method='228,117,337,118,332,331,225,119,222') 
+
     response = getall_and_update_condition(rest_interface_module, f"/api/gponconfig/dbaProfile/getall?nodeId={node_id}&shelfId=1&slotId=1")
     # DBA_Profile(rest_interface_module, node_id, dba_profile(1, {"nodeId":None, "slotId":1,"shelfId":1,"dbaId":1,"name": "HSI", "dbaType": 2, "fixedBwValue": None, "assureBwValue": 250, "maxBwValue": 100000},
     #                                                        {
