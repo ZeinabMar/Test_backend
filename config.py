@@ -427,6 +427,10 @@ service_profile_Data_Delete_Config = (
     service_profile(3, {"nodeId":None, "slotId":1,"shelfId":1, "servicePortId": 1, "onuId": 1, "portId": 3},result="Pass",method="DELETE"),  
 )
 #****************************************************************************************************************************
+remote_service = namedtuple('remote_service_profile', ['index', 'expected_result_Set', 'expected_result_Get', "result", "method"])                                       
+remote_service.__new__.__defaults__ = (None, {}, {},None, None)
+
+#****************************************************************************************************************************
 Onu_Service_Profile = namedtuple('Onu_Service_Profile', ['index', 'expected_result_Set', 'expected_result_Get', "result"])                                       
 Onu_Service_Profile.__new__.__defaults__ = (None, {}, {},None)
 

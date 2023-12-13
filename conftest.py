@@ -4,7 +4,7 @@ import logging
 
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
-board_ip = "192.168.9.128"
+board_ip = "192.168.9.127"
 
 
 def join_oid(url_base, *indexes):
@@ -108,13 +108,19 @@ def get_check(rest_interface_module, data=None, url=None):
 
 def replace_dictionary(data = None, Method = "set", dict_replace=None):
     if Method == "set":
-        dict = data.expected_result_Set
+        dict_source = data.expected_result_Set
     else:
-        dict = data.expected_result_Get  
-    for key,value in dict.items():
-        for key2,value2 in dict_replace.items():
-            if key==key2:
-                dict[key]=value2
+        dict_source = data.expected_result_Get 
+
+    logger.info(f"sourceeee {dict_source}")
+    for key1 in dict_source.keys():
+        for key2 in dict_replace.keys():
+            if key1==key2:
+                dict[key1]=dict_replace[key2]
+    if Method == "set":            
+        data.expected_result_Set = dict_source
+    else :   
+        data.expected_result_Get = dict_source
     return data      
 
 
