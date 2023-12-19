@@ -430,7 +430,7 @@ service_profile_Data_Delete_Config = (
 remote_service = namedtuple('remote_service_profile', ['index', 'expected_result_Set', 'expected_result_Get', "result", "method"])                                       
 remote_service.__new__.__defaults__ = (None, {}, {},None, None)
 remote_service_profile_Data = (
-remote_service_profile(1, {
+remote_service(1, {
     "nodeId": None,"shelfId": 1,"slotId": 1,"portId": 2,"onuId": 1, "rmServiceId": "1",
     "onuPortType": "VEIP","onuPortId": 0,"vlanMode": "ACCESS","gemId": 1,"pvId": "10","priority": "3",}, {"rmServiceId": [1, "rmServiceId"],
                                                                                                 "onuPortType": ["VEIP", "onuPortType"],
