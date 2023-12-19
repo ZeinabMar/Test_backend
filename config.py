@@ -429,7 +429,19 @@ service_profile_Data_Delete_Config = (
 #****************************************************************************************************************************
 remote_service = namedtuple('remote_service_profile', ['index', 'expected_result_Set', 'expected_result_Get', "result", "method"])                                       
 remote_service.__new__.__defaults__ = (None, {}, {},None, None)
-
+remote_service_profile_Data = (
+remote_service_profile(1, {
+    "nodeId": None,"shelfId": 1,"slotId": 1,"portId": 2,"onuId": 1, "rmServiceId": "1",
+    "onuPortType": "VEIP","onuPortId": 0,"vlanMode": "ACCESS","gemId": 1,"pvId": "10","priority": "3",}, {"rmServiceId": [1, "rmServiceId"],
+                                                                                                "onuPortType": ["VEIP", "onuPortType"],
+                                                                                                "onuPortId": [0, "onuPortId"],
+                                                                                                "onuId": [1, "onuId"],
+                                                                                                "portId": [2, "portId"],
+                                                                                                "gemId": [1, "gemId"],
+                                                                                                "vlanMode": ["ACCESS", "vlanMode"],
+                                                                                                "pvId": [10, "pvId"],
+                                                                                                "priority": [3, "priority"],},result="Pass",method="ADD"),
+)
 #****************************************************************************************************************************
 Onu_Service_Profile = namedtuple('Onu_Service_Profile', ['index', 'expected_result_Set', 'expected_result_Get', "result"])                                       
 Onu_Service_Profile.__new__.__defaults__ = (None, {}, {},None)

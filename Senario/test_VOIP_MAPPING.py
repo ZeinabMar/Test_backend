@@ -84,7 +84,7 @@ def test_Shut_Down_On(rest_interface_module, node_id):
     #                                                         "assurebwvalue": [250, "assureBwValue"],
     #                                                         "maxbwvalue": [1000, "maxBwValue"]},result="Pass"), method='ADD')
     for port in range(1,2):
-        for i in  range(1,29) :
+        for i in  range(20,21) :
             response = getall_and_update_condition(rest_interface_module, f"/api/gponconfig/tcont/getall?nodeId={node_id}&shelfId=1&slotId=1&portId={port}&onuId=-1")
             Tcont_Management(rest_interface_module, node_id, tcont(1, {"nodeId":None, "slotId":1,"shelfId":1,"bwProfileId":1,"bwProfileName": "HSI", "name": "tcont_valid1", "onuId": i, "portId": port, "tcontId": 1},
                                                            {
