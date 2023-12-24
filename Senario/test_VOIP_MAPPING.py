@@ -21,8 +21,8 @@ pytestmark = [pytest.mark.env_name("REST_env"), pytest.mark.rest_dev("olt_nms")]
 logging.basicConfig(level=logging.DEBUG)
 
 
-priority = [0,0,0,0,1,0,0,0,2,0,3,0,7,0,3,0,2,0,0,3,0,0,5,6,6,2,0,0] #
-Vlan = [333,330,229,112,224,334,338,313,226,335,227,111,221,223,115,220,114,336,110,228,117,337,118,332,331,225,119,222]#
+priority = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0] #
+Vlan = [111,118,112,226,337,223,338,229,220,336,330,119,221,335,228,113,333,116,114,117,334,332,227,225,115,222,224,331]#
 def test_Shut_Down_On(rest_interface_module, node_id):
     # response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/sp5100/bridgeconfig/getall?nodeId={node_id}&shelfId=1&slotId=1")
     # bridge_config(rest_interface_module, node_id, Bridge_conf(1,"RSTP_VLAN_BRIDGE"), method='POST')
@@ -43,13 +43,13 @@ def test_Shut_Down_On(rest_interface_module, node_id):
     #     response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/sp5100/vlan/getall?nodeId={node_id}&shelfId=1&slotId=1")
     #     vlan_config(rest_interface_module, node_id, Vlan_conf(Vlan[i], 'CUSTOMER'), method='POST')  
     
-#     for port in range(1,2):
-#         response = getall_and_update_condition(rest_interface_module, f"/api/gponconfig/sp5100/bridgegroupconfig/getall?nodeId={node_id}&shelfId=1&slotId=1")
-#         switch_config(rest_interface_module, node_id, Switch_conf()._replace(ethIfIndex=port, index=4), method='POST')
-#         response = getall_and_update_condition(rest_interface_module, f"/api/gponconfig/sp5100/portvlan/getall?nodeId={node_id}&shelfId=1&slotId=1")
-#         uplink_vlan_config(rest_interface_module, node_id, uplink_vlan_conf_DATA[1]._replace(ethIfIndex=port,taggedVlanSet="700,333,330,229,112,224,334,338,313,226"), method='POST') 
-#         uplink_vlan_config(rest_interface_module, node_id, uplink_vlan_conf_DATA[1]._replace(ethIfIndex=port,taggedVlanSet="335,227,111,221,223,115,220,114,336,110"), method='POST') 
-#         uplink_vlan_config(rest_interface_module, node_id, uplink_vlan_conf_DATA[1]._replace(ethIfIndex=port,taggedVlanSet="228,117,337,118,332,331,225,119,222"), method='POST') 
+    # for port in range(1,2):
+    #     response = getall_and_update_condition(rest_interface_module, f"/api/gponconfig/sp5100/bridgegroupconfig/getall?nodeId={node_id}&shelfId=1&slotId=1")
+    #     # switch_config(rest_interface_module, node_id, Switch_conf()._replace(ethIfIndex=port, index=4), method='POST')
+    #     response = getall_and_update_condition(rest_interface_module, f"/api/gponconfig/sp5100/portvlan/getall?nodeId={node_id}&shelfId=1&slotId=1")
+    #     # uplink_vlan_config(rest_interface_module, node_id, uplink_vlan_conf_DATA[1]._replace(ethIfIndex=port,taggedVlanSet="700,111,118,112,226,337,223,338,229,220"), method='POST') 
+    #     uplink_vlan_config(rest_interface_module, node_id, uplink_vlan_conf_DATA[1]._replace(ethIfIndex=port,taggedVlanSet="336,330,119,221,335,228,113,333,116,114"), method='POST') 
+    #     uplink_vlan_config(rest_interface_module, node_id, uplink_vlan_conf_DATA[1]._replace(ethIfIndex=port,taggedVlanSet="117,334,332,227,225,115,222,224,331"), method='POST') 
 
 #     #     mapping_add_1 = replace_dictionary(Mapping_Add, "set",{"ifIndex": 1, "vlanId": 10,"vlanTranslatedId": 11})
 #     #     mapping_add_1 = replace_dictionary(mapping_add_1,"get", {"ifIndex":[1,"ifIndex"],"vlanId":[10,"vlanId"],"vlanTranslatedId":[11,"vlanTranslatedId"]})     
@@ -60,13 +60,13 @@ def test_Shut_Down_On(rest_interface_module, node_id):
 #     #     Mapping(rest_interface_module, node_id, mapping_add_2, method='ADD')
 
 # #**********************************PON Config ****************************************
-#     for port in range(1,2):
-#         response = getall_and_update_condition(rest_interface_module, f"/api/gponconfig/sp5100/bridgegroupconfig/getall?nodeId={node_id}&shelfId=1&slotId=1")
-#         switch_config(rest_interface_module, node_id, Switch_conf()._replace(ethIfIndex=port+8, index=4), method='POST')
-#         response = getall_and_update_condition(rest_interface_module, f"/api/gponconfig/sp5100/portvlan/getall?nodeId={node_id}&shelfId=1&slotId=1")
-#         uplink_vlan_config(rest_interface_module, node_id, uplink_vlan_conf_DATA[1]._replace(ethIfIndex=port+8, taggedVlanSet="700,333,330,229,112,224,334,338,313,226"), method='POST') 
-#         uplink_vlan_config(rest_interface_module, node_id, uplink_vlan_conf_DATA[1]._replace(ethIfIndex=port+8, taggedVlanSet="335,227,111,221,223,115,220,114,336,110"), method='POST') 
-#         uplink_vlan_config(rest_interface_module, node_id, uplink_vlan_conf_DATA[1]._replace(ethIfIndex=port+8, taggedVlanSet="700"), method='228,117,337,118,332,331,225,119,222') 
+    # for port in range(14,15):
+    #     # response = getall_and_update_condition(rest_interface_module, f"/api/gponconfig/sp5100/bridgegroupconfig/getall?nodeId={node_id}&shelfId=1&slotId=1")
+    #     # switch_config(rest_interface_module, node_id, Switch_conf()._replace(ethIfIndex=port+8, index=4), method='POST')
+    #     response = getall_and_update_condition(rest_interface_module, f"/api/gponconfig/sp5100/portvlan/getall?nodeId={node_id}&shelfId=1&slotId=1")
+    #     uplink_vlan_config(rest_interface_module, node_id, uplink_vlan_conf_DATA[1]._replace(ethIfIndex=port+8, taggedVlanSet="700,333,330,229,112,224,334,338,313,226"), method='POST') 
+    #     uplink_vlan_config(rest_interface_module, node_id, uplink_vlan_conf_DATA[1]._replace(ethIfIndex=port+8, taggedVlanSet="336,330,119,221,335,228,113,333,116,114"), method='POST') 
+    #     uplink_vlan_config(rest_interface_module, node_id, uplink_vlan_conf_DATA[1]._replace(ethIfIndex=port+8, taggedVlanSet="117,334,332,227,225,115,222,224,331"), method='POST') 
 
     response = getall_and_update_condition(rest_interface_module, f"/api/gponconfig/dbaProfile/getall?nodeId={node_id}&shelfId=1&slotId=1")
     # DBA_Profile(rest_interface_module, node_id, dba_profile(1, {"nodeId":None, "slotId":1,"shelfId":1,"dbaId":1,"name": "HSI", "dbaType": 2, "fixedBwValue": None, "assureBwValue": 250, "maxBwValue": 100000},
@@ -83,8 +83,8 @@ def test_Shut_Down_On(rest_interface_module, node_id):
     #                                                         "fixedbwvalue": [None, "fixedBwValue"],
     #                                                         "assurebwvalue": [250, "assureBwValue"],
     #                                                         "maxbwvalue": [1000, "maxBwValue"]},result="Pass"), method='ADD')
-    for port in range(1,2):
-        for i in  range(20,21) :
+    for port in range(14,15):
+        for i in  range(1,29) :
             response = getall_and_update_condition(rest_interface_module, f"/api/gponconfig/tcont/getall?nodeId={node_id}&shelfId=1&slotId=1&portId={port}&onuId=-1")
             Tcont_Management(rest_interface_module, node_id, tcont(1, {"nodeId":None, "slotId":1,"shelfId":1,"bwProfileId":1,"bwProfileName": "HSI", "name": "tcont_valid1", "onuId": i, "portId": port, "tcontId": 1},
                                                            {
@@ -160,11 +160,11 @@ def test_Shut_Down_On(rest_interface_module, node_id):
                                                                                                 "pvId": [700, "pvId"],
                                                                                                 "priority": [5, "priority"],},result="Pass",method="ADD"))
 
-        # for i in range(len(Onu_Number)):
-        #     remote_2_del = replace_dictionary(remote_service_profile_Data_Delete[0], "set",{"rmServiceId": 1, "onuId": i, "portId": port})
-        #     ONU_remote_Service(rest_interface_module, node_id, remote_2_del)
-        #     remote_1_del = replace_dictionary(remote_service_profile_Data_Delete[0], "set",{"rmServiceId": 2, "onuId": i, "portId": port})
-        #     ONU_remote_Service(rest_interface_module, node_id, remote_1_del)
+        for i in range(len(Onu_Number)):
+            remote_2_del = replace_dictionary(remote_service_profile_Data_Delete[0], "set",{"rmServiceId": 1, "onuId": i, "portId": port})
+            ONU_remote_Service(rest_interface_module, node_id, remote_2_del)
+            remote_1_del = replace_dictionary(remote_service_profile_Data_Delete[0], "set",{"rmServiceId": 2, "onuId": i, "portId": port})
+            ONU_remote_Service(rest_interface_module, node_id, remote_1_del)
 
         #     service_1_del = replace_dictionary(service_profile_Data_Delete_Config[0], "set",{"servicePortId": 1, "onuId": i, "portId": port})
         #     OLT_Service(rest_interface_module, node_id, service_1_del)
