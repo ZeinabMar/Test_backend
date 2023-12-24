@@ -3,7 +3,7 @@ import pytest
 import logging
 from conftest import *
 from config import *
-# from Pon.test_dba_profile import test_DBA_Profile
+from Pon.test_dba_profile import test_DBA_Profile
 from Pon.test_tcont_profile import test_Tcont_Management
 from Pon.test_gem_profile import test_Gem_Management
 from Pon.test_OLT_Service import test_OLT_Service
