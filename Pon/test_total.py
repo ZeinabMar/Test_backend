@@ -27,3 +27,6 @@ from Pon.test_IPTV_Configuration import test_IPTV_Configuration
 from Pon.test_Batch_Config_Service_Profile import test_Batch_Config
 from Pon.test_AES_encryption_Management import test_AES_encryption_Management
 
+
+pytestmark = [pytest.mark.env_name("REST_env"), pytest.mark.rest_dev("olt_nms")]
+
