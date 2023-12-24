@@ -93,7 +93,6 @@ def test_Mapping(rest_interface_module, node_id):
     for map in Mapping_Delete:
         Mapping(rest_interface_module, node_id, map, method='DELETE')  
 
-
     for port in range(1,3):   
         response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/sp5100/bridgegroupconfig/getall?nodeId={node_id}&shelfId=1&slotId=1")
         switch_config(rest_interface_module, node_id, Switch_conf()._replace(ethIfIndex=port, index=9), method='DELETE')
