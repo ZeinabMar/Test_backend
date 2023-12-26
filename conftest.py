@@ -4,7 +4,9 @@ import logging
 
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
-board_ip = "192.168.9.128"
+board_IP = input("Please Enter your Board IP:")
+
+board_ip = f"{board_IP}"#"192.168.9.128"
 
 
 def join_oid(url_base, *indexes):
@@ -70,7 +72,6 @@ def search_in_tree(tree, nodes):
 @pytest.fixture(scope="module")
 def get_zone_tree(rest_interface_module):
     r = rest_interface_module.get_request("/api/protocol/zone/getZoneTree")
-    print(f"rrrr{r}")
     assert 200 == r.status_code
     tree = json.loads(r.text)
     nodes = []
@@ -92,7 +93,6 @@ def node_id(rest_interface_module, get_zone_tree):
 def getall_and_update_condition(rest_interface_module, url=None):
     logger.info(f"TRY GETTTING ALL IN ORDER TO BECOMING UPDATE ...")
     read_data = rest_interface_module.get_request(url)
-    logger.info(f"dataaa {read_data}")
     assert(read_data.status_code == 200)  
 
 
@@ -112,7 +112,6 @@ def replace_dictionary(data = None, Method = "set", dict_replace=None):
     else:
         dict_source = data.expected_result_Get 
 
-    logger.info(f"sourceeee {dict_source}")
     for key1 in dict_source.keys():
         for key2 in dict_replace.keys():
             if key1==key2:
