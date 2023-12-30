@@ -6,6 +6,7 @@ import re
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
+
 #****************************************************************************************************************************
 Bridge_conf = namedtuple('Bridge_conf', ['bridgeId', 'bridgeProtocol', 'ageingTime', 'forwardTime', 'helloTime', 'maxAge',
                                'maxHops', 'priority', 'id', 'result', 'shelfId', 'slotId', 'nodeId'])
@@ -390,7 +391,6 @@ gem_profile_Data_Delete_Config= (
     gem_profile(1, {"nodeId":None, "slotId":1,"shelfId":1,"gemId":"1","name": "gem_test1", "onuId": 1, "portId": 2, "tcontId": 8},result="Pass",method="DELETE"), 
     gem_profile(2, {"nodeId":None, "slotId":1,"shelfId":1,"gemId":"2","name": "gem_test2", "onuId": 1, "portId": 2, "tcontId": 6},result="Pass",method="DELETE"), 
     gem_profile(3, {"nodeId":None, "slotId":1,"shelfId":1,"gemId":"1","name": "gem_test1", "onuId": 1, "portId": 3, "tcontId": 8},result="Pass",method="DELETE"), 
-
 )
 
 #******************************************************************************************************************************************
@@ -675,14 +675,13 @@ Pon_Protection_Add = pon_protection(1, {"nodeId": 11,"shelfId": 1,"slotId": 1,"g
 
 Pon_Protection_Delete = pon_protection(1, {"nodeId": 11,"shelfId": 1,"slotId": 1,"groupIndex": 1}, result="Pass",method="DELETE")
 #*********************************************************************************************************************************
-dict_ONU_Vlan_Priority = {"UTEL20FD749E":[111,0], "HWTC20b3c380":[112,1],"ESGP0C005730":[113,2], "UTEL20FC5178":[114,2],
-                          "HWTCF448E19E":[115,3], "UTEL20FC4D18":[116,3], "UTEL20FD827E":[117,4],"HWTC5A93CF3F":[118,5],
-                          "ELTX74004b9c":[119,6], "HWTC20B3DAF0":[220,6], "HWTC20F3C478":[221,7],"ELTX7400A540":[222,7],
-                          "HWTC1A74B09C":[223,0], "HWTCA3A8E09C":[224,1], "HWTCA67EDEA4":[225,2],"HWTC96610DA3":[226,3],
-                          "HWTCD2099E7C":[227,3], "UTEL20FC5410":[228,3], "HWTC20B3E9E8":[229,4], "HWTCA4C5349C":[330,5],
-                          "HWTC41D47EAC":[331,6], "HWTC7758307C":[332,6], "HWTC20B3CC30":[333,7], "HWTC20B3E9D8":[334,7],
-                          "ELTX6C0016E8":[335,0], "ELTX6C001AF0":[336,1], "ELTX7400d898":[337,2],"ELTX740082f0":[338,2],
-                          "HWTC8f30f67c":[800,0]}
-           
+dict_Serial_Mapping_Vlan = {"UTEL20FD749E":111, "HWTC20b3c380":112,"ESGP0C005730":113, "UTEL20FC5178":114,
+                            "HWTCF448E19E":115, "UTEL20FC4D18":116, "UTEL20FD827E":117,"HWTC5A93CF3F":118,
+                            "ELTX74004b9c":119, "HWTC20B3DAF0":220, "HWTC20F3C478":221,"ELTX7400A540":222,
+                            "HWTC1A74B09C":223, "HWTCA3A8E09C":224, "HWTCA67EDEA4":225,"HWTC96610DA3":226,
+                            "HWTCD2099E7C":227, "UTEL20FC5410":228, "HWTC20B3E9E8":229,"HWTCA4C5349C":330,
+                            "HWTC41D47EAC":331, "HWTC7758307C":332, "HWTC20B3CC30":333,"HWTC20B3E9D8":334,
+                            "ELTX6C0016E8":335, "ELTX6C001AF0":336, "ELTX7400d898":337,"ELTX740082f0":338,
+                            "HWTC8f30f67c":800, "UTEL20fc4ce0":10, "HWTC50ac3392":11}
 
-Port_Onu = {2:[1],3:[1]}
+           

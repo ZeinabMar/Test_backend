@@ -128,10 +128,10 @@ def test_Gem_Management(rest_interface_module, node_id):
     #     response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/gem/getall?nodeId={node_id}&shelfId=1&slotId=1&portId=2&onuId=1")
     #     response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/gem/getall?nodeId={node_id}&shelfId=1&slotId=1&portId=3&onuId=1")
     #     Gem_Management(rest_interface_module, node_id, gem)
-    # for gem in gem_profile_Data_Delete:
-    #     response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/gem/getall?nodeId={node_id}&shelfId=1&slotId=1&portId=2&onuId=1")
-    #     response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/gem/getall?nodeId={node_id}&shelfId=1&slotId=1&portId=3&onuId=1")
-    #     Gem_Management(rest_interface_module, node_id, gem)
+    for gem in gem_profile_Data_Delete:
+        response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/gem/getall?nodeId={node_id}&shelfId=1&slotId=1&portId=2&onuId=1")
+        response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/gem/getall?nodeId={node_id}&shelfId=1&slotId=1&portId=3&onuId=1")
+        Gem_Management(rest_interface_module, node_id, gem)
 
     for tcont in tcont_Data_Delete_Config:
         response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/tcont/getall?nodeId={node_id}&shelfId=1&slotId=1&portId=2&onuId=-1")

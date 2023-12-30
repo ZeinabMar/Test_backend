@@ -60,8 +60,8 @@ service_olt(6, {"nodeId":None, "slotId":1,"shelfId":1, "servicePortId": "2", "on
   
 service_olt_Data_Delete = (
     service_olt(1, {"nodeId":None, "slotId":1,"shelfId":1, "servicePortId": 1, "onuId": 1, "portId": 2},result="Pass",method="DELETE"),  
-    service_olt(1, {"nodeId":None, "slotId":1,"shelfId":1, "servicePortId": 2, "onuId": 1, "portId": 2},result="Pass",method="DELETE"),  
-    service_olt(1, {"nodeId":None, "slotId":1,"shelfId":1, "servicePortId": 1, "onuId": 1, "portId": 3},result="Pass",method="DELETE"),  
+    service_olt(2, {"nodeId":None, "slotId":1,"shelfId":1, "servicePortId": 2, "onuId": 1, "portId": 2},result="Pass",method="DELETE"),  
+    service_olt(3, {"nodeId":None, "slotId":1,"shelfId":1, "servicePortId": 1, "onuId": 1, "portId": 3},result="Pass",method="DELETE"),  
 )
 
 def OLT_Service(rest_interface_module, node_id, service_olt_data=service_olt(), method='ADD'):
@@ -125,12 +125,14 @@ def test_OLT_Service(rest_interface_module, node_id):
     for gem in gem_profile_Data_Config:
         Gem_Management(rest_interface_module, node_id, gem)
 
-    response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/service/getall?nodeId={node_id}&shelfId=1&slotId=1&portId=2&onuId=1")
-    response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/service/getall?nodeId={node_id}&shelfId=1&slotId=1&portId=3&onuId=1")
     for serviceolt in service_olt_Data:
+        response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/service/getall?nodeId={node_id}&shelfId=1&slotId=1&portId=2&onuId=1")
+        response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/service/getall?nodeId={node_id}&shelfId=1&slotId=1&portId=3&onuId=1")
         OLT_Service(rest_interface_module, node_id, serviceolt)
 
     for serviceolt in service_olt_Data_Delete:
+        response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/service/getall?nodeId={node_id}&shelfId=1&slotId=1&portId=2&onuId=1")
+        response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/service/getall?nodeId={node_id}&shelfId=1&slotId=1&portId=3&onuId=1")
         OLT_Service(rest_interface_module, node_id, serviceolt)
 
     response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/gem/getall?nodeId={node_id}&shelfId=1&slotId=1&portId=2&onuId=1")

@@ -7,7 +7,10 @@ logger = logging.getLogger(__name__)
 board_IP = input("Please Enter your Board IP:")
 
 board_ip = "192.168.9.128" #f"{board_IP}"#"
-
+Vlan_From_Serial_Of_ONUs = {}
+@pytest.fixture(scope="session")
+def setup_vlan(Vlan_From_Serial_Of_ONUs):
+    return Vlan_From_Serial_Of_ONUs 
 
 def join_oid(url_base, *indexes):
     suffix_url = ""
@@ -15,8 +18,6 @@ def join_oid(url_base, *indexes):
     list_indexes = [i for i in list_indexes[0]]
     for  item in list_indexes:
         suffix_url = suffix_url+"/"+str(item[1])
-    logger.info(f'HIIIIIIII   {suffix_url}')
-    logger.info(f'looog    {list_indexes}')
     url = url_base+suffix_url        
     return url
 
