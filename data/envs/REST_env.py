@@ -3,7 +3,7 @@ from pytest_sina_framework import SecretText
 
 DICT__SERVER = {
     'type': "NMS_Server",
-    'server_ip': "192.168.9.128",
+    'server_ip': "192.168.9.132",
     'server_host': "https://192.168.1.65",
     'nms_username': "root",
     'nms_password': SecretText("root"),

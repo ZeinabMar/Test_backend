@@ -6,11 +6,9 @@ logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 board_IP = input("Please Enter your Board IP:")
 
-board_ip = "192.168.9.128" #f"{board_IP}"#"
+board_ip = board_IP #"192.168.9.128" #f"{board_IP}"#"
+
 Vlan_From_Serial_Of_ONUs = {}
-@pytest.fixture(scope="session")
-def setup_vlan(Vlan_From_Serial_Of_ONUs):
-    return Vlan_From_Serial_Of_ONUs 
 
 def join_oid(url_base, *indexes):
     suffix_url = ""
@@ -92,7 +90,7 @@ def node_id(rest_interface_module, get_zone_tree):
 
 
 def getall_and_update_condition(rest_interface_module, url=None):
-    logger.info(f"TRY GETTTING ALL IN ORDER TO BECOMING UPDATE ...")
+    logger.info(f"TRY GETTTING ALL IN ORDER TO BECOME UPDATE ...")
     read_data = rest_interface_module.get_request(url)
     assert(read_data.status_code == 200)  
 

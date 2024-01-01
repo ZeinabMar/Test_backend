@@ -6,7 +6,6 @@ from conftest import *
 from Pon.test_Pon_Initial_Information import Pon_Initial_Information
 from Pon.test_onu_auto_learn import read_only_Onu_State,read_only_Onu_SN
 from Switch.test_vlan import vlan_config
-from copy_log_system import copy_log_to_server
 
 pytestmark = [pytest.mark.env_name("REST_env"), pytest.mark.rest_dev("olt_nms")]
 logging.basicConfig(level=logging.DEBUG)
@@ -61,19 +60,15 @@ def find_vlan_from_Serial(rest_interface_module, port, node_id, SN):
     logger.info(f"Vlan {vlan}")
     return vlan  
 
-
-PORT_TotalNumberOnusInThisPort= {1:16}
+PORT_TotalNumberOnusInThisPort= {2:1,3:1}
 def test_Smoke(rest_interface_module, node_id):
-    try:
-        for port,total_of_onu in PORT_TotalNumberOnusInThisPort.items():
-            no_shutDown_Pon(rest_interface_module,port,node_id)
-            ONUs = read_number_Onus_On_Pon(rest_interface_module, port, node_id, total_of_onu)
-            SN = check_Operation_Onus_On_Pon(rest_interface_module, port, node_id, ONUs)
-            Vlan = find_vlan_from_Serial(rest_interface_module, port, node_id, SN)
-            Vlan_From_Serial_Of_ONUs[port]=Vlan  
-        logger.info(f"Vlan_after_map {Vlan_From_Serial_Of_ONUs}")
-    except:
-        copy_log_to_server("smoke", board_ip, "root", "sbkt4v")    
+    for port,total_of_onu in PORT_TotalNumberOnusInThisPort.items():
+        no_shutDown_Pon(rest_interface_module,port,node_id)
+        ONUs = read_number_Onus_On_Pon(rest_interface_module, port, node_id, total_of_onu)
+        SN = check_Operation_Onus_On_Pon(rest_interface_module, port, node_id, ONUs)
+        Vlan = find_vlan_from_Serial(rest_interface_module, port, node_id, SN)
+        Vlan_From_Serial_Of_ONUs[port]=Vlan  
+    logger.info(f"Vlan_after_map {Vlan_From_Serial_Of_ONUs}")
  
 
 
