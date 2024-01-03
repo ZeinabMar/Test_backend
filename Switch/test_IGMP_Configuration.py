@@ -52,7 +52,7 @@ def IGMP_Configuration(rest_interface_module, node_id, IGMP_data=IGMP(), method=
         response = rest_interface_module.post_request(url, expected_set)  
     elif method == 'UPDATE':  
         url = "/api/gponconfig/sp5100/igmp/update"
-        response = rest_interface_module.post_request(url, data._asdict())       
+        response = rest_interface_module.post_request(url, expected_set)       
     else:  # method==DELETE   
         url = f"/api/gponconfig/sp5100/igmp/delete/"+str(expected_set["nodeId"])+"/"+str(expected_set["shelfId"])+"/"+str(expected_set["slotId"])+"/"+str(expected_set["vlanId"])
         response = rest_interface_module.delete_request(url)

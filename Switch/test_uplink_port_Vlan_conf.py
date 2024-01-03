@@ -143,7 +143,8 @@ def test_uplink_vlan_config(rest_interface_module, node_id):
                 response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/sp5100/bridgegroupconfig/getall?nodeId={node_id}&shelfId=1&slotId=1")
                 switch_config(rest_interface_module, node_id, Switch_conf()._replace(ethIfIndex=port, index=4), method='POST') 
 
-    for port in range(4,5):            
+    for port in range(4,5):  
+        response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/sp5100/bridgegroupconfig/getall?nodeId={node_id}&shelfId=1&slotId=1")
         switch_config(rest_interface_module, node_id, Switch_conf()._replace(ethIfIndex=port, index=9), method='DELETE')
     #*********************************************************************************************************************  
     for vlan in VLAN_DATA_conf_CUSTOM:
