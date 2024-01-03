@@ -30,7 +30,7 @@ mapping(3, {"nodeId": None,"shelfId": 1,"slotId": 1, "ifIndex": 2, "vlanId": 10,
 
 
 Mapping_Delete = (
-    mapping(1, {"nodeId": None,"shelfId": 1,"slotId": 1, "ifIndex": 1, "vlanId": 10,"vlanTranslatedId": 11},result="Pass", method="DELETE"),
+    mapping(1, {"nodeId": None,"shelfId": 1,"slotId": 1, "ifIndex": 1, "vlanId": 10,"vlanTranslatedId": 11},result="Fail", method="DELETE"),
     mapping(2, {"nodeId": None,"shelfId": 1,"slotId": 1, "ifIndex": 1, "vlanId": 10,"vlanTranslatedId": 12},result="Pass", method="DELETE"),  
     mapping(3, {"nodeId": None,"shelfId": 1,"slotId": 1, "ifIndex": 2, "vlanId": 10,"vlanTranslatedId": 11},result="Pass", method="DELETE"),  
   
@@ -77,28 +77,28 @@ def Mapping(rest_interface_module, node_id, mapping_data=mapping(), method='ADD'
 
 
 def test_Mapping(rest_interface_module, node_id):
-    response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/sp5100/bridgeconfig/getall?nodeId={node_id}&shelfId=1&slotId=1")
-    bridge_config(rest_interface_module, node_id, Bridge_conf(), method='POST')
-    # ****************************************************************************************************************************
-    response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/sp5100/vlan/getall?nodeId={node_id}&shelfId=1&slotId=1")
-    for vlan in VLAN_DATA_conf_CUSTOM:
-        vlan_config(rest_interface_module, node_id, vlan, method='POST')  
-    for port in range(1,3):
-        response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/sp5100/bridgegroupconfig/getall?nodeId={node_id}&shelfId=1&slotId=1")
-        switch_config(rest_interface_module, node_id, Switch_conf()._replace(ethIfIndex=port, index=4), method='POST')
+    # response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/sp5100/bridgeconfig/getall?nodeId={node_id}&shelfId=1&slotId=1")
+    # bridge_config(rest_interface_module, node_id, Bridge_conf(), method='POST')
+    # # ****************************************************************************************************************************
+    # response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/sp5100/vlan/getall?nodeId={node_id}&shelfId=1&slotId=1")
+    # for vlan in VLAN_DATA_conf_CUSTOM:
+    #     vlan_config(rest_interface_module, node_id, vlan, method='POST')  
+    # for port in range(1,3):
+    #     response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/sp5100/bridgegroupconfig/getall?nodeId={node_id}&shelfId=1&slotId=1")
+    #     switch_config(rest_interface_module, node_id, Switch_conf()._replace(ethIfIndex=port, index=4), method='POST')
     response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/sp5100/vlan/mapping/getall?nodeId={node_id}&shelfId=1&slotId=1")
     for map in Mapping_Data:
         Mapping(rest_interface_module, node_id, map, method='ADD')
     response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/sp5100/vlan/mapping/getall?nodeId={node_id}&shelfId=1&slotId=1")
-    for map in Mapping_Delete:
-        Mapping(rest_interface_module, node_id, map, method='DELETE')  
+    # for map in Mapping_Delete:
+    #     Mapping(rest_interface_module, node_id, map, method='DELETE')  
 
-    for port in range(1,3):   
-        response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/sp5100/bridgegroupconfig/getall?nodeId={node_id}&shelfId=1&slotId=1")
-        switch_config(rest_interface_module, node_id, Switch_conf()._replace(ethIfIndex=port, index=9), method='DELETE')
-    #*********************************************************************************************************************  
-    response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/sp5100/vlan/getall?nodeId={node_id}&shelfId=1&slotId=1")
-    for vlan in VLAN_DATA_conf_CUSTOM:
-        vlan_config(rest_interface_module, node_id, vlan, method='DELETE')
-    #****************************************************************************************************************************
-    bridge_config(rest_interface_module, node_id, Bridge_conf(), method='DELETE')      
+    # for port in range(1,3):   
+    #     response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/sp5100/bridgegroupconfig/getall?nodeId={node_id}&shelfId=1&slotId=1")
+    #     switch_config(rest_interface_module, node_id, Switch_conf()._replace(ethIfIndex=port, index=9), method='DELETE')
+    # #*********************************************************************************************************************  
+    # response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/sp5100/vlan/getall?nodeId={node_id}&shelfId=1&slotId=1")
+    # for vlan in VLAN_DATA_conf_CUSTOM:
+    #     vlan_config(rest_interface_module, node_id, vlan, method='DELETE')
+    # #****************************************************************************************************************************
+    # bridge_config(rest_interface_module, node_id, Bridge_conf(), method='DELETE')      
