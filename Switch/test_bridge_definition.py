@@ -1,5 +1,5 @@
 import pytest
-import logging,coloredlogs
+import logging
 import json
 from Switch.bridge_funcs import *
 from conftest import *
