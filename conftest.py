@@ -2,11 +2,11 @@ import pytest
 import json
 import logging
 
-logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
+
 board_IP = input("Please Enter your Board IP:")
 
-board_ip = board_IP #"192.168.9.128" #f"{board_IP}"#"
+board_ip = "192.168.9.128"#board_IP #"192.168.9.128" #f"{board_IP}"#"
 
 Vlan_From_Serial_Of_ONUs = {}
 
@@ -120,6 +120,7 @@ def replace_dictionary(data = None, Method = "set", dict_replace=None):
     else :   
         data.expected_result_Get = dict_source
     return data      
+
 
 
 

@@ -1,5 +1,5 @@
 import pytest
-import logging
+import logging,coloredlogs
 import json
 from Switch.bridge_funcs import *
 from conftest import *
@@ -7,9 +7,8 @@ from config import *
 
 pytestmark = [pytest.mark.env_name("REST_env"), pytest.mark.rest_dev("olt_nms")]
 
-logging.basicConfig(level=logging.DEBUG)
-logger = logging.getLogger(__name__)
 
+logger = logging.getLogger(__name__)
 
 BRIDGE_DATA = (
     Bridge(1, 'IEEE', 100, 30, 1, 6, priority=4096),
@@ -31,13 +30,7 @@ BRIDGE_DATA = (
     # Bridge(1, 'IEEE', 100, 30, 1, 6, priority=4000, result='Fail'),
     # Bridge(2, 'IEEE', result='Fail')
 )
-BRIDGE_IDS = [f"test number :{i}, bridgeId :{bridge.bridgeId}, bridgeProtocol :{bridge.bridgeProtocol}"
-              for i, bridge in enumerate(BRIDGE_DATA)]
 
-
-# BUG : fail tests set wrongly
-# BUG : bridge with id=2 return error but set wrongly
-# @pytest.mark.parametrize('test_data', BRIDGE_DATA, ids=BRIDGE_IDS)
 def test_set_bridge(rest_interface_module, node_id):
     response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/sp5100/bridgeconfig/getall?nodeId={node_id}&shelfId=1&slotId=1")
     for bridge in BRIDGE_DATA:

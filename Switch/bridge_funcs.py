@@ -2,11 +2,12 @@ import pytest
 import logging
 import json
 from collections import namedtuple
-
 pytestmark = [pytest.mark.env_name("REST_env"), pytest.mark.rest_dev("nms")]
 
-logging.basicConfig(level=logging.DEBUG)
+
+
 logger = logging.getLogger(__name__)
+
 
 Bridge = namedtuple('Bridge', ['bridgeId', 'bridgeProtocol', 'ageingTime', 'forwardTime', 'helloTime', 'maxAge',
                                'maxHops', 'priority', 'id', 'result', 'shelfId', 'slotId', 'nodeId'])
