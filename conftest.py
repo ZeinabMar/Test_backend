@@ -4,7 +4,7 @@ import logging
 
 logger = logging.getLogger(__name__)
 
-board_IP = input("Please Enter your Board IP:")
+# board_IP = input("Please Enter your Board IP:")
 
 board_ip = "192.168.9.128"#board_IP #"192.168.9.128" #f"{board_IP}"#"
 
