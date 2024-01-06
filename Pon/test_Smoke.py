@@ -67,7 +67,8 @@ def test_Smoke(rest_interface_module, node_id):
         ONUs = read_number_Onus_On_Pon(rest_interface_module, port, node_id, total_of_onu)
         SN = check_Operation_Onus_On_Pon(rest_interface_module, port, node_id, ONUs)
         Vlan = find_vlan_from_Serial(rest_interface_module, port, node_id, SN)
-        Vlan_From_Serial_Of_ONUs[port]=Vlan  
+        Vlan_From_Serial_Of_ONUs[port]=Vlan 
+    assert Vlan_From_Serial_Of_ONUs=={2:[10],3:[10]}
     logger.info(f"Vlan_after_map {Vlan_From_Serial_Of_ONUs}")
  
 

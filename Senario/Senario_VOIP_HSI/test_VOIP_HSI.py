@@ -21,9 +21,9 @@ pytestmark = [pytest.mark.env_name("REST_env"), pytest.mark.rest_dev("olt_nms")]
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
-Vlan_From_Serial_Of_ONUs ={2: [11], 3: [10]} 
+# Vlan_From_Serial_Of_ONUs ={2: [11], 3: [10]} 
 
-def test_Shut_Down_On(rest_interface_module, node_id, vlan_from_serial_of_onus= Vlan_From_Serial_Of_ONUs):
+def test_VOIP_HSI(rest_interface_module, node_id, vlan_from_serial_of_onus):
     logger.info(f"Vlan_after_map {vlan_from_serial_of_onus}")
     response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/sp5100/bridgeconfig/getall?nodeId={node_id}&shelfId=1&slotId=1")
     bridge_config(rest_interface_module, node_id, Bridge_conf(1,"RSTP_VLAN_BRIDGE"), method='POST')
@@ -144,7 +144,7 @@ def test_Shut_Down_On(rest_interface_module, node_id, vlan_from_serial_of_onus= 
                                                                                                 "vlanMode": ["ACCESS", "vlanMode"],
                                                                                                 "pvId": [700, "pvId"],
                                                                                                 "priority": [5, "priority"],},result="Pass",method="ADD"))
-    sleep(2)
+    time.sleep(2)
     for PORT,VlAN in Vlan_From_Serial_Of_ONUs.items():
         for i in  range(len(vlan_from_serial_of_onus[PORT])) :
             response = getall_and_update_condition(rest_interface_module, f"/api/gponconfig/sp5100/rmonu/service/getall?nodeId={node_id}&shelfId=1&slotId=1&onuId={i+1}&portId={PORT}")
