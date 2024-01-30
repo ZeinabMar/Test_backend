@@ -23,7 +23,7 @@ Back_up_Data = (
                       "fileMgmtFtpHost": "192.168.1.65",
                       "fileMgmtFtpFileName": "",
                       "fileMgmtFtpUserName": "root",
-                      "fileMgmtFtpPassword": "AccessAdmin",
+                      "fileMgmtFtpPassword": "1",
                       "fileMgmtFtpPort": "21",
                       "deviceType": 0,
                       "errorCode": 0}, result="Pass"),)

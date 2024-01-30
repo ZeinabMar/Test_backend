@@ -1,0 +1,17 @@
+
+pipeline {
+    agent {label "linux-machine"}
+    stage('Deploy') {
+            step{
+
+                sh "sudo sed -i '/$BUILD_NUMBER/d' /etc/environment"
+                sh "sudo sed -i "1 i export $BUILD_NUMBER" /etc/environment"
+                sh "source /etc/environment"
+                sh "cd /usr/local/bin/"
+                sh "docker-compose rm -s -v -f configuration"
+                sh "docker-compose up -d configuration"
+                 }
+            post {always {sh "docker-compose down || true"}}
+                    }
+        }    
+

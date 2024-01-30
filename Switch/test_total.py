@@ -15,7 +15,6 @@ from Switch.test_Port_Qos_policy_conf import test_Port_Qos_Policy_config
 from Switch.test_QinQ_registration_table_conf import test_QinQ_registration_table_config
 from Switch.test_Port_L_3 import test_Port_L3_config
 from Switch.test_Static_Route_conf import test_Static_Route_config
-# from Switch.test_Mapping import test_Mapping
 from Switch.test_Bridge_Stp_conf import test_Bridge_Stp_config
 from Switch.test_Port_Stp_conf import test_Port_Stp_config
 from Switch.test_Bridge_Mstp_instance_conf import test_Bridge_Mstp_config
@@ -25,7 +24,8 @@ from Switch.test_Bridge_stp_state_report import test_Bridge_Stp_report
 from Switch.test_Interface_stp_state_report import test_interface_Stp_report
 from Switch.test_Port_Mirror_conf import test_Port_Mirror_config
 from Switch.test_IGMP_Configuration import test_IGMP_Configuration
-# from Switch.test_Interface_Mstp_state_report import test_Port_Mstp_report
+from Switch.test_Mapping import test_Mapping
+from Switch.test_Interface_Mstp_state_report import test_Port_Mstp_report
 from Switch.test_Port_QinQ_conf import test_Port_QinQ_config
 from Switch.test_Qos_policy_New_feature import test_Qos_Policy_config
 

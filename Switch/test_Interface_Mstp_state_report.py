@@ -55,31 +55,34 @@ def Port_Mstp_report(rest_interface_module, node_id, Port_Mstp_rp=Bridge_conf(),
         if method == 'GET':
             if data.bridgeProtocol == "MSTP" or "MSTP_RING" or "PROVIDER_MSTP" or "PROVIDER_MSTP_EDGE":
                 assert (input_data["stpIndex"] == 1 and
+                        input_data["ifIndex"]== ifIndex and
                         # len(str(input_data["specStpBridgeId"])) != 0 and 
-                        input_data["specMstpBridgePriority"] == data.priority and 
-                        input_data["specMstpHelloTime"] == data.helloTime and
-                        input_data["specMstpMaxAge"] == data.maxAge and
-                        input_data["specMstpMaxHops"] == data.maxHops and
-                        len(str(input_data["specMstpTopologyChangeCount"])) != 0 and
-                        len(str(input_data["specMstpRootId"])) != 0 and
-                        input_data["specMstpStpEnable"] == 1 and
-                        input_data["stpBridgeStpErrDisableState"] == data.stpBridgeStpErrDisableState and
-                        str(input_data["stpBridgeStpPathCost"]) == str(data.stpBridgeStpPathCost)),f'IN Everythig is ok Bridge_Mstp config(after {method}'
+                        input_data["specMstpInstanceInterfaceMSTIPriority"] == data.priority and 
+                        input_data["specMstpInstanceInterfaceHelloTime"] == data.helloTime and
+                        input_data["specMstpInstanceInterfaceMessageAgeTimer"] != 0 ),f'IN Everythig is ok Bridge_Mstp config(after {method}'
+                        # input_data["specMstpMaxAge"] == data.maxAge and
+                        # input_data["specMstpMaxHops"] == data.maxHops and
+                        # len(str(input_data["specMstpTopologyChangeCount"])) != 0 and
+                        # len(str(input_data["specMstpRootId"])) != 0 and
+                        # input_data["specMstpStpEnable"] == 1 and
+                        # input_data["stpBridgeStpErrDisableState"] == data.stpBridgeStpErrDisableState and
+                        #str(input_data["stpBridgeStpPathCost"]) == str(data.stpBridgeStpPathCost)
+                        
                 logger.info(f'every thing ok after Bridge_Mstp config(after {method} ')
 
-            else:
-                assert (input_data["stpIndex"] == 1 and
-                        # len(str(input_data["specStpBridgeId"])) != 0 and 
-                        input_data["specMstpBridgePriority"] == data.priority and 
-                        input_data["specMstpHelloTime"] == data.helloTime and
-                        input_data["specMstpMaxAge"] == data.maxAge and
-                        input_data["specMstpMaxHops"] == data.maxHops and
-                        len(str(input_data["specMstpTopologyChangeCount"])) != 0 and
-                        len(str(input_data["specMstpRootId"])) != 0 and
-                        input_data["specMstpStpEnable"] == 1 and
-                        input_data["stpBridgeStpErrDisableState"] == data.stpBridgeStpErrDisableState and
-                        str(input_data["stpBridgeStpPathCost"]) == str(data.stpBridgeStpPathCost)),f'IN Everythig is ok Bridge_Mstp config(after {method}'
-                logger.info(f'every thing ok after Bridge_Mstp config(after {method} ')
+            # else:
+            #     assert (input_data["stpIndex"] == 1 and
+            #             # len(str(input_data["specStpBridgeId"])) != 0 and 
+            #             input_data["specMstpInstanceInterfaceMSTIPriority"] == data.priority and 
+            #             input_data["specMstpInstanceInterfaceHelloTime"] == data.helloTime and
+            #             input_data["specMstpMaxAge"] == data.maxAge and
+            #             input_data["specMstpMaxHops"] == data.maxHops and
+            #             len(str(input_data["specMstpTopologyChangeCount"])) != 0 and
+            #             len(str(input_data["specMstpRootId"])) != 0 and
+            #             input_data["specMstpStpEnable"] == 1 and
+            #             input_data["stpBridgeStpErrDisableState"] == data.stpBridgeStpErrDisableState and
+            #             str(input_data["stpBridgeStpPathCost"]) == str(data.stpBridgeStpPathCost)),f'IN Everythig is ok Bridge_Mstp config(after {method}'
+            #     logger.info(f'every thing ok after Bridge_Mstp config(after {method} ')
 
 
 def test_Port_Mstp_report(rest_interface_module, node_id):

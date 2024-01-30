@@ -96,7 +96,6 @@ def test_IGMP_Configuration(rest_interface_module, node_id):
         response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/sp5100/portvlan/getall?nodeId={node_id}&shelfId=1&slotId=1")
         uplink_vlan_config(rest_interface_module, node_id, uplink_vlan_conf_DATA[1]._replace(ethIfIndex=port), method='POST')  
 
-
     for igmp in IGMP_DATA:
         IGMP_Configuration(rest_interface_module, node_id, igmp)
     for igmp in IGMP_Delete:
