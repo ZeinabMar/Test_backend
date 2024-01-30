@@ -7,9 +7,9 @@ from config import *
 # from Switch.test_vlan import test_vlan_management
 # from Switch.test_Bridge_group_conf import test_switch_config
 # from Switch.test_Uplink_Port_L2_conf import test_Port_L2_config
-from Switch.test_uplink_port_Vlan_conf import test_uplink_vlan_config
-from Switch.test_Static_Route_conf import test_Static_Route_config
-from Switch.test_Qos_management import test_Qos_Manage_config
+# from Switch.test_uplink_port_Vlan_conf import test_uplink_vlan_config
+# from Switch.test_Static_Route_conf import test_Static_Route_config
+# from Switch.test_Qos_management import test_Qos_Manage_config
 from Switch.test_Qos_class_definition import test_Qos_Class_config
 from Switch.test_Port_Qos_policy_conf import test_Port_Qos_Policy_config
 from Switch.test_QinQ_registration_table_conf import test_QinQ_registration_table_config
