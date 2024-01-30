@@ -30,7 +30,7 @@ Port_L2_DATA = (
 
 def Port_L2_config(rest_interface_module, node_id, Port_L2_data=Port_L2(), method='POST'):
     data = Port_L2_data._replace(nodeId=node_id)
-    logger.info(f"TRY TO {method} Port_L2 CONFIG ...")
+    logger.info(f"TRY TO {method} Port_L2 CONFIG in {data.index} DATE ...")
 
     if method == 'POST' or method == 'DELETE':  
         url = "/api/gponconfig/sp5100/portl2/update"
