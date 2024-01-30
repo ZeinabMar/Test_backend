@@ -25,7 +25,7 @@ from config import *
 # from Switch.test_Interface_Mstp_state_report import test_Port_Mstp_report
 # from Switch.test_Port_Mirror_conf import test_Port_Mirror_config
 # from Switch.test_IGMP_Configuration import test_IGMP_Configuration
-from Switch.test_Mapping import test_Mapping
+# from Switch.test_Mapping import test_Mapping
 from Switch.test_Port_QinQ_conf import test_Port_QinQ_config
 from Switch.test_Qos_policy_New_feature import test_Qos_Policy_config
 
