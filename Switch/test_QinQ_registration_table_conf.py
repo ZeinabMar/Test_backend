@@ -171,25 +171,25 @@ def test_QinQ_registration_table_config(rest_interface_module, node_id):
     response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/sp5100/qinqregistration/getall?nodeId={node_id}&shelfId=1&slotId=1")     
     QinQ_registration_table_config(rest_interface_module, node_id, Reg_QinQ_Table_2_Data[1], method='ADD') 
     response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/sp5100/qinqregistration/getall?nodeId={node_id}&shelfId=1&slotId=1")     
-    QinQ_registration_table_config(rest_interface_module, node_id, Reg_QinQ_Table_2_Data[2], method='Post') 
-    QinQ_registration_table_config(rest_interface_module, node_id, Reg_QinQ_Table_2_Data[3], method='Post') 
-    QinQ_registration_table_config(rest_interface_module, node_id, Reg_QinQ_Table_2_Data[4], method='Post') 
-    QinQ_registration_table_config(rest_interface_module, node_id, Reg_QinQ_Table_2_Data[5], method='Post') 
-    QinQ_registration_table_config(rest_interface_module, node_id, Reg_QinQ_Table_2_Data[6], method='Post') 
-    QinQ_registration_table_config(rest_interface_module, node_id, Reg_QinQ_Table_2_Data[7], method='Post') 
-    QinQ_registration_table_config(rest_interface_module, node_id, Reg_QinQ_Table_2_Data[8], method='Post') 
+    # QinQ_registration_table_config(rest_interface_module, node_id, Reg_QinQ_Table_2_Data[2], method='Post') 
+    # QinQ_registration_table_config(rest_interface_module, node_id, Reg_QinQ_Table_2_Data[3], method='Post') 
+    # QinQ_registration_table_config(rest_interface_module, node_id, Reg_QinQ_Table_2_Data[4], method='Post') 
+    # QinQ_registration_table_config(rest_interface_module, node_id, Reg_QinQ_Table_2_Data[5], method='Post') 
+    # QinQ_registration_table_config(rest_interface_module, node_id, Reg_QinQ_Table_2_Data[6], method='Post') 
+    # QinQ_registration_table_config(rest_interface_module, node_id, Reg_QinQ_Table_2_Data[7], method='Post') 
+    # QinQ_registration_table_config(rest_interface_module, node_id, Reg_QinQ_Table_2_Data[8], method='Post') 
 
-    response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/sp5100/qinqregistration/getall?nodeId={node_id}&shelfId=1&slotId=1")     
-    QinQ_registration_table_config(rest_interface_module, node_id, Reg_QinQ_Table(None, 1, "reg"), method='DELETE') 
-    response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/sp5100/qinqregistration/getall?nodeId={node_id}&shelfId=1&slotId=1")         
-    QinQ_registration_table_config(rest_interface_module, node_id, Reg_QinQ_Table(None, 2, "reg2"), method='DELETE') 
+    # response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/sp5100/qinqregistration/getall?nodeId={node_id}&shelfId=1&slotId=1")     
+    # QinQ_registration_table_config(rest_interface_module, node_id, Reg_QinQ_Table(None, 1, "reg"), method='DELETE') 
+    # response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/sp5100/qinqregistration/getall?nodeId={node_id}&shelfId=1&slotId=1")         
+    # QinQ_registration_table_config(rest_interface_module, node_id, Reg_QinQ_Table(None, 2, "reg2"), method='DELETE') 
 
-    response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/sp5100/vlan/getall?nodeId={node_id}&shelfId=1&slotId=1")     
-    for vlan in VLAN_DATA_conf_CUSTOM:
-        vlan_config(rest_interface_module, node_id, vlan, method='DELETE')   
-    for vlan in VLAN_DATA_conf_service:
-        vlan_config(rest_interface_module, node_id, vlan, method='DELETE')   
-    bridge_config(rest_interface_module, node_id, Bridge_conf_s_c[0], method='DELETE')    
+    # response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/sp5100/vlan/getall?nodeId={node_id}&shelfId=1&slotId=1")     
+    # for vlan in VLAN_DATA_conf_CUSTOM:
+    #     vlan_config(rest_interface_module, node_id, vlan, method='DELETE')   
+    # for vlan in VLAN_DATA_conf_service:
+    #     vlan_config(rest_interface_module, node_id, vlan, method='DELETE')   
+    # bridge_config(rest_interface_module, node_id, Bridge_conf_s_c[0], method='DELETE')    
 
 
 

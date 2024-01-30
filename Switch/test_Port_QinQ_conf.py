@@ -314,7 +314,7 @@ def Port_QinQ_config(rest_interface_module, node_id, Port_QinQ_data=Port_QinQ(),
 
 
 def test_Port_QinQ_config(rest_interface_module, node_id):
-    theory=1
+    theory=2
 
     #theory1 Translation
     if theory==1:
