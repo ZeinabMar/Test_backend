@@ -88,7 +88,7 @@ def Tcont_Management(rest_interface_module, node_id, tcont_data=tcont(), method=
     elif method == "UPDATE":
         url = "/api/gponconfig/tcont/update"
         response = rest_interface_module.post_request(url, expected_set)     
-    elif method==DELETE:   
+    elif method=="DELETE":   
         url = f"/api/gponconfig/tcont/delete/"+str(expected_set["nodeId"])+"/"+str(expected_set["shelfId"])+"/"+str(expected_set["slotId"])+"/"+str(expected_set["portId"])+"/"+str(expected_set["onuId"])+"/"+str(expected_set["tcontId"])
         response = rest_interface_module.delete_request(url)
 
