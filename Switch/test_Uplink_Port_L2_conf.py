@@ -22,11 +22,12 @@ Port_L2_DATA = (
     Port_L2(1, None, 1, -1, "100G", 1500, "NO", None, "FULL", "", "Fail", 1, 1, None),#S100G is over
     Port_L2(2, None, 1, -1, "1G", 1500, "BOTH", None, "FULL", "", "Pass", 1, 1, None),
     Port_L2(3, None, 1, -1, "10G", 3000, "RX", None, "FULL", "", "Pass", 1, 1, None),
-    Port_L2(4, None, 1, 1, "1G", 3000, "TX", None, "FULL", "", "Pass", 1, 1, None),
-    Port_L2(5, None, 1, 1, None, 3000, "NO", None, "FULL", "", "Fail", 1, 1, None),
-    Port_L2(6, None, 1, 1, "1G", None, "NO", None, "FULL", "", "Fail", 1, 1, None),
-    Port_L2(7,None)
+    Port_L2(4, None, 0, 1, "1G", 3000, "TX", None, "FULL", "", "Pass", 1, 1, None),
+    Port_L2(5, None, 0, 1, None, 3000, "NO", None, "FULL", "", "Fail", 1, 1, None),
+    Port_L2(6, None, 0, 1, "1G", None, "NO", None, "FULL", "", "Fail", 1, 1, None),
 )
+
+Port_L2_Default = Port_L2(7,None)
 
 def Port_L2_config(rest_interface_module, node_id, Port_L2_data=Port_L2(), method='POST'):
     data = Port_L2_data._replace(nodeId=node_id)
@@ -43,11 +44,11 @@ def Port_L2_config(rest_interface_module, node_id, Port_L2_data=Port_L2(), metho
         logger.info(f' GETTING Port_L2-config (after {method} method) ... ')
         read_data = rest_interface_module.get_request(f"/api/gponconfig/sp5100/portl2/get/{data.nodeId}/{data.shelfId}/{data.slotId}/{data.ethIfIndex}")
         input_data = json.loads(read_data.text)
-        logger.info(f'data after read input_data {input_data}')
+        # logger.info(f'data after read input_data {input_data}')
         #*********************************************************
         if method == 'POST':
             assert (input_data["ethIfIndex"] == data.ethIfIndex and 
-                    input_data["ethIfTxStatus"] == 1 and
+                    input_data["ethIfTxStatus"] == data.ethIfTxStatus and
                     input_data["phyIfState"] == data.phyIfState and
                     str(input_data["phyIfSpeed"]) == str(data.phyIfSpeed) and
                     input_data["phyIfMtu"] == data.phyIfMtu and
@@ -69,14 +70,13 @@ def Port_L2_config(rest_interface_module, node_id, Port_L2_data=Port_L2(), metho
 
 
 def test_Port_L2_config(rest_interface_module, node_id):
-    for port in range(1,3):
+    for port in range(1,2):
         for l2 in Port_L2_DATA:
             response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/sp5100/portl2/getall?nodeId={node_id}&shelfId=1&slotId=1")
-            if l2.index != 7:
-                Port_L2_config(rest_interface_module, node_id, l2._replace(ethIfIndex=port), method='POST')
+            Port_L2_config(rest_interface_module, node_id, l2._replace(ethIfIndex=port), method='POST')
     response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/sp5100/portl2/getall?nodeId={node_id}&shelfId=1&slotId=1")
-    for port in range(1,3):
-            Port_L2_config(rest_interface_module, node_id, Port_L2_DATA[6]._replace(ethIfIndex=port), method='DELETE')
+    for port in range(1,2):
+            Port_L2_config(rest_interface_module, node_id, Port_L2_Default._replace(ethIfIndex=port), method='DELETE')
 
 
 

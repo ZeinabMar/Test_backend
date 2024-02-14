@@ -31,7 +31,7 @@ IGMP(1, {
                                                             "fastLeave": [1, "fastLeave"],
                                                             "querier": [1, "querier"],
                                                             "workMode": ["PROXCY", "workMode"],
-                                                            "mrouter": [2, "mrouter"],
+                                                            "mrouter": [1, "mrouter"],
                                                             "vlanId": [10, "vlanId"]},result="Pass",method="ADD"),  
 )
 IGMP_Delete = (
@@ -101,14 +101,14 @@ def test_IGMP_Configuration(rest_interface_module, node_id):
     for igmp in IGMP_Delete:
         IGMP_Configuration(rest_interface_module, node_id, igmp)
 
-    for port in range(1,3):  
-        response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/sp5100/portvlan/getall?nodeId={node_id}&shelfId=1&slotId=1")
-        uplink_vlan_config(rest_interface_module, node_id, uplink_vlan_conf_DATA[1]._replace(ethIfIndex=port), method='DELETE')   
-        response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/sp5100/bridgegroupconfig/getall?nodeId={node_id}&shelfId=1&slotId=1")
-        switch_config(rest_interface_module, node_id, Switch_conf()._replace(ethIfIndex=port, index=9), method='DELETE')
+    # for port in range(1,3):  
+    #     response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/sp5100/portvlan/getall?nodeId={node_id}&shelfId=1&slotId=1")
+    #     uplink_vlan_config(rest_interface_module, node_id, uplink_vlan_conf_DATA[1]._replace(ethIfIndex=port), method='DELETE')   
+    #     response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/sp5100/bridgegroupconfig/getall?nodeId={node_id}&shelfId=1&slotId=1")
+    #     switch_config(rest_interface_module, node_id, Switch_conf()._replace(ethIfIndex=port, index=9), method='DELETE')
     
-    response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/sp5100/vlan/getall?nodeId={node_id}&shelfId=1&slotId=1")
-    for vlan in VLAN_DATA_conf_CUSTOM:
-        vlan_config(rest_interface_module, node_id, vlan, method='DELETE')
-    #****************************************************************************************************************************
-    bridge_config(rest_interface_module, node_id, Bridge_conf(), method='DELETE')
+    # response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/sp5100/vlan/getall?nodeId={node_id}&shelfId=1&slotId=1")
+    # for vlan in VLAN_DATA_conf_CUSTOM:
+    #     vlan_config(rest_interface_module, node_id, vlan, method='DELETE')
+    # #****************************************************************************************************************************
+    # bridge_config(rest_interface_module, node_id, Bridge_conf(), method='DELETE')

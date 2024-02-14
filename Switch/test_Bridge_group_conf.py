@@ -33,7 +33,7 @@ Switch_DATA = (
 
 def switch_config(rest_interface_module, node_id, SWITCH_data=Switch(), method='POST'):
     data = SWITCH_data._replace(nodeId=node_id)
-    logger.info(f"TRY TO {method} SWITCH CONFIG ...")
+    logger.info(f"TRY TO {method} SWITCH CONFIG IN {data.index}...")
     if method == 'POST':
         url = "/api/gponconfig/sp5100/bridgegroupconfig/update"
         response = rest_interface_module.post_request(url, data._asdict())

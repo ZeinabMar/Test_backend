@@ -177,7 +177,12 @@ Bridge_Mstp_conf = namedtuple('Bridge_Mstp_conf', ['index', 'instanceIndex', 'ms
 Bridge_Mstp_conf.__new__.__defaults__ = (None, 1, "", "", "", "Pass", 1, 1, None)
 Bridge_Mstp_DATA_conf = (
     Bridge_Mstp_conf(1, 5, 1, None, None, "10-12,17-19", "Pass", 1, 1, None),
-    Bridge_Mstp_conf(2, 5))
+    Bridge_Mstp_conf(2, 4, 1, None, None, "13-16", "Pass", 1, 1, None),
+    )
+Bridge_Mstp_DATA_conf_DELETE = (
+    Bridge_Mstp_conf(1, 5),
+    Bridge_Mstp_conf(2, 4),
+)    
 #*****************************************************************************************************************************
 uplink_vlan_conf = namedtuple('uplink_vlan_conf', ['ethIfIndex', 'index', 'vlanMode', 'pvId', 'taggedVlan', 
                     'taggedVlanClr', 'taggedVlanSet', 'untaggedVlan', 'result', 

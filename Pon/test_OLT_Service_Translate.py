@@ -151,7 +151,7 @@ service_olt(3,{
   "slotId": 1,
   "portId": 2,
   "onuId": 1,
-  "servicePortId": 4,
+  "servicePortId": 3,
   "gemId": 1,
   "vlan": 12,
   "svlan": 0,
@@ -211,7 +211,8 @@ def OLT_Service(rest_interface_module, node_id, service_olt_data=service_olt(), 
     else:
         assert response.status_code in range(400, 505), f'{method} SET INCORRECT DATA in SERVICE OLT {expected_set}'
         if len(expected_get.keys()) !=0:
-            if expected_get.keys() != ["lengetall"]:
+            logger.info(f'HIIIII {expected_get.keys()}')
+            if expected_get.keys() != dict_keys(['lengetall']):
                 read_data = rest_interface_module.get_request(f"/api/gponconfig/service/get/"+str(expected_set["nodeId"])+"/"+str(expected_set["shelfId"])+"/"+str(expected_set["slotId"])+"/"+str(expected_set["portId"])+"/"+str(expected_set["onuId"])+"/"+str(expected_set["servicePortId"]))
                 input_data = json.loads(read_data.text)
                 for key in expected_get.keys():

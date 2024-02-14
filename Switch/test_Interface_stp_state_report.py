@@ -47,7 +47,7 @@ def interface_Stp_report(rest_interface_module, node_id, interface_Stp=interface
         logger.info(f' GETTING interface_Stp_report (after {method} method) ... ')
         #*********************************************************
         if result == "Pass":
-            assert read_data.status_code == 200, f'{method} ERROR in interface_Stp config {data._asdict}'
+            assert read_data.status_code == 200, f'{method} ERROR in interface_Stp config'
             if read_data.status_code != 200:
                 logger.error(read_data.message)
             logger.info(f' GETTING interface_Stp_report (after {method} method) ... ')
@@ -59,7 +59,7 @@ def interface_Stp_report(rest_interface_module, node_id, interface_Stp=interface
             logger.info(f'every thing ok after nterfaace_Stp config(after {method} ')
 
         elif result == "Fail":
-            assert read_data.status_code in range(400, 505), f'{method} SET INCORRECT DATA in interface_Stp_report config {data._asdict}'
+            assert read_data.status_code in range(400, 505), f'{method} SET INCORRECT DATA in interface_Stp_report config'
 
 
 def test_interface_Stp_report(rest_interface_module, node_id):

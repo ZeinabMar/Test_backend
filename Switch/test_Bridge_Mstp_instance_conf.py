@@ -24,8 +24,10 @@ Bridge_Mstp_DATA = (
     Bridge_Mstp(3, 5, 1, "10,11,12", "", "19", "Fail", 1, 1, None),
     Bridge_Mstp(4, 5, 1, "10,11,12", "", "17", "Pass", 1, 1, None),
     Bridge_Mstp(5, 5, 1, "10,11,12,17", "10", "", "Pass", 1, 1, None),
-    Bridge_Mstp(6, 5),
-    Bridge_Mstp(7, 4)
+)
+Bridge_Mstp_INSTANCE_DELETE = (
+    Bridge_Mstp(1, 5),
+    Bridge_Mstp(2, 4)
 )
 d_string ={"nodeId": 17,
             "shelfId": 1,
@@ -79,7 +81,7 @@ def set_and_clear_data(input_data=d_string):
 
 def Bridge_Mstp_config(rest_interface_module, node_id, Bridge_Mstp_data=Bridge_Mstp(), method='POST'):
     data = Bridge_Mstp_data._replace(nodeId=node_id)
-    logger.info(f"TRY TO {method} Bridge_Mstp CONFIG ...")
+    logger.info(f"TRY TO {method} Bridge_Mstp CONFIG IN {data.index} ...")
     if method == 'add':
         url = "/api/gponconfig/sp5100/bridgemstpinstanceconfig/add"
         response = rest_interface_module.post_request(url, data._asdict()) 
@@ -150,8 +152,8 @@ def test_Bridge_Mstp_config(rest_interface_module, node_id):
     Bridge_Mstp_config(rest_interface_module, node_id, Bridge_Mstp_DATA[3], method='POST')
     Bridge_Mstp_config(rest_interface_module, node_id, Bridge_Mstp_DATA[4], method='POST')
     response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/sp5100/bridgemstpinstanceconfig/getall?nodeId={node_id}&shelfId=1&slotId=1")
-    Bridge_Mstp_config(rest_interface_module, node_id, Bridge_Mstp_DATA[5], method='DELETE')
-    Bridge_Mstp_config(rest_interface_module, node_id, Bridge_Mstp_DATA[6], method='DELETE')
+    for b_mstp_ins in Bridge_Mstp_INSTANCE_DELETE:
+        Bridge_Mstp_config(rest_interface_module, node_id, b_mstp_ins, method='DELETE')
     # ******************************************************************
     response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/sp5100/vlan/getall?nodeId={node_id}&shelfId=1&slotId=1")
     for vlan in VLAN_DATA_conf_service:

@@ -24,8 +24,8 @@ Bridge_Stp_DATA = (
     Bridge_Stp(4, 1, 1, 1, 1, 1000, -1,"SHORT", 1, "Pass"),
     Bridge_Stp(5, 1, 1, 1, 1, 2, -1,"SHORT", 1, "Fail"),
     Bridge_Stp(6, 1, 1, 1, 1, 1000, "NO", "SHORT", 1, "Fail"),
-    Bridge_Stp(7, 1, -1, -1, -1, -1, -1,"NO", 1, "Pass")
 )
+Bridge_Stp_Default_config = Bridge_Stp(7, 1, -1, -1, -1, -1, -1,"NO", 1, "Pass")
 
 def Bridge_Stp_config(rest_interface_module, node_id, Bridge_Stp_data=Bridge_Stp(), method='POST'):
     data = Bridge_Stp_data._replace(nodeId=node_id)
@@ -70,10 +70,9 @@ def test_Bridge_Stp_config(rest_interface_module, node_id):
     bridge_config(rest_interface_module, node_id, Bridge_conf(), method='POST')
     for b_stp in Bridge_Stp_DATA:
         response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/sp5100/bridgestpconfig/getall?nodeId={node_id}&shelfId=1&slotId=1")
-        if b_stp.index == 7:
-            Bridge_Stp_config(rest_interface_module, node_id, b_stp, method='DELETE')
-        else:
-            Bridge_Stp_config(rest_interface_module, node_id, b_stp, method='POST')
+        Bridge_Stp_config(rest_interface_module, node_id, b_stp, method='POST')
+
+    Bridge_Stp_config(rest_interface_module, node_id, Bridge_Stp_Default_config, method='DELETE')        
     bridge_config(rest_interface_module, node_id, Bridge_conf(), method='DELETE')
 
 

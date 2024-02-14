@@ -15,17 +15,38 @@ pytestmark = [pytest.mark.env_name("REST_env"), pytest.mark.rest_dev("olt_nms")]
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
-Port_Mstp_add = namedtuple('Port_Mstp_add', ['ifIndex', 'instanceIfIndex', 'result','shelfId', 'slotId', 'nodeId'])
-Port_Mstp_add.__new__.__defaults__ = (None, None, "Pass", 1, 1, None)
+Port_Mstp_add = namedtuple('Port_Mstp_add', ['index','ifIndex', 'instanceIfIndex', 'result','shelfId', 'slotId', 'nodeId'])
+Port_Mstp_add.__new__.__defaults__ = (None, None, None, "Pass", 1, 1, None)
+Port_Mstp_ADD_DATA = (
+    Port_Mstp_add(1, 1, 5, "Pass", 1, 1, None),
+    Port_Mstp_add(2, 2, 5, "Pass", 1, 1, None),
+    Port_Mstp_add(3, 2, 4, "Pass", 1, 1, None),
+    Port_Mstp_add(4, 3, 4, "Pass", 1, 1, None),
+)
 
-Port_Mstp_POST = namedtuple('Port_Mstp_POST', ['ifIndex', 'instanceIfIndex','mstpInstanceIfPathCost', 
+Port_Mstp_POST = namedtuple('Port_Mstp_POST', ['index', 'ifIndex', 'instanceIfIndex','mstpInstanceIfPathCost', 
                        'mstpInstanceIfPriority', "id", 'result','shelfId', 'slotId', 'nodeId'])
 Port_Mstp_POST.__new__.__defaults__ = (None, None, None, 0, 0, 0, "Pass", 1, 1, None)
+
+Port_Mstp_POST_DATE = (
+Port_Mstp_POST(1, 1, 4, 0, 0, 0, "Fail", 1, 1, None),
+Port_Mstp_POST(2, 1, 5, 1000, 120, 0, "Pass", 1, 1, None),
+Port_Mstp_POST(3, 1, 5, 1000, 250, 0, "Fail", 1, 1, None),
+Port_Mstp_POST(4, 2, 5, 1000, 250, 0, "Fail", 1, 1, None),
+Port_Mstp_POST(5, 1, 5, -1, -1, 0, "Pass", 1, 1, None),
+)
+
+Port_Mstp_DELETE_DATA=(
+Port_Mstp_add(1, 1, 5, "Pass", 1, 1, None),
+Port_Mstp_add(2, 2, 5, "Pass", 1, 1, None),
+Port_Mstp_add(3, 2, 4, "Pass", 1, 1, None),
+Port_Mstp_add(4, 3, 4, "Pass", 1, 1, None),
+)
 
 
 def Port_Mstp_config(rest_interface_module, node_id, Port_Mstp_data=Port_Mstp_add(), method='POST'):
     data = Port_Mstp_data._replace(nodeId=node_id)
-    logger.info(f"TRY TO {method} Port_Mstp CONFIG ...")
+    logger.info(f"TRY TO {method} Port_Mstp CONFIG IN {data.index}...")
 
     if method == 'add':
         url = "/api/gponconfig/sp5100/portmstpconfig/add"
@@ -79,28 +100,30 @@ def test_Port_Mstp_config(rest_interface_module, node_id):
     for vlan in VLAN_DATA_conf_CUSTOM:
         vlan_config(rest_interface_module, node_id, vlan, method='POST')  
     # *****************************************************************************
-    response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/sp5100/bridgemstpinstanceconfig/getall?nodeId={node_id}&shelfId=1&slotId=1")
-    Bridge_Mstp_config(rest_interface_module, node_id, Bridge_Mstp_DATA_conf[0], method='add')
+    for instance_mstp in Bridge_Mstp_DATA_conf:
+        response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/sp5100/bridgemstpinstanceconfig/getall?nodeId={node_id}&shelfId=1&slotId=1")
+        Bridge_Mstp_config(rest_interface_module, node_id, instance_mstp, method='add')
     # ************************************************************    
-    for port in range(1,2):
+    for port in range(1,4):
         response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/sp5100/bridgegroupconfig/getall?nodeId={node_id}&shelfId=1&slotId=1")
         switch_config(rest_interface_module, node_id, Switch_conf()._replace(ethIfIndex=port,index=4), method='POST')
     # **************************************************
-    for port in range(1,2):
+    for port_mstp in Port_Mstp_ADD_DATA:
         response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/sp5100/portmstpconfig/getall?nodeId={node_id}&shelfId=1&slotId=1")
-        Port_Mstp_config(rest_interface_module, node_id, Port_Mstp_add(port, 5, "Pass"), method='add')
+        Port_Mstp_config(rest_interface_module, node_id, port_mstp, method='add')
         # Port_Mstp_config(rest_interface_module, node_id, Port_Mstp_POST(port, 5, 1, 1, 5, "Pass"), method='POST')
-        if port<24:
-            Port_Mstp_config(rest_interface_module, node_id, Port_Mstp_add(port+1, 5, "Fail"), method='add')
-        elif port==24:
-              Port_Mstp_config(rest_interface_module, node_id, Port_Mstp_add(port-1, 5, "Fail"), method='add')  
-        Port_Mstp_config(rest_interface_module, node_id, Port_Mstp_add(port, 5, "Pass"), method='DELETE')
+    for port_mstp in Port_Mstp_POST_DATE:
+        response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/sp5100/portmstpconfig/getall?nodeId={node_id}&shelfId=1&slotId=1")
+        Port_Mstp_config(rest_interface_module, node_id, port_mstp._replace(ifIndex=port), method='POST')
+    for port_mstp in Port_Mstp_DELETE_DATA:
+        Port_Mstp_config(rest_interface_module, node_id, port_mstp, method='DELETE')
     # *************************************************
-    for port in range(1,2):
+    for port in range(1,4):
         switch_config(rest_interface_module, node_id, Switch_conf()._replace(ethIfIndex=port,index=9), method='DELETE')
     #************************************************************
-    response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/sp5100/bridgemstpinstanceconfig/getall?nodeId={node_id}&shelfId=1&slotId=1")
-    Bridge_Mstp_config(rest_interface_module, node_id, Bridge_Mstp_DATA_conf[1], method='DELETE')
+    for instance_mstp in Bridge_Mstp_DATA_conf_DELETE:
+        response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/sp5100/bridgemstpinstanceconfig/getall?nodeId={node_id}&shelfId=1&slotId=1")
+        Bridge_Mstp_config(rest_interface_module, node_id, instance_mstp, method='DELETE')
     #*****************************************************************************  
     response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/sp5100/vlan/getall?nodeId={node_id}&shelfId=1&slotId=1")
     for vlan in VLAN_DATA_conf_CUSTOM:
