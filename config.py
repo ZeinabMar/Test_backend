@@ -36,6 +36,23 @@ Bridge_conf_s_c =[
     Bridge_conf(1, "PROVIDER_MSTP_EDGE", 100, 15, 2, 20, 20, 32768, 1, "Pass", 1, 1, None),
     Bridge_conf(1, "PROVIDER_RSTP_EDGE", 100, 15, 2, 20, 20, 32768, 1, "Pass", 1, 1, None)
 ]
+
+Bridge_Mstp = [
+    Bridge_conf(1, "PROVIDER_MSTP", 100, 15, 2, 20, 20, 32768, 1, "Pass", 1, 1, None),
+    Bridge_conf(1, "PROVIDER_MSTP_EDGE", 100, 15, 2, 20, 20, 32768, 1, "Pass", 1, 1, None),
+    Bridge_conf(1, "MSTPRING", 100, 15, 2, 20, 20, 32768, 1, "Pass", 1, 1, None),
+    Bridge_conf(1, "MSTP", 100, 15, 2, 20, 20, 32768, 1, "Pass", 1, 1, None),
+]
+
+Bridge_Stp = [
+    Bridge_conf(1, "PROVIDER_RSTP", 100, 15, 2, 20, 20, 32768, 1, "Pass", 1, 1, None),
+    Bridge_conf(1, "PROVIDER_RSTP_EDGE", 100, 15, 2, 20, 20, 32768, 1, "Pass", 1, 1, None),
+    Bridge_conf(1, "RPVSTP", 100, 15, 2, 20, 20, 32768, 1, "Pass", 1, 1, None),
+    Bridge_conf(1, "RSTP", 100, 15, 2, 20, 20, 32768, 1, "Pass", 1, 1, None),
+    Bridge_conf(1, "RSTP_RING", 100, 15, 2, 20, 20, 32768, 1, "Pass", 1, 1, None),
+    Bridge_conf(1, "RSTP_VLAN_BRIDGE", 100, 15, 2, 20, 20, 32768, 1, "Pass", 1, 1, None),
+]
+
 #****************************************************************************************************************************
 Vlan_conf = namedtuple('Vlan_conf', ['vlanId', 'vlanTypeId', 'vlanState', 'vlanBridgeId', 'result', 'shelfId', 'slotId', 'nodeId'])
 Vlan_conf.__new__.__defaults__ = (100, 'CUSTOMER', 1, 1, 'Pass', 1, 1, None)
@@ -687,6 +704,7 @@ dict_Serial_Mapping_Vlan = {"UTEL20FD749E":111, "HWTC20b3c380":112,"ESGP0C005730
                             "HWTCD2099E7C":227, "UTEL20FC5410":228, "HWTC20B3E9E8":229,"HWTCA4C5349C":330,
                             "HWTC41D47EAC":331, "HWTC7758307C":332, "HWTC20B3CC30":333,"HWTC20B3E9D8":334,
                             "ELTX6C0016E8":335, "ELTX6C001AF0":336, "ELTX7400d898":337,"ELTX740082f0":338,
-                            "HWTC8f30f67c":800, "UTEL20fc4ce0":12, "HWTC50ac3392":11, "HWTC20f3ce08":10}
+                            "HWTC8f30f67c":800, "UTEL20fc4ce0":12, "HWTC50ac3392":11,"HWTC9c828f95":700, 
+                            "HWTC20f3ce08":250}
 
            

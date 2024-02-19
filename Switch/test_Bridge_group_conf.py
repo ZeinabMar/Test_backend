@@ -47,7 +47,7 @@ def switch_config(rest_interface_module, node_id, SWITCH_data=Switch(), method='
         response = rest_interface_module.post_request(url, data._asdict())
         
     if data.result == "Pass":
-        assert response.status_code == 200, f'{method} ERROR in switch config {data._asdict}'
+        assert response.status_code == 200, f'{method} ERROR in switch config'
         if response.status_code != 200:
             logger.error(response.message)
         logger.info(f' GETTING switch-config (after {method} method) ... ')

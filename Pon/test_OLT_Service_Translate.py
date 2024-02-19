@@ -170,7 +170,6 @@ service_olt(3,{
   "deviceType": 0,
   "isServiceProfile": True,
   "errorCode": 0} ,{"lengetall":3},result="Fail",method="ADD"), 
-
 )   
   
 service_olt_Data_Delete = (
