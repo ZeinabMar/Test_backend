@@ -64,7 +64,7 @@ def Port_Mstp_config(rest_interface_module, node_id, Port_Mstp_data=Port_Mstp_ad
         assert response.status_code == 200, f'{method} ERROR in Port_Stp config {data._asdict}'
         if response.status_code != 200:
             logger.error(response.message)
-        logger.info(f' GETTING Port_Stp-config (after {method} method) ... ')
+        logger.info(f' GETTING Port_Mstp (after {method} method) ... ')
 
         read_data = rest_interface_module.get_request(f"/api/gponconfig/sp5100/portmstpconfig/get/{data.nodeId}/{data.shelfId}/{data.slotId}/{data.ifIndex}/{data.instanceIfIndex}")
         input_data = json.loads(read_data.text)
@@ -125,7 +125,6 @@ def test_Port_Mstp_config(rest_interface_module, node_id):
         response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/sp5100/portmstpconfig/getall?nodeId={node_id}&shelfId=1&slotId=1")
         Port_Mstp_config(rest_interface_module, node_id, instance_mstp, method='DELETE')
     # *****************************************************************************  
-    
     for port in range(1,4):
         response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/sp5100/bridgegroupconfig/getall?nodeId={node_id}&shelfId=1&slotId=1")
         switch_config(rest_interface_module, node_id, Switch_conf()._replace(ethIfIndex=port,index=9), method='DELETE') 

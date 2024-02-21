@@ -182,12 +182,17 @@ Port_Storm_conf = namedtuple('Port_Storm_conf', ['ethIfIndex', 'phyIfStormBroadc
                         'phyIfStormMulticast', 'result', 'shelfId', 'slotId', 'nodeId'])
 Port_Storm_conf.__new__.__defaults__ = (None, "-1", "-1", "-1", "Pass", 1, 1, None)
 #*****************************************************************************************************************************
-Port_Mstp_conf = namedtuple('Port_Mstp_conf', ['index','ifIndex', 'instanceIfIndex','mstpInstanceIfPathCost', 
+Port_Mstp_conf_Update = namedtuple('Port_Mstp_conf_Update', ['index','ifIndex', 'instanceIfIndex','mstpInstanceIfPathCost', 
                        'mstpInstanceIfPriority', 'result','shelfId', 'slotId', 'nodeId'])
-Port_Mstp_conf.__new__.__defaults__ = (None, None, -1, "NO", "NO", -1, -1, -1, "Pass", 1, 1, None)
-Port_Mstp_conf_DATA = (
-    Port_Mstp_conf(1, None, -1, "ENABLE", "NO", 1, -1, -1, "Pass"),
+Port_Mstp_conf_Update.__new__.__defaults__ = (None, None, -1, "NO", "NO", -1, -1, -1, "Pass", 1, 1, None)
+Port_Mstp_conf_DATA_UPDATE = (
+    Port_Mstp_conf_Update(1, None, -1, "ENABLE", "NO", 1, -1, -1, "Pass"),
 )
+
+Port_Mstp_conf_add = namedtuple('Port_Mstp_conf_add', ['index','ifIndex', 'instanceIfIndex', 'result','shelfId', 'slotId', 'nodeId'])
+Port_Mstp_conf_add.__new__.__defaults__ = (None, None, None, "Pass", 1, 1, None)
+Port_Mstp_conf_DATA_ADD = Port_Mstp_conf_add(1, 1, 5, "Pass", 1, 1, None)
+
 #*****************************************************************************************************************************
 Bridge_Mstp_conf = namedtuple('Bridge_Mstp_conf', ['index', 'instanceIndex', 'mstpInstanceBridgeId','mstpInstanceVlan', 
                        'mstpInstanceVlanClr','mstpInstanceVlanSet', 'result','shelfId', 'slotId', 'nodeId'])
