@@ -26,6 +26,7 @@ Bridge_Mstp_DATA = (
     Bridge_Mstp(5, 5, 1, "10,11,12,17", "10", "", "Pass", 1, 1, None),
 )
 Bridge_Mstp_INSTANCE_DELETE = (
+    
     Bridge_Mstp(1, 5),
     Bridge_Mstp(2, 4)
 )

@@ -90,7 +90,7 @@ def test_Port_Mstp_report(rest_interface_module, node_id):
             switch_config(rest_interface_module, node_id, Switch_conf()._replace(ethIfIndex=port,index=9), method='DELETE')    
 
         response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/sp5100/bridgemstpinstanceconfig/getall?nodeId={node_id}&shelfId=1&slotId=1")
-        Bridge_Mstp_config(rest_interface_module, node_id, Bridge_Mstp_conf(1, 5, 1, f"{vlan.vlanId}", f"{vlan.vlanId}", "", "Pass", 1, 1, None), "DELETE")
+        Bridge_Mstp_config(rest_interface_module, node_id, Bridge_Mstp_conf(1, 5), "DELETE")
 
     for bridge in Bridge_Mstp:
         response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/sp5100/bridgeconfig/getall?nodeId={node_id}&shelfId=1&slotId=1")
