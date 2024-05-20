@@ -12,8 +12,36 @@ DICT__SERVER = {
     'rest_Content-Type': "application/json",
 }
 
-DICT__ENV = {
-    'olt_nms': DICT__SERVER
+DICT__SIB_SERVER_1 = {
+    'type': "RaspberryPi",
+    'ssh_ip': "192.168.2.136",
+    'ssh_password': SecretText("1234"),
+    'ssh_username': "root",
+    'ssh_port': "22"
 }
+
+DICT__SIB_SERVER_2 = {
+    'type': "RaspberryPi",
+    'ssh_ip': "192.168.2.136",
+    'ssh_password': SecretText("1234"),
+    'ssh_username': "root",
+    'ssh_port': "22"
+}
+DICT__SIB_SERVER_3 = {
+    'type': "RaspberryPi",
+    'ssh_ip': "192.168.2.136",
+    'ssh_password': SecretText("1234"),
+    'ssh_username': "root",
+    'ssh_port': "22"
+}
+
+DICT__ENV = {
+    'server_olt_1': DICT__SIB_SERVER_1,
+    'server_olt_2': DICT__SIB_SERVER_2,
+    'server_olt_3': DICT__SIB_SERVER_3,
+    'olt_nms': DICT__SERVER,
+}
+
+
 
 

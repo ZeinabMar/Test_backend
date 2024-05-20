@@ -1,4 +1,4 @@
-from Senario.Senario_Unicast_one_PON_one_Uplink.test_Smoke import test_Smoke
+from Senario.Senario_Unicast_one_PON_one_Uplink.test_Smoke_Unicast import test_Smoke
 from Senario.Senario_Unicast_one_PON_one_Uplink.test_Unicast_one_PON_one_Uplink import test_Unicast_One_Pon_One_Uplink
 from config import *
 from conftest import *

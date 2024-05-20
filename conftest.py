@@ -122,5 +122,32 @@ def replace_dictionary(data = None, Method = "set", dict_replace=None):
     return data      
 
 
+class RestInterface:
+    def __init__(self, host, username, password, client_version, contenttype, authenticate_url) -> None:
+        self.host = host
+        self.username = username
+        self.password = password
+        self.client_version = client_version
+        self.contenttype = contenttype
+        if authenticate_url == None:
+            authenticate_url = '/authenticate'
+        self.r = self.authenticate(authenticate_url)
 
+    def authenticate(self, authenticate_url):
+        self.data = {'username': self.username, 'password': self.password}
+        self.header = {'client-version': self.client_version, 'Content-Type': self.contenttype}
+        self.authen = self.host + authenticate_url
+        logger.info("rest post request URL {}".format(authenticate_url))
+        self.r = requests.post(self.authen, data=json.dumps(self.data), headers=self.header, verify=False)
+        logger.info("result: status={}, response={}".format(self.r.status_code, self.r.text))
+        return self.r
 
+    def get_request(self, req):
+        logger.info("rest get request URL={}".format(req))
+        token = json.loads(self.r.text)['token']
+        cookie = self.r.cookies.get_dict()
+        headers = {'Authorization': 'Bearer {}'.format(token), 'Content-Type': self.contenttype}
+        req1 = self.host + req
+        response = requests.get(req1, headers=headers, cookies=cookie, verify=False)
+        logger.info("result: status={}, response={}".format(response.status_code, response.text))
+        return response

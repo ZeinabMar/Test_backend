@@ -4,13 +4,6 @@ import json
 from config import *
 from conftest import *
 from Pon.test_Pon_Initial_Information import Pon_Initial_Information
-from Pon.test_onu_auto_learn import read_only_Onu_State
-from Switch.test_Mapping import Mapping
-from Switch.bridge_funcs import bridge_config
-from Switch.test_vlan import vlan_config
-from Switch.test_Bridge_group_conf import switch_config
-from Switch.test_uplink_port_Vlan_conf import uplink_vlan_config
-from Senario.detect_onu_with_serial import detect_onu_with_Serial_number
 from Pon.test_tcont_profile import Tcont_Management
 from Pon.test_dba_profile import DBA_Profile
 from Pon.test_gem_profile import Gem_Management

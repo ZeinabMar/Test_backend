@@ -5,7 +5,7 @@ from conftest import *
 from config import *
 from Switch.test_Qos_management import Qos_Manage_config
 from Switch.bridge_funcs import bridge_config
-from test_vlan import vlan_config
+from Switch.test_vlan import vlan_config
 # from pytest-check import check
 
 pytestmark = [pytest.mark.env_name("REST_env"), pytest.mark.rest_dev("olt_nms")]

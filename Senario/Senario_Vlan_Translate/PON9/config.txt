@@ -1,0 +1,32 @@
+#sp5100_test_senario_Translate_Service
+
+gpon
+	profile bandwidth VOIP maximum 100000
+exit
+interface gpon-olt1/9 
+	no shutdown
+interface gpon-onu1/9:1 ... interface gpon-onu1/9:10 
+	tcont 1 profile test
+	gemport 1 tcont 1
+	service-port 1 gemport 1 user-vlan 700 translate vlan 702
+	remote service 1 gem 1 uni veip vlan-mode access pvlan 700 priority 7	
+
+bridge 1 protocol rstp-vlan-bridge
+	spanning-tree bridge 1 pathcost method short 
+	spanning-tree bridge 1 portfast bpdu-guard
+vlan 700 bridge 1 type customer state enable
+vlan 702 bridge 1 type customer state enable
+
+int gpon-olt1/9
+	switchport 
+	bridge-group 1 spanning-tree enable 
+	switchport mode trunk
+	switchport trunk tag 702,700
+	
+int ge1/1
+	max-frame 1650 
+	switchport 
+	bridge-group 1 spanning-tree enable 
+	switchport mode trunk
+	switchport trunk tag 702
+	speed 1G	
