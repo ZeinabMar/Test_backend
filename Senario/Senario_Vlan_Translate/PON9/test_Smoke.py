@@ -70,6 +70,7 @@ def find_vlan_from_Serial(rest_interface_module, port, node_id, SN):
 def test_Smoke(rest_interface_module, node_id):
     # ssh_interface_module.ex
     PORT_TotalNumberOnusInThisPort= {9:4}
+    Vlan_From_Serial_Of_ONUs = {}
     # try:
     for port,total_of_onu in PORT_TotalNumberOnusInThisPort.items():
         no_shutDown_Pon(rest_interface_module,port,node_id)

@@ -16,6 +16,7 @@ from Pon.test_gem_profile import Gem_Management
 from Pon.test_OLT_Service_Translate import OLT_Service
 from Pon.test_ONU_remote_Service import ONU_remote_Service
 import time
+from Senario.Senario_Vlan_Translate.PON8.test_Smoke import config_smoke_requirement
 
 pytestmark = [pytest.mark.env_name("REST_env"), pytest.mark.rest_dev("olt_nms")]
 logging.basicConfig(level=logging.DEBUG)
@@ -24,97 +25,140 @@ logger = logging.getLogger(__name__)
 # Vlan_From_Serial_Of_ONUs ={2: [11], 3: [10]} 
 
 def test_Vlan_Translate(rest_interface_module, node_id):
-    vlan_from_serial_of_onus = {8:[800, 800, 800, 800, 800, 800, 800, 800, 800, 800, 800, 800, 800, 800, 800, 800, 800, 800, 800, 800]}
-    logger.info(f"Vlan_after_map {vlan_from_serial_of_onus}")
-    # response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/sp5100/bridgeconfig/getall?nodeId={node_id}&shelfId=1&slotId=1")
-    # bridge_config(rest_interface_module, node_id, Bridge_conf(1,"RSTP_VLAN_BRIDGE"), method='POST')
-    # # # # # ****************************************************************************************************************************
-    # response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/sp5100/vlan/getall?nodeId={node_id}&shelfId=1&slotId=1")
-    # response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/sp5100/vlan/getall?nodeId={node_id}&shelfId=1&slotId=1")
-    # vlan_config(rest_interface_module, node_id, Vlan_conf(802, 'CUSTOMER'), method='POST')  
-    # vlan_config(rest_interface_module, node_id, Vlan_conf(800, 'CUSTOMER'), method='POST')   
-
-    # response = getall_and_update_condition(rest_interface_module, f"/api/gponconfig/sp5100/bridgegroupconfig/getall?nodeId={node_id}&shelfId=1&slotId=1")
-    # switch_config(rest_interface_module, node_id, Switch_conf()._replace(ethIfIndex=1, index=4), method='POST')
-    # response = getall_and_update_condition(rest_interface_module, f"/api/gponconfig/sp5100/portvlan/getall?nodeId={node_id}&shelfId=1&slotId=1")
-    # uplink_vlan_config(rest_interface_module, node_id, uplink_vlan_conf_DATA[1]._replace(ethIfIndex=1,taggedVlanSet="802"), method='POST') 
-
+    PORT_INFORMATION = config_smoke_requirement(rest_interface_module, node_id)
 #**********************************PON Config ****************************************
     response = getall_and_update_condition(rest_interface_module, f"/api/gponconfig/sp5100/bridgegroupconfig/getall?nodeId={node_id}&shelfId=1&slotId=1")
     switch_config(rest_interface_module, node_id, Switch_conf()._replace(ethIfIndex=8+8, index=4), method='POST')
     response = getall_and_update_condition(rest_interface_module, f"/api/gponconfig/sp5100/portvlan/getall?nodeId={node_id}&shelfId=1&slotId=1")
     uplink_vlan_config(rest_interface_module, node_id, uplink_vlan_conf_DATA[1]._replace(ethIfIndex=8+8,taggedVlanSet="800,802"), method='POST') 
     
-    response = getall_and_update_condition(rest_interface_module, f"/api/gponconfig/dbaProfile/getall?nodeId={node_id}&shelfId=1&slotId=1")
-    DBA_Profile(rest_interface_module, node_id, dba_profile(1, {"nodeId":None, "slotId":1,"shelfId":1,"dbaId":1,"name": "VOIP", "dbaType": 3, "fixedBwValue": None, "assureBwValue": 250, "maxBwValue": 100000},
-                                                           {
-                                                            "namedba": ["VOIP", "name"],
-                                                            "dbatype": [3, "dbaType"],
-                                                            "fixedbwvalue": [0, "fixedBwValue"],
-                                                            "assurebwvalue": [250, "assureBwValue"],
-                                                            "maxbwvalue": [100000, "maxBwValue"]},result="Pass"), method='ADD')
-    for PORT,VlAN in vlan_from_serial_of_onus.items():
-        for i in range(len(vlan_from_serial_of_onus[PORT])) :
+    # response = getall_and_update_condition(rest_interface_module, f"/api/gponconfig/dbaProfile/getall?nodeId={node_id}&shelfId=1&slotId=1")
+    # DBA_Profile(rest_interface_module, node_id, dba_profile(1, {"nodeId":None, "slotId":1,"shelfId":1,"dbaId":1,"name": "VOIP", "dbaType": 3, "fixedBwValue": None, "assureBwValue": 250, "maxBwValue": 100000},
+    #                                                        {
+    #                                                         "namedba": ["VOIP", "name"],
+    #                                                         "dbatype": [3, "dbaType"],
+    #                                                         "fixedbwvalue": [0, "fixedBwValue"],
+    #                                                         "assurebwvalue": [250, "assureBwValue"],
+    #                                                         "maxbwvalue": [100000, "maxBwValue"]},result="Pass"), method='ADD')
+    for PORT,information in PORT_INFORMATION.items():
+        for info in information :
             response = getall_and_update_condition(rest_interface_module, f"/api/gponconfig/tcont/getall?nodeId={node_id}&shelfId=1&slotId=1&portId={PORT}&onuId=-1")
-            Tcont_Management(rest_interface_module, node_id, tcont(1, {"nodeId":None, "slotId":1,"shelfId":1,"bwProfileId":1,"bwProfileName": "VOIP", "name": "tcont_valid1", "onuId": i+1, "portId": PORT, "tcontId": 1},
+            Tcont_Management(rest_interface_module, node_id, tcont(1, {"nodeId":None, "slotId":1,"shelfId":1,"bwProfileId":1,"bwProfileName": "VOIP", "name": "tcont_valid1", "onuId": info["ONUnumber"], "portId": PORT, "tcontId": 1},
                                                            {"bwProfileId": [1, "bwProfileId"],
                                                             "bwProfileName": ["VOIP", "bwProfileName"],
                                                             "name": ["tcont_valid1", "name"],
-                                                            "onuId": [i+1, "onuId"],
+                                                            "onuId": [info["ONUnumber"], "onuId"],
                                                             "portId": [PORT, "portId"],
                                                             "tcontId": [1, "tcontId"]},result="Pass", method="ADD"))
-            response = getall_and_update_condition(rest_interface_module, f"/api/gponconfig/gem/getall?nodeId={node_id}&shelfId=1&slotId=1&portId={PORT}&onuId={i+1}")
-            Gem_Management(rest_interface_module, node_id, gem_profile(1, {"nodeId":None, "slotId":1,"shelfId":1,"gemId":"1","name": "gem1", "onuId": i+1, "portId": PORT, "tcontId": 1},
+            response = getall_and_update_condition(rest_interface_module, f"/api/gponconfig/gem/getall?nodeId={node_id}&shelfId=1&slotId=1&portId={PORT}&onuId={info['ONUnumber']}")
+            Gem_Management(rest_interface_module, node_id, gem_profile(1, {"nodeId":None, "slotId":1,"shelfId":1,"gemId":"1","name": "gem1", "onuId": info["ONUnumber"], "portId": PORT, "tcontId": 1},
                                                            {
                                                             "gemid": [1, "gemId"],
                                                             "name": ["gem1", "name"],
-                                                            "onuId": [i+1, "onuId"],
+                                                            "onuId": [info["ONUnumber"], "onuId"],
                                                             "portId": [PORT, "portId"],
                                                             "tcontId": [1, "tcontId"]},result="Pass",method="ADD"))
-            response = getall_and_update_condition(rest_interface_module, f"/api/gponconfig/service/getall?nodeId={node_id}&shelfId=1&slotId=1&portId={PORT}&onuId={i+1}")
+            response = getall_and_update_condition(rest_interface_module, f"/api/gponconfig/tcont/getall?nodeId={node_id}&shelfId=1&slotId=1&portId={PORT}&onuId=-1")
+            Tcont_Management(rest_interface_module, node_id, tcont(1, {"nodeId":None, "slotId":1,"shelfId":1,"bwProfileId":1,"bwProfileName": "VOIP", "name": "tcont_valid2", "onuId": info["ONUnumber"], "portId": PORT, "tcontId": 2},
+                                                           {"bwProfileId": [1, "bwProfileId"],
+                                                            "bwProfileName": ["VOIP", "bwProfileName"],
+                                                            "name": ["tcont_valid2", "name"],
+                                                            "onuId": [info["ONUnumber"], "onuId"],
+                                                            "portId": [PORT, "portId"],
+                                                            "tcontId": [2, "tcontId"]},result="Pass", method="ADD"))
+            response = getall_and_update_condition(rest_interface_module, f"/api/gponconfig/gem/getall?nodeId={node_id}&shelfId=1&slotId=1&portId={PORT}&onuId={info['ONUnumber']}")
+            Gem_Management(rest_interface_module, node_id, gem_profile(1, {"nodeId":None, "slotId":1,"shelfId":1,"gemId":"2","name": "gem2", "onuId": info["ONUnumber"], "portId": PORT, "tcontId": 2},
+                                                           {
+                                                            "gemid": [2, "gemId"],
+                                                            "name": ["gem2", "name"],
+                                                            "onuId": [info["ONUnumber"], "onuId"],
+                                                            "portId": [PORT, "portId"],
+                                                            "tcontId": [2, "tcontId"]},result="Pass",method="ADD"))
 
-            
+
+            response = getall_and_update_condition(rest_interface_module, f"/api/gponconfig/service/getall?nodeId={node_id}&shelfId=1&slotId=1&portId={PORT}&onuId={info['ONUnumber']}")
             OLT_Service(rest_interface_module, node_id, service_profile(1, {
-                                    "nodeId": None,"shelfId": 1,"slotId": 1,"portId": PORT,"onuId": i+1,"servicePortId": 1,"gemId": 1,"vlan": 802,"svlan": 0,"userVlan": f"{vlan_from_serial_of_onus[PORT][i]}",
-                                    "innerVlan": 0,"vlanAction": "VLAN_TRANSLATE","vlanPriority": 0,"svlanPriority": 0,"vlanPriorityAction": "1","svlanPriorityAction": "1","queue": 0,
+                                    "nodeId": None,"shelfId": 1,"slotId": 1,"portId": PORT,"onuId": info['ONUnumber'],"servicePortId": 1,"gemId": 1,"vlan": 0,"svlan": 0,"userVlan": f"{info['Vlan_Transparent']}",
+                                    "innerVlan": 0,"vlanAction": "VLAN_TRANSPARENT","vlanPriority": 0,"svlanPriority": 0,"vlanPriorityAction": "1","svlanPriorityAction": "1","queue": 0,
                                     "cosQueueProfileId": 0,"queueSelectMode": 0,"upLinkC2CId": 0,"downLinkC2CId": 0,"deviceType": 0,"isServiceProfile": True,"errorCode": 0},
-                                                           {"portId": [PORT, "portId"],
-                                                            "onuId": [i+1, "onuId"],
+                                                        {"portId": [PORT, "portId"],
+                                                            "onuId": [info['ONUnumber'], "onuId"],
                                                             "servicePortId": [1,"servicePortId"],
                                                             "gemId": [1, "gemId"],
-                                                            "vlan": [802,"vlan"],
-                                                            "userVlan": [vlan_from_serial_of_onus[PORT][i],"userVlan"],
+                                                            "vlan": [0,"vlan"],
+                                                            "userVlan": [info['Vlan_Transparent'],"userVlan"],
+                                                            "vlanAction": ["VLAN_TRANSPARENT", 'vlanAction']},result="Pass",method="ADD"))
+
+            response = getall_and_update_condition(rest_interface_module, f"/api/gponconfig/sp5100/rmonu/service/getall?nodeId={node_id}&shelfId=1&slotId=1&onuId={info['ONUnumber']}&portId={PORT}")
+            ONU_remote_Service(rest_interface_module, node_id, remote_service(1, {
+                "nodeId": None,"shelfId": 1,"slotId": 1,"portId": PORT,"onuId": info['ONUnumber'], "rmServiceId": "1",
+                "onuPortType": "VEIP","onuPortId": 0,"vlanMode": "ACCESS","gemId": 1,"pvId": f"{info['Vlan_Transparent']}","priority": "0",}, {"rmServiceId": [1, "rmServiceId"],
+                                                                                            "onuPortType": ["VEIP", "onuPortType"],
+                                                                                            # "onuPortId": [0, "onuPortId"],
+                                                                                            "onuId": [info['ONUnumber'], "onuId"],
+                                                                                            "portId": [PORT, "portId"],
+                                                                                            "gemId": [1, "gemId"],
+                                                                                            "vlanMode": ["ACCESS", "vlanMode"],
+                                                                                            "pvId": [info['Vlan_Transparent'], "pvId"],
+                                                                                            "priority":[ 0, "priority"],},result="Pass",method="ADD")
+)
+            response = getall_and_update_condition(rest_interface_module, f"/api/gponconfig/service/getall?nodeId={node_id}&shelfId=1&slotId=1&portId={PORT}&onuId={info['ONUnumber']}")
+            OLT_Service(rest_interface_module, node_id, service_profile(1, {
+                                    "nodeId": None,"shelfId": 1,"slotId": 1,"portId": PORT,"onuId": info['ONUnumber'],"servicePortId": 2,"gemId": 2,"vlan": info['Vlan_Translate'],"svlan": 0,"userVlan": f"{info['Vlan_Translate']}",
+                                    "innerVlan": 0,"vlanAction": "VLAN_TRANSLATE","vlanPriority": 0,"svlanPriority": 0,"vlanPriorityAction": "1","svlanPriorityAction": "1","queue": 0,
+                                    "cosQueueProfileId": 0,"queueSelectMode": 0,"upLinkC2CId": 0,"downLinkC2CId": 0,"deviceType": 0,"isServiceProfile": True,"errorCode": 0},
+                                                        {"portId": [PORT, "portId"],
+                                                            "onuId": [info['ONUnumber'], "onuId"],
+                                                            "servicePortId": [2,"servicePortId"],
+                                                            "gemId": [2, "gemId"],
+                                                            "vlan": [info['Vlan_Translate']+2,"vlan"],
+                                                            "userVlan": [info['Vlan_Translate'],"userVlan"],
                                                             "vlanAction": ["VLAN_TRANSLATE", 'vlanAction']},result="Pass",method="ADD"))
 
-            response = getall_and_update_condition(rest_interface_module, f"/api/gponconfig/sp5100/rmonu/service/getall?nodeId={node_id}&shelfId=1&slotId=1&onuId={i+1}&portId={PORT}")
+            response = getall_and_update_condition(rest_interface_module, f"/api/gponconfig/sp5100/rmonu/service/getall?nodeId={node_id}&shelfId=1&slotId=1&onuId={info['ONUnumber']}&portId={PORT}")
             ONU_remote_Service(rest_interface_module, node_id, remote_service(1, {
-                 "nodeId": None,"shelfId": 1,"slotId": 1,"portId": PORT,"onuId": i+1, "rmServiceId": "1",
-                 "onuPortType": "VEIP","onuPortId": 0,"vlanMode": "ACCESS","gemId": 1,"pvId": f"{vlan_from_serial_of_onus[PORT][i]}","priority": "0",}, {"rmServiceId": [1, "rmServiceId"],
+                "nodeId": None,"shelfId": 1,"slotId": 1,"portId": PORT,"onuId": info['ONUnumber'], "rmServiceId": "2",
+                "onuPortType": "VEIP","onuPortId": 0,"vlanMode": "ACCESS","gemId": 2,"pvId": f"{info['Vlan_Translate']}","priority": "0",}, {"rmServiceId": [2, "rmServiceId"],
                                                                                                 "onuPortType": ["VEIP", "onuPortType"],
-                                                                                                # "onuPortId": [0, "onuPortId"],
-                                                                                                "onuId": [i+1, "onuId"],
-                                                                                                "portId": [PORT, "portId"],
-                                                                                                "gemId": [1, "gemId"],
-                                                                                                "vlanMode": ["ACCESS", "vlanMode"],
-                                                                                                "pvId": [vlan_from_serial_of_onus[PORT][i], "pvId"],
-                                                                                                "priority":[ 0, "priority"],},result="Pass",method="ADD")
-)
-    # time.sleep(2)
-    # for PORT,VlAN in vlan_from_serial_of_onus.items():
-    #     for i in  range(len(vlan_from_serial_of_onus[PORT])) :
-    #         response = getall_and_update_condition(rest_interface_module, f"/api/gponconfig/sp5100/rmonu/service/getall?nodeId={node_id}&shelfId=1&slotId=1&onuId={i+1}&portId={PORT}")
-    #         ONU_remote_Service(rest_interface_module, node_id, 
-    #         remote_service(1, {"nodeId":None, "slotId":1,"shelfId":1, "rmServiceId": 1, "onuId": i+1, "portId": PORT},result="Pass",method="DELETE"))
-            
-    #         response = getall_and_update_condition(rest_interface_module, f"/api/gponconfig/service/getall?nodeId={node_id}&shelfId=1&slotId=1&portId={PORT}&onuId={i+1}")
-    #         OLT_Service(rest_interface_module, node_id, 
-    #         service_profile(1, {"nodeId":None, "slotId":1,"shelfId":1, "servicePortId": 1, "onuId": i+1, "portId": PORT},result="Pass",method="DELETE"))
-            
-    #         response = getall_and_update_condition(rest_interface_module, f"/api/gponconfig/gem/getall?nodeId={node_id}&shelfId=1&slotId=1&portId={PORT}&onuId={i+1}")
-    #         Gem_Management(rest_interface_module, node_id,gem_profile(1, {"nodeId":None, "slotId":1,"shelfId":1,"gemId":"1","name": "gem1", "onuId": i+1, "portId": PORT, "tcontId": 1},result="Pass",method="DELETE"))
+                                                                                            # "onuPortId": [0, "onuPortId"],
+                                                                                            "onuId": [info['ONUnumber'], "onuId"],
+                                                                                            "portId": [PORT, "portId"],
+                                                                                            "gemId": [2, "gemId"],
+                                                                                            "vlanMode": ["ACCESS", "vlanMode"],
+                                                                                            "pvId": [info['Vlan_Translate'], "pvId"],
+                                                                                            "priority":[ 0, "priority"],},result="Pass",method="ADD"))
 
-    #         response = getall_and_update_condition(rest_interface_module, f"/api/gponconfig/tcont/getall?nodeId={node_id}&shelfId=1&slotId=1&portId={PORT}&onuId=-1")
-    #         Tcont_Management(rest_interface_module, node_id,tcont(1, {"nodeId":None, "slotId":1,"shelfId":1, "onuId": i+1, "portId": PORT, "tcontId": 1},result="Pass",method="DELETE"))
+            
+    time.sleep(2)
+    for PORT,informarion in PORT_INFORMATION.items():
+        for info in  information :
+            response = getall_and_update_condition(rest_interface_module, f"/api/gponconfig/sp5100/rmonu/service/getall?nodeId={node_id}&shelfId=1&slotId=1&onuId={info['ONUnumber']}&portId={PORT}")
+            ONU_remote_Service(rest_interface_module, node_id, 
+            remote_service(1, {"nodeId":None, "slotId":1,"shelfId":1, "rmServiceId": 1, "onuId": info['ONUnumber'], "portId": PORT},result="Pass",method="DELETE"))
+            
+            response = getall_and_update_condition(rest_interface_module, f"/api/gponconfig/service/getall?nodeId={node_id}&shelfId=1&slotId=1&portId={PORT}&onuId={info['ONUnumber']}")
+            OLT_Service(rest_interface_module, node_id, 
+            service_profile(1, {"nodeId":None, "slotId":1,"shelfId":1, "servicePortId": 1, "onuId": info['ONUnumber'], "portId": PORT},result="Pass",method="DELETE"))
+            
+            response = getall_and_update_condition(rest_interface_module, f"/api/gponconfig/gem/getall?nodeId={node_id}&shelfId=1&slotId=1&portId={PORT}&onuId={info['ONUnumber']}")
+            Gem_Management(rest_interface_module, node_id,gem_profile(1, {"nodeId":None, "slotId":1,"shelfId":1,"gemId":"1","name": "gem1", "onuId": info['ONUnumber'], "portId": PORT, "tcontId": 1},result="Pass",method="DELETE"))
+
+            response = getall_and_update_condition(rest_interface_module, f"/api/gponconfig/tcont/getall?nodeId={node_id}&shelfId=1&slotId=1&portId={PORT}&onuId=-1")
+            Tcont_Management(rest_interface_module, node_id,tcont(1, {"nodeId":None, "slotId":1,"shelfId":1, "onuId": info['ONUnumber'], "portId": PORT, "tcontId": 1},result="Pass",method="DELETE"))
+    
+            response = getall_and_update_condition(rest_interface_module, f"/api/gponconfig/sp5100/rmonu/service/getall?nodeId={node_id}&shelfId=1&slotId=1&onuId={info['ONUnumber']}&portId={PORT}")
+            ONU_remote_Service(rest_interface_module, node_id, 
+            remote_service(1, {"nodeId":None, "slotId":1,"shelfId":1, "rmServiceId": 2, "onuId": info['ONUnumber'], "portId": PORT},result="Pass",method="DELETE"))
+            
+            response = getall_and_update_condition(rest_interface_module, f"/api/gponconfig/service/getall?nodeId={node_id}&shelfId=1&slotId=1&portId={PORT}&onuId={info['ONUnumber']}")
+            OLT_Service(rest_interface_module, node_id, 
+            service_profile(1, {"nodeId":None, "slotId":1,"shelfId":1, "servicePortId": 2, "onuId": info['ONUnumber'], "portId": PORT},result="Pass",method="DELETE"))
+            
+            response = getall_and_update_condition(rest_interface_module, f"/api/gponconfig/gem/getall?nodeId={node_id}&shelfId=1&slotId=1&portId={PORT}&onuId={info['ONUnumber']}")
+            Gem_Management(rest_interface_module, node_id,gem_profile(1, {"nodeId":None, "slotId":1,"shelfId":1,"gemId":"2","name": "gem2", "onuId": info['ONUnumber'], "portId": PORT, "tcontId":2},result="Pass",method="DELETE"))
+
+            response = getall_and_update_condition(rest_interface_module, f"/api/gponconfig/tcont/getall?nodeId={node_id}&shelfId=1&slotId=1&portId={PORT}&onuId=-1")
+            Tcont_Management(rest_interface_module, node_id,tcont(1, {"nodeId":None, "slotId":1,"shelfId":1, "onuId": info['ONUnumber'], "portId": PORT, "tcontId": 2},result="Pass",method="DELETE"))
     
 
 #     DBA_Profile(rest_interface_module, node_id, dba_profile(1, {"nodeId":None, "slotId":1,"shelfId":1,"dbaId":1}, result="Pass"), method='DELETE')       

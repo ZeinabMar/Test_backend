@@ -8,7 +8,6 @@ logger = logging.getLogger(__name__)
 
 board_ip = "192.168.9.127"#board_IP #"192.168.9.128" #f"{board_IP}"#"
 
-Vlan_From_Serial_Of_ONUs = {}
 
 def join_oid(url_base, *indexes):
     suffix_url = ""
