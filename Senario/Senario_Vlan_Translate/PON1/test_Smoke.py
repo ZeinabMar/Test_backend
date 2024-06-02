@@ -84,7 +84,7 @@ def generate_list_of_serial_number_based_on_onu_number(rest_interface_module, po
 def config_smoke_requirement(rest_interface_module, node_id):
     PORTs_information = {}
     PORT_TotalNumberOnusInThisPort= {1:20}
-    Serial_number_of_operation_onus= ["HWTC20b3cc48", "HWTC20b3cb18", "HWTC20f3ce08"]
+    Serial_number_of_operation_onus= ["UTEL20FC5178", "HWTCF448E19E", "HWTC5A93CF3F", "HWTC20B3DAF0", "HWTC20F3C478"]
     for port,total_of_onu in PORT_TotalNumberOnusInThisPort.items():
         no_shutDown_Pon(rest_interface_module,port,node_id)
         ONUs = read_number_of_Onus_On_Pon(rest_interface_module, port, node_id, total_of_onu)
@@ -95,6 +95,7 @@ def config_smoke_requirement(rest_interface_module, node_id):
         PORTs_information[port]= SerialNumber_ONUsNumber 
     logger.info(f"PORTs_information {PORTs_information}")
     return PORTs_information
+
 
 def test_Smoke(rest_interface_module, node_id):
     # try:

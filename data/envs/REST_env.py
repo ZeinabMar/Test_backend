@@ -13,32 +13,59 @@ DICT__SERVER = {
 }
 
 DICT__SIB_SERVER_1 = {
-    'type': "RaspberryPi",
-    'ssh_ip': "192.168.2.136",
+    'type': "sib_server",
+    'ssh_ip': "192.168.110.3",
     'ssh_password': SecretText("1234"),
-    'ssh_username': "root",
+    'ssh_username': "saat",
     'ssh_port': "22"
 }
 
 DICT__SIB_SERVER_2 = {
-    'type': "RaspberryPi",
-    'ssh_ip': "192.168.2.136",
+    'type': "sib_server",
+    'ssh_ip': "192.168.120.3",
     'ssh_password': SecretText("1234"),
-    'ssh_username': "root",
+    'ssh_username': "saat",
     'ssh_port': "22"
 }
 DICT__SIB_SERVER_3 = {
-    'type': "RaspberryPi",
-    'ssh_ip': "192.168.2.136",
+    'type': "sib_server",
+    'ssh_ip': "192.168.130.3",
     'ssh_password': SecretText("1234"),
-    'ssh_username': "root",
+    'ssh_username': "saat",
+    'ssh_port': "22"
+}
+
+DICT__SIB_SERVER_4 = {
+    'type': "sib_server",
+    'ssh_ip': "192.168.140.3",
+    'ssh_password': SecretText("1234"),
+    'ssh_username': "saat",
+    'ssh_port': "22"
+}
+
+DICT__SIB_SERVER_5 = {
+    'type': "sib_server",
+    'ssh_ip': "192.168.150.3",
+    'ssh_password': SecretText("1234"),
+    'ssh_username': "saat",
+    'ssh_port': "22"
+}
+
+DICT__SERVER = {
+    'type': "server",
+    'ssh_ip': "192.168.2.218",
+    'ssh_password': SecretText("1234"),
+    'ssh_username': "saat",
     'ssh_port': "22"
 }
 
 DICT__ENV = {
+    'server_olt': DICT__SERVER,
     'server_olt_1': DICT__SIB_SERVER_1,
     'server_olt_2': DICT__SIB_SERVER_2,
     'server_olt_3': DICT__SIB_SERVER_3,
+    'server_olt_4': DICT__SIB_SERVER_4,
+    'server_olt_5': DICT__SIB_SERVER_5,
     'olt_nms': DICT__SERVER,
 }
 

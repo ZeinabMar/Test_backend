@@ -1,3 +1,16 @@
+"""
+in this smoke_test we test :
+1) Operational or added situation for any ONu
+
+and in ultimately our outcomes must be in order below:
+{Port1:[ONU_number, Serial_number], ..., Port?:[ONU_number, Serial_number]}
+
+in this senario we must have 5 intact onus with operational situation. 
+rest of onus will be for executing Pon_los in system.
+you can config them or not.
+
+"""
+
 import pytest
 import logging
 import json
@@ -31,50 +44,46 @@ def no_shutDown_Pon(rest_interface_module,port,node_id):
                                                                                                             "modulePresentStr": ["Enabled", "modulePresentStr"],},result="Pass",method="UPDATE")  )                                               
     logger.info("****** no_shutDown_Pon complete *************")
 
-def read_number_Onus_On_Pon(rest_interface_module, port, node_id, onu_On_Pon=0):
+def read_number_of_Onus_On_Pon(rest_interface_module, port, node_id, onu_On_Pon=0):
     read_data = rest_interface_module.get_request(f"/api/gponconfig/onu/getpononunumber/{node_id}/1/1/{port}")
     Onu_Detected = json.loads(read_data.text)
     if onu_On_Pon !=0:
         assert Onu_Detected["totalOnu"] == onu_On_Pon
-    logger.info("****** read_number_Onus_On_Pon complete *************")
+    logger.info("****** read_number_of_Onus_On_Pon complete *************")
     return Onu_Detected["totalOnu"]
 
-
-def check_Operation_Onus_On_Pon(rest_interface_module, port, node_id, ONUs):  
-    active = "ADDED" 
+def extract_Serial_number_of_ONUs(rest_interface_module, port, node_id, ONUs):
     SN = []    
     for onu in range(ONUs):
-        while("OPERATION_STATE"!=active):
-            active = read_only_Onu_State(rest_interface_module, node_id ,1,1,port,onu+1) 
         SN.append(read_only_Onu_SN(rest_interface_module, node_id ,1,1,port,onu+1))  
-    logger.info("****** check_Operation_Onus_On_Pon complete *************")
+    logger.info("****** extract Serial number of Onus complete*************")
     logger.info(f"serial {SN}")
     return SN   
 
-def find_vlan_from_Serial(rest_interface_module, port, node_id, SN):
-    vlan =[]
-    for sn in SN:
-        for key,value in dict_Serial_Mapping_Vlan.items():
-            if key==sn:
-                vlan.append(dict_Serial_Mapping_Vlan[sn])
-    logger.info("****** find_vlan_from_Serial complete *************")            
-    logger.info(f"Vlan {vlan}")
-    return vlan  
+
+def check_Operation_Onus_On_Pon(rest_interface_module, port, node_id, SN, ONUs):  
+    active = "ADDED" 
+    for onu in range(ONUs):
+        for serial_num in SN:    
+            if serial_num == read_only_Onu_SN(rest_interface_module, node_id ,1,1,port,onu+1):
+                while("OPERATION_STATE"!=active):
+                    active = read_only_Onu_State(rest_interface_module, node_id ,1,1,port,onu+1) 
+    logger.info("****** Onus are operational *************")
 
 
 def test_Smoke(rest_interface_module, node_id):
-    PORT_TotalNumberOnusInThisPort= {4:1, 10:1}
-    try:
-        for port,total_of_onu in PORT_TotalNumberOnusInThisPort.items():
-            no_shutDown_Pon(rest_interface_module,port,node_id)
-            ONUs = read_number_Onus_On_Pon(rest_interface_module, port, node_id, total_of_onu)
-            SN = check_Operation_Onus_On_Pon(rest_interface_module, port, node_id, ONUs)
-            Vlan = find_vlan_from_Serial(rest_interface_module, port, node_id, SN)
-            Vlan_From_Serial_Of_ONUs[port]=Vlan  
-        logger.info(f"Vlan_after_map {Vlan_From_Serial_Of_ONUs}")
-        assert Vlan_From_Serial_Of_ONUs == {4:[700], 10:[700]}
-    except:
-        copy_log_to_server("smoke", board_ip, "root", "sbkt4v")    
+    # try:
+    Serial_number_of_operation_onus= ["UTEL20FC5178", "HWTCF448E19E"]
+    Serial_of_all_onus = []
+    PORT_TotalNumberOnusInThisPort= {10:1, 4:1}
+    for port,total_of_onu in PORT_TotalNumberOnusInThisPort.items():
+        no_shutDown_Pon(rest_interface_module,port,node_id)
+        ONUs = read_number_of_Onus_On_Pon(rest_interface_module, port, node_id, total_of_onu)
+        Serial_of_all_onus.append(extract_Serial_number_of_ONUs(rest_interface_module, port, node_id, ONUs))
+        check_Operation_Onus_On_Pon(rest_interface_module, port, node_id, Serial_number_of_operation_onus, ONUs)    
+    assert sorted(Serial_of_all_onus) == sorted(Serial_number_of_operation_onus)
+    # except:
+    #     copy_log_to_server("smoke", board_ip, "root", "sbkt4v")    
  
 
 

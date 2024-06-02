@@ -41,9 +41,9 @@ def test_Vlan_Translate(rest_interface_module, node_id):
                                                             "maxbwvalue": [100000, "maxBwValue"]},result="Pass"), method='ADD')
 
     response = getall_and_update_condition(rest_interface_module, f"/api/gponconfig/dbaProfile/getall?nodeId={node_id}&shelfId=1&slotId=1")
-    DBA_Profile(rest_interface_module, node_id, dba_profile(1, {"nodeId":None, "slotId":1,"shelfId":1,"dbaId":2,"name": "unicast", "dbaType": 3, "fixedBwValue": None, "assureBwValue": 250, "maxBwValue": 100000},
+    DBA_Profile(rest_interface_module, node_id, dba_profile(1, {"nodeId":None, "slotId":1,"shelfId":1,"dbaId":2,"name": "HSI", "dbaType": 3, "fixedBwValue": None, "assureBwValue": 250, "maxBwValue": 100000},
                                                            {
-                                                            "namedba": ["unicast", "name"],
+                                                            "namedba": ["HSI", "name"],
                                                             "dbatype": [3, "dbaType"],
                                                             "fixedbwvalue": [0, "fixedBwValue"],
                                                             "assurebwvalue": [250, "assureBwValue"],
@@ -52,16 +52,19 @@ def test_Vlan_Translate(rest_interface_module, node_id):
     response = getall_and_update_condition(rest_interface_module, f"/api/gponconfig/sp5100/bridgegroupconfig/getall?nodeId={node_id}&shelfId=1&slotId=1")
     switch_config(rest_interface_module, node_id, Switch_conf()._replace(ethIfIndex=1, index=4), method='POST')
     response = getall_and_update_condition(rest_interface_module, f"/api/gponconfig/sp5100/portvlan/getall?nodeId={node_id}&shelfId=1&slotId=1")
-    uplink_vlan_config(rest_interface_module, node_id, uplink_vlan_conf_DATA[1]._replace(ethIfIndex=1,taggedVlanSet="702,802,700"), method='POST') 
+    uplink_vlan_config(rest_interface_module, node_id, uplink_vlan_conf_DATA[1]._replace(ethIfIndex=1,taggedVlanSet="702,802,902,700,800,900"), method='POST') 
 
 
-    # uplink_vlan_config(rest_interface_module, node_id, uplink_vlan_conf(1, None, "TRUNK", -1, "" , "702,700,802", "", -1, "Pass"), method='POST')
+    # uplink_vlan_config(rest_interface_module, node_id, uplink_vlan_conf(1, None, "TRUNK", -1, "" , "702,700,802,902,900,800", "", -1, "Pass"), method='POST')
     # switch_config(rest_interface_module, node_id, Switch_conf()._replace(ethIfIndex=1, index=9), method='DELETE')
     # DBA_Profile(rest_interface_module, node_id, dba_profile(1, {"nodeId":None, "slotId":1,"shelfId":1,"dbaId":1}, result="Pass"), method='DELETE')       
     # DBA_Profile(rest_interface_module, node_id, dba_profile(1, {"nodeId":None, "slotId":1,"shelfId":1,"dbaId":2}, result="Pass"), method='DELETE')       
     # vlan_config(rest_interface_module, node_id, Vlan_conf(800, 'CUSTOMER'), method='DELETE')    
     # vlan_config(rest_interface_module, node_id, Vlan_conf(802, 'CUSTOMER'), method='DELETE')  
     # vlan_config(rest_interface_module, node_id, Vlan_conf(702, 'CUSTOMER'), method='DELETE')    
-    # vlan_config(rest_interface_module, node_id, Vlan_conf(700, 'CUSTOMER'), method='DELETE')    
+    # vlan_config(rest_interface_module, node_id, Vlan_conf(700, 'CUSTOMER'), method='DELETE')   
+    # vlan_config(rest_interface_module, node_id, Vlan_conf(900, 'CUSTOMER'), method='DELETE')    
+    # vlan_config(rest_interface_module, node_id, Vlan_conf(902, 'CUSTOMER'), method='DELETE')    
+ 
     # # # #****************************************************************************************************************************
     # bridge_config(rest_interface_module, node_id, Bridge_conf(), method='DELETE') 

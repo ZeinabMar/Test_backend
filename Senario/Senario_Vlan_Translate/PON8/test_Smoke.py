@@ -24,8 +24,10 @@ logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
 
-Vlan_Translate = {"HWTC1A74B09C":900, "HWTC1a27a188":900, "HWTCA67EDEA4":800, "HWTC96610DA3":800, "HWTCD2099E7C":700}
-Vlan_Transparent = {"HWTC1A74B09C": 700, "HWTC1a27a188":700, "HWTCA67EDEA4":900, "HWTC96610DA3":900, "HWTCD2099E7C":900}
+Vlan_Translate = {"HWTC1a27a188":900, "HWTC1A74B09C":900, "HWTCA67EDEA4":800,"HWTC96610DA3":800, "HWTCD2099E7C":700, "UTEL20FC5410":700,
+                  "HWTCA4C5349C":700, "HWTC41D47EAC":700, "HWTC7758307C":700}
+Vlan_Transparent = {"HWTC1a27a188": 700, "HWTC1A74B09C":700, "HWTCA67EDEA4":900, "HWTC96610DA3":900, "HWTCD2099E7C":900, "UTEL20FC5410":900,
+                    "HWTCA4C5349C":900, "HWTC41D47EAC":900, "HWTC7758307C":900}
 
 def no_shutDown_Pon(rest_interface_module,port,node_id):
     response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/pon/getprimaryinfo/{node_id}/1/1/{port}/{port}")
@@ -82,7 +84,7 @@ def generate_list_of_serial_number_based_on_onu_number_and_Vlan(rest_interface_m
 def config_smoke_requirement(rest_interface_module, node_id):
     PORTs_information = {}
     PORT_TotalNumberOnusInThisPort= {8:9}
-    Serial_number_of_operation_onus= ["HWTC20b3cc48", "HWTC20b3cb18", "HWTC20f3ce08"]
+    Serial_number_of_operation_onus= ["HWTC1A74B09C", "HWTC1a27a188", "HWTCA67EDEA4", "HWTC96610DA3", "HWTCD2099E7C", "UTEL20FC5410", "HWTCA4C5349C","HWTC41D47EAC", "HWTC7758307C"]
     for port,total_of_onu in PORT_TotalNumberOnusInThisPort.items():
         no_shutDown_Pon(rest_interface_module,port,node_id)
         ONUs = read_number_of_Onus_On_Pon(rest_interface_module, port, node_id, total_of_onu)

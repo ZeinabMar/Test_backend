@@ -1,21 +1,28 @@
+"""
+in this smoke_test we test :
+1) Operational or added situation for any ONu
+
+and in ultimately our outcomes must be in order below:
+{Port1:[ONU_number, Serial_number], ..., Port?:[ONU_number, Serial_number]}
+
+in this senario we must have all intact onus with operational situation. 
+
+"""
+
 import pytest
 import logging
 import json
 from config import *
 from conftest import *
-from config import dict_Serial_Mapping_Vlan
 from Pon.test_Pon_Initial_Information import Pon_Initial_Information
 from Pon.test_onu_auto_learn import read_only_Onu_State,read_only_Onu_SN
 from Switch.test_vlan import vlan_config
 from copy_log_system import copy_log_to_server
-from pytest_sina_framework import cli_interface_module
-from pytest_sina_framework import rest_interface_module
 
-
-pytestmark = [pytest.mark.env_name("REST_env"), pytest.mark.ssh_dev("server_olt"), pytest.mark.rest_dev("olt_nms")]
-
+pytestmark = [pytest.mark.env_name("REST_env"), pytest.mark.rest_dev("olt_nms")]
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
+
 
 def no_shutDown_Pon(rest_interface_module,port,node_id):
     response = getall_and_update_condition(rest_interface_module,f"/api/gponconfig/pon/getprimaryinfo/{node_id}/1/1/{port}/{port}")
@@ -36,51 +43,46 @@ def no_shutDown_Pon(rest_interface_module,port,node_id):
                                                                                                             "modulePresentStr": ["Enabled", "modulePresentStr"],},result="Pass",method="UPDATE")  )                                               
     logger.info("****** no_shutDown_Pon complete *************")
 
-def read_number_Onus_On_Pon(rest_interface_module, port, node_id, onu_On_Pon=0):
+def read_number_of_Onus_On_Pon(rest_interface_module, port, node_id, onu_On_Pon=0):
     read_data = rest_interface_module.get_request(f"/api/gponconfig/onu/getpononunumber/{node_id}/1/1/{port}")
     Onu_Detected = json.loads(read_data.text)
     if onu_On_Pon !=0:
         assert Onu_Detected["totalOnu"] == onu_On_Pon
-    logger.info("****** read_number_Onus_On_Pon complete *************")
+    logger.info("****** read_number_of_Onus_On_Pon complete *************")
     return Onu_Detected["totalOnu"]
 
-
-def check_Operation_Onus_On_Pon(rest_interface_module, port, node_id, ONUs):  
-    active = "ADDED" 
+def extract_Serial_number_of_ONUs(rest_interface_module, port, node_id, ONUs):
     SN = []    
     for onu in range(ONUs):
-        while("OPERATION_STATE"!=active):
-            active = read_only_Onu_State(rest_interface_module, node_id ,1,1,port,onu+1) 
         SN.append(read_only_Onu_SN(rest_interface_module, node_id ,1,1,port,onu+1))  
-    logger.info("****** check_Operation_Onus_On_Pon complete *************")
+    logger.info("****** extract Serial number of Onus complete*************")
     logger.info(f"serial {SN}")
     return SN   
 
-def find_vlan_from_Serial(rest_interface_module, port, node_id, SN):
-    vlan =[]
-    for sn in SN:
-        for key,value in dict_Serial_Mapping_Vlan.items():
-            if key==sn:
-                vlan.append(dict_Serial_Mapping_Vlan[sn])
-    logger.info("****** find_vlan_from_Serial complete *************")            
-    logger.info(f"Vlan {vlan}")
-    return vlan  
+
+def check_Operation_Onus_On_Pon(rest_interface_module, port, node_id, SN, ONUs):  
+    active = "ADDED" 
+    for onu in range(ONUs):
+        while("OPERATION_STATE"!=active):
+            active = read_only_Onu_State(rest_interface_module, node_id ,1,1,port,onu+1) 
+    logger.info("****** Onus are operational *************")
 
 
 def test_Smoke(rest_interface_module, node_id):
-    # ssh_interface_module.ex
-    PORT_TotalNumberOnusInThisPort= {9:4}
-    Vlan_From_Serial_Of_ONUs = {}
     # try:
+    PORT_TotalNumberOnusInThisPort= {9:40}
+    Serial_number_of_operation_onus= ["HWTCdc99d69a", "HWTCf65efc9a", "HWTCc0a5899d", "HWTC70bbc89b", "HWTCd69f299c", "HWTC67ae299c", "HWTC40a58397", 
+                                      "HWTCa151899b", "HWTCda1bb59a", "HWTCd662c09a", "HWTC265f8a9c", "HWTC7df2ba9b", "HWTC3f04589c", "HWTCe152f69b",
+                                      "HWTC13fece9a", "HWTCff10df9a", "HWTCb918039a", "HWTCd7a4369a", "HWTC1a55c79c", "HWTC82f40c9b", "HWTCc714199a",
+                                      "HWTCff326d9a", "HWTC00f8f19b", "HWTC1423179c", "HWTC0dacf29c", "HWTCcf99709b", "HWTCc685a29b", "HWTC81501a9a",
+                                      "HWTC6a32229b", "HWTC24370d9a", "HWTC61fe6c9c", "HWTC13f0d79a", "HWTCdda1d79b", "HWTCe14e069b", "HWTC2a82ff9c",
+                                      "HWTC265e039c", "HWTC98728b9b", "HWTC48dcdf9d", "HWTC79268d9a", "HWTC1fb0a09c"]
     for port,total_of_onu in PORT_TotalNumberOnusInThisPort.items():
         no_shutDown_Pon(rest_interface_module,port,node_id)
-        ONUs = read_number_Onus_On_Pon(rest_interface_module, port, node_id, total_of_onu)
-        SN = check_Operation_Onus_On_Pon(rest_interface_module, port, node_id, ONUs)
-        Vlan = find_vlan_from_Serial(rest_interface_module, port, node_id, SN)
-        Vlan_From_Serial_Of_ONUs[port]=Vlan  
-    logger.info(f"Vlan_after_map {Vlan_From_Serial_Of_ONUs}")
-    assert Vlan_From_Serial_Of_ONUs == {9:[700, 700, 700, 700]} #700, 700, 700, 700, 700, 700, 700, 700, 700, 700, 700, 700, 700, 700, 700, 700,
-        #700, 700, 700, 700, 700, 700, 700, 700, 700, 700, 700, 700, 700, 700, 700, 700, 700, 700, 700, 700
+        ONUs = read_number_of_Onus_On_Pon(rest_interface_module, port, node_id, total_of_onu)
+        Serial_number_of_all_onus = extract_Serial_number_of_ONUs(rest_interface_module, port, node_id, ONUs)
+        check_Operation_Onus_On_Pon(rest_interface_module, port, node_id, Serial_number_of_all_onus, ONUs)    
+        assert sorted(Serial_number_of_operation_onus) == sorted(Serial_number_of_all_onus)
     # except:
     #     copy_log_to_server("smoke", board_ip, "root", "sbkt4v")    
  

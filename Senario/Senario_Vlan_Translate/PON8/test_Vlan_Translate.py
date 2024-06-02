@@ -30,7 +30,7 @@ def test_Vlan_Translate(rest_interface_module, node_id):
     response = getall_and_update_condition(rest_interface_module, f"/api/gponconfig/sp5100/bridgegroupconfig/getall?nodeId={node_id}&shelfId=1&slotId=1")
     switch_config(rest_interface_module, node_id, Switch_conf()._replace(ethIfIndex=8+8, index=4), method='POST')
     response = getall_and_update_condition(rest_interface_module, f"/api/gponconfig/sp5100/portvlan/getall?nodeId={node_id}&shelfId=1&slotId=1")
-    uplink_vlan_config(rest_interface_module, node_id, uplink_vlan_conf_DATA[1]._replace(ethIfIndex=8+8,taggedVlanSet="800,802"), method='POST') 
+    uplink_vlan_config(rest_interface_module, node_id, uplink_vlan_conf_DATA[1]._replace(ethIfIndex=8+8,taggedVlanSet="800,802,900,902,,700,702"), method='POST') 
     
     # response = getall_and_update_condition(rest_interface_module, f"/api/gponconfig/dbaProfile/getall?nodeId={node_id}&shelfId=1&slotId=1")
     # DBA_Profile(rest_interface_module, node_id, dba_profile(1, {"nodeId":None, "slotId":1,"shelfId":1,"dbaId":1,"name": "VOIP", "dbaType": 3, "fixedBwValue": None, "assureBwValue": 250, "maxBwValue": 100000},
@@ -42,10 +42,17 @@ def test_Vlan_Translate(rest_interface_module, node_id):
     #                                                         "maxbwvalue": [100000, "maxBwValue"]},result="Pass"), method='ADD')
     for PORT,information in PORT_INFORMATION.items():
         for info in information :
+            if info["Vlan_Translate"] == 900:
+                profile_2="HSI"
+                profile_1="VOIP"
+            else:
+                profile_2="VOIP"
+                profile_1="HSI"
+
             response = getall_and_update_condition(rest_interface_module, f"/api/gponconfig/tcont/getall?nodeId={node_id}&shelfId=1&slotId=1&portId={PORT}&onuId=-1")
-            Tcont_Management(rest_interface_module, node_id, tcont(1, {"nodeId":None, "slotId":1,"shelfId":1,"bwProfileId":1,"bwProfileName": "VOIP", "name": "tcont_valid1", "onuId": info["ONUnumber"], "portId": PORT, "tcontId": 1},
+            Tcont_Management(rest_interface_module, node_id, tcont(1, {"nodeId":None, "slotId":1,"shelfId":1,"bwProfileId":1,"bwProfileName": profile_1, "name": "tcont_valid1", "onuId": info["ONUnumber"], "portId": PORT, "tcontId": 1},
                                                            {"bwProfileId": [1, "bwProfileId"],
-                                                            "bwProfileName": ["VOIP", "bwProfileName"],
+                                                            "bwProfileName": [profile_1, "bwProfileName"],
                                                             "name": ["tcont_valid1", "name"],
                                                             "onuId": [info["ONUnumber"], "onuId"],
                                                             "portId": [PORT, "portId"],
@@ -59,9 +66,9 @@ def test_Vlan_Translate(rest_interface_module, node_id):
                                                             "portId": [PORT, "portId"],
                                                             "tcontId": [1, "tcontId"]},result="Pass",method="ADD"))
             response = getall_and_update_condition(rest_interface_module, f"/api/gponconfig/tcont/getall?nodeId={node_id}&shelfId=1&slotId=1&portId={PORT}&onuId=-1")
-            Tcont_Management(rest_interface_module, node_id, tcont(1, {"nodeId":None, "slotId":1,"shelfId":1,"bwProfileId":1,"bwProfileName": "VOIP", "name": "tcont_valid2", "onuId": info["ONUnumber"], "portId": PORT, "tcontId": 2},
-                                                           {"bwProfileId": [1, "bwProfileId"],
-                                                            "bwProfileName": ["VOIP", "bwProfileName"],
+            Tcont_Management(rest_interface_module, node_id, tcont(1, {"nodeId":None, "slotId":1,"shelfId":1,"bwProfileId":2,"bwProfileName": profile_2, "name": "tcont_valid2", "onuId": info["ONUnumber"], "portId": PORT, "tcontId": 2},
+                                                           {"bwProfileId": [2, "bwProfileId"],
+                                                            "bwProfileName": [profile_2, "bwProfileName"],
                                                             "name": ["tcont_valid2", "name"],
                                                             "onuId": [info["ONUnumber"], "onuId"],
                                                             "portId": [PORT, "portId"],
@@ -164,18 +171,8 @@ def test_Vlan_Translate(rest_interface_module, node_id):
 #     DBA_Profile(rest_interface_module, node_id, dba_profile(1, {"nodeId":None, "slotId":1,"shelfId":1,"dbaId":1}, result="Pass"), method='DELETE')       
 
 # #**********************************PON UNconfig ****************************************
-#     uplink_vlan_config(rest_interface_module, node_id, uplink_vlan_conf(2+8, None, "TRUNK", -1, "" , "800,802", "", -1, "Pass"), method='POST')
-#     switch_config(rest_interface_module, node_id, Switch_conf()._replace(ethIfIndex=2+8, index=9), method='DELETE')
+#     uplink_vlan_config(rest_interface_module, node_id, uplink_vlan_conf(8+8, None, "TRUNK", -1, "" , "800,802,900,902,,700,702", "", -1, "Pass"), method='POST')
+#     switch_config(rest_interface_module, node_id, Switch_conf()._replace(ethIfIndex=8+8, index=9), method='DELETE')
     
-# #**********************************Switch UNconfig ****************************************
-#     uplink_vlan_config(rest_interface_module, node_id, uplink_vlan_conf(1, None, "TRUNK", -1, "" , "802", "", -1, "Pass"), method='POST')
-#     switch_config(rest_interface_module, node_id, Switch_conf()._replace(ethIfIndex=1, index=9), method='DELETE')
-    
-#     vlan_config(rest_interface_module, node_id, Vlan_conf(800, 'CUSTOMER'), method='DELETE')    
-#     vlan_config(rest_interface_module, node_id, Vlan_conf(802, 'CUSTOMER'), method='DELETE')    
-
-#     # # #****************************************************************************************************************************
-#     bridge_config(rest_interface_module, node_id, Bridge_conf(), method='DELETE')      
-
 
    
