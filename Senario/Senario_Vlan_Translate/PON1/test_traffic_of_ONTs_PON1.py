@@ -10,7 +10,6 @@ logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
 List_Of_ONTs_On_PON1_Voip_802 = [
-    "192.168.13.104",
     "192.168.130.104",
     "192.168.130.5",
     "192.168.130.8",
