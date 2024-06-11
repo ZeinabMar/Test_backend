@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  packet_sender:
+    image: traffic_checker
+    container_name: Packet_sender
+    restart: unless-stopped
+    tty: true  
+    volumes:
+    - .:/home   
+    networks:
+    - packet_sender_net
+    #ipv4_address: 192.168.140.3
+    command: >
+      sh -c "
+      python3 /home/PackerSenderVlan.py &
+      python3 /home/Reciever.py &
+      wait
+      "
+networks:
+  packet_sender_net:
+    external:
+      name: sender-macvlan

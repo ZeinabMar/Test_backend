@@ -1,0 +1,18 @@
+version: '2'
+
+services:
+  python_runner:
+    container_name: python_runner
+    image: traffic_checker
+    tty: false
+    restart: unless-stopped
+    volumes:
+      - .:/home
+    command: >
+      sh -c "
+      python3 /home/test_traffic_of_ONTs_PON1.py & 
+      python3 /home/test_traffic_of_ONTs_PON8.py & 
+      python3 /home/test_traffic_of_ONTs_PON9.py & 
+      wait
+      "
+

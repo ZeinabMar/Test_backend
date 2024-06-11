@@ -1,0 +1,45 @@
+
+# Use the official Ubuntu 22.04 image from Docker Hub
+FROM ubuntu:22.04
+#RUN echo 192.168.5.61 repo.sinacomsys.local >> /etc/hosts
+RUN cp /etc/apt/sources.list /etc/apt/sources.list.org
+
+RUN sed -i "s|http://archive.ubuntu.com/ubuntu|http://repo.sinacomsys.local:9099/repository/apt-hosted/|g" /etc/apt/sources.list
+
+RUN sed -i "s|http://us.archive.ubuntu.com/ubuntu|http://repo.sinacomsys.local:9099/repository/apt-hosted/|g" /etc/apt/sources.list
+
+RUN sed -i "s|http://ir.archive.ubuntu.com/ubuntu|http://repo.sinacomsys.local:9099/repository/apt-hosted/|g" /etc/apt/sources.list
+
+# Set environment variable to avoid interactive prompts
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Preconfigure timezone information
+RUN apt-get update \
+    && apt-get install -y tzdata \
+    && ln -fs /usr/share/zoneinfo/Etc/UTC /etc/localtime \
+    && dpkg-reconfigure --frontend noninteractive tzdata
+
+# Update package lists and install necessary packages
+RUN apt-get update 
+RUN apt-get install -y software-properties-common 
+RUN add-apt-repository ppa:deadsnakes/ppa \
+    && apt-get update 
+RUN apt-get install -y python3.8 python3.8-dev python3-pip
+
+# Set the working directory in the container
+WORKDIR /app
+
+# Copy the current directory contents into the container at /app
+COPY . /app
+
+# Install any needed dependencies specified in requirements.txt
+RUN pip3 install --no-cache-dir -r requirements.txt
+
+# Make port 80 available to the world outside this container
+EXPOSE 80
+
+# Define environment variable
+ENV NAME World
+RUN apt-get -y install net-tools iputils-ping libpcap-dev tcpdump traceroute
+# Run app.py when the container launches
+#CMD ["python3.8", "app.py"]

@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  packet_receiver:
+    image: traffic_checker
+    container_name: Packet_receiver
+    restart: unless-stopped
+    tty: true  
+    volumes:
+    - .:/home   
+    networks:
+      proxy-tier2:
+        ipv4_address: 192.168.120.5
+ 
+    #ipv4_address: 192.168.140.3
+    command: >
+          sh -c "
+                python3 /home/Reciever.py
+                "
+#    command: /bin/bash
+networks:
+  proxy-tier2:
+    external:
+      name: macvlan120
+      
