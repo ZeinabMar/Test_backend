@@ -12,7 +12,7 @@ from pytest_sina_framework import ssh_interface_module
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
-pytestmark = [pytest.mark.env_name("REST_env"), pytest.mark.ssh_dev("server_olt_1"), pytest.mark.rest_dev("olt_nms")]
+pytestmark = [pytest.mark.env_name("REST_env"), pytest.mark.ssh_dev("server_olt")]
 # pytestmark = [pytest.mark.env_name("SNMP_CLI_env"), pytest.mark.ssh_dev("shelf_olt")]
 
 List_Of_ONTs_On_PON10 = [
@@ -23,17 +23,8 @@ List_Of_ONTs_On_PON4 = [
     '192.168.15.141'
 ]
 
-def test_traffic_of_ONTs(ssh_interface_module, rest_interface_module):
-    for ONT in List_Of_ONTs_On_PON10:
-        result = ssh_interface_module.exec(f"ping -c 10 {ONT}", timeout=10)
-        logger.info(f"result in {ONT} is : {result}")
-        assert result != None
-        for line in result:
-            assert line != "Request timed out" or line != "Unreachable"
-    for ONT in List_Of_ONTs_On_PON4:
-        result = ssh_interface_module.exec(f"ping -c 10 {ONT}", timeout=10)
-        logger.info(f"result in {ONT} is : {result}")
-        assert result != None
-        for line in result:
-            assert line != "Request timed out" or line != "Unreachable"        
-    # ssh_interface_module
+def test_traffic_of_ONTs(ssh_interface_module):
+    result = ssh_interface_module.exec(f"sudo python3 Reciver.py", timeout=10)
+    logger.info(f"result is : {result}")
+    assert result != None
+    assert result.find("recieving is ok")

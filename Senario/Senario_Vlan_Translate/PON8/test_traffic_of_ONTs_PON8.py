@@ -7,13 +7,14 @@ import logging
 import paramiko
 import openpyxl
 import os
+import socket
 
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
 List_Of_ONTs_On_PON8_Voip_700 = [
-     "192.168.120.13",
-     "192.168.120.14"
+     "192.168.110.13",
+     "192.168.110.14"
 ]
 
 List_Of_ONTs_On_PON8_Voip_702 =[
@@ -38,13 +39,19 @@ def is_ssh_connected(ssh):
         return False
 
 def ssh_connect(IP,username, password):
-    ssh = paramiko.SSHClient()
-    ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-    ssh.connect(IP, username=username, password=password)
+    try:
+        ssh = paramiko.SSHClient()
+        ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+        ssh.connect(IP, username=username, password=password, port=22, look_for_keys=False, timeout=10)
+    except paramiko.AuthenticationException:
+        logger.exception("SSH Connect Authentication Failed")
+    except socket.timeout:
+        logger.exception("SSH Connect Timeout")
+
     if is_ssh_connected(ssh) == False:
         raise(paramiko.SSHException)
     else:
-        return ssh
+        return ssh 
 
 def get_information_of_app_on_system(ssh):
     stdin,output,err = ssh.exec_command(f"top -b -n 1", 3)
@@ -74,8 +81,8 @@ def apply_extract_information(ssh_server,ssh_olt, sheet, workbook, i, List_Of_ON
                     
 def test_traffic_of_ONTs():
     #********************************* creat EXCEL report file ************************************
-    current_directory = os.getcwd()
-    logger.info(f"current_directory : {current_directory}")
+    #current_directory = os.getcwd()
+    #logger.info(f"current_directory : {current_directory}")
     workbook = openpyxl.Workbook()
     sheet1 =workbook.create_sheet("PON8 VOIP 700")
     sheet2 =workbook.create_sheet("PON8 VOIP 702")
@@ -85,20 +92,31 @@ def test_traffic_of_ONTs():
     sheet2.append(data[0])
     sheet3.append(data[0])
 
-    #******************************** connect to based server **********************************
-    ssh_client_server = ssh_connect("192.168.2.218","saat","1234")
-    #******************************** connect to OLT  **********************************
-    ssh_client_olt = ssh_connect("192.168.9.135","root","sbkt4v")
-    
     while True:
-        
-        apply_extract_information(ssh_client_server,ssh_client_olt,sheet1,workbook, "", List_Of_ONTs_On_PON8_Voip_700)
-        apply_extract_information(ssh_client_server,ssh_client_olt,sheet2,workbook, "2", List_Of_ONTs_On_PON8_Voip_702)
-        apply_extract_information(ssh_client_server,ssh_client_olt,sheet3,workbook, "3", List_Of_ONTs_On_PON8_Voip_802)
+        try:
+            ssh_client_server = ssh_connect("192.168.2.218","saat","1234")
+            ssh_client_olt = ssh_connect("192.168.9.135","root","sbkt4v")
+            apply_extract_information(ssh_client_server,ssh_client_olt,sheet1,workbook, "", List_Of_ONTs_On_PON8_Voip_700)
+            apply_extract_information(ssh_client_server,ssh_client_olt,sheet2,workbook, "2", List_Of_ONTs_On_PON8_Voip_702)
+            apply_extract_information(ssh_client_server,ssh_client_olt,sheet3,workbook, "3", List_Of_ONTs_On_PON8_Voip_802)
+            ssh_client_server.close()
+            ssh_client_olt.close()
+        except:
+            ssh_client_server.close()
+            ssh_client_olt.close()
+            continue
 
 
+def main():
+    while True:
+        try:
+            test_traffic_of_ONTs()
+        except:
+            continue
 
-
+if __name__== "__main__" :
+    main()
+      
 
 
 

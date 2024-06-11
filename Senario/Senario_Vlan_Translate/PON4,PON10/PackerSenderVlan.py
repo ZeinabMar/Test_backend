@@ -1,5 +1,4 @@
 from scapy.all import Ether, IP, TCP, sendp, sniff, Dot1Q
-
 import threading 
 
 import time
@@ -12,7 +11,7 @@ vlan_id=700
 
 dst_mac='08:00:27:74:bc:d6'
 
-payload = "Hello, world!"
+payload = "*******************************  Hello, world!  ************************************"
 
 
 
@@ -32,7 +31,8 @@ payload = "Hello, world!"
 
 
 
-selectedInterface="enp0s3"
+# selectedInterface="ens38"
+selectedInterface="lo"
 
 
 
@@ -52,16 +52,8 @@ def send_packet(src_mac_address,pay_load):
 
     # Craft an Ethernet frame with the desired source and destination MAC addresses
 
-    packet = Ether(src=src_mac_address, dst=dst_mac) / \
-
-     Dot1Q(vlan=vlan_id) / \
-
-     IP(dst=dst_ip) / \
-
-     TCP(dport=selectedPort) / \
-
-     pay_load
-
+    # packet = Ether(src=src_mac_address, dst=dst_mac) / Dot1Q(vlan=vlan_id) / IP(dst=dst_ip) / TCP(dport=selectedPort) / pay_load
+    packet = Ether(src=src_mac_address)/ TCP(dport=selectedPort) / pay_load
     print(src_mac_address) 
 
     # Send the packet
@@ -130,7 +122,7 @@ def check_packet():
 
 def main():
 
-    mac_addresses = read_mac_addresses('mac_addresses.txt')
+    mac_addresses = read_mac_addresses('/home/zeinab/test_sp5100/test_sp5100_rest/Senario/Senario_Vlan_Translate/PON4,PON10/mac.txt')
 
     num_macs = len(mac_addresses)
 
@@ -142,7 +134,7 @@ def main():
 
             send_packet(src_mac, payload)
 
-            time.sleep(0.2)
+            time.sleep(1)
 
         # Wait for a short duration before sending packets with next MAC
 
