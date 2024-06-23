@@ -13,8 +13,8 @@ logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
 List_Of_ONTs_On_PON8_Voip_700 = [
-     "192.168.110.13",
-     "192.168.110.14"
+     "192.168.120.13",
+     "192.168.120.14"
 ]
 
 List_Of_ONTs_On_PON8_Voip_702 =[
@@ -63,22 +63,23 @@ def get_information_of_app_on_system(ssh):
     return app_information
 
 def apply_extract_information(ssh_server,ssh_olt, sheet, workbook, i, List_Of_ONTs):
+    logger.info("************************   PON8 ******************************")
     for ont in List_Of_ONTs:
-            stdin,output,err = ssh_server.exec_command(f"docker exec freepbx-app{i} ping -c 1 {ont}", 3)
-            command = f"docker exec freepbx-app{i} ping -c 1 {ont}"
-            logger.info(f"command: {command}")
-            stdin_olt,output_olt_time,err_olt = ssh_olt.exec_command(f"uptime", 3)
-            for line_olt in output_olt_time:
-                time = []
-                logger.info(f"line : {line_olt.strip()}")
-                time.append(str(line_olt.strip()))
-            app_information = get_information_of_app_on_system(ssh_olt)    
-            for line in output:
-                logger.info(f"line : {line.strip()}")
-                if line.find("Request timed out")!=-1 or line.find("Unreachable")!=-1:
-                    sheet.append([f"{ont}", f"{time[0]}", f"{app_information}"])
-                    workbook.save("PON8.xlsx")
-                    
+        stdin,output,err = ssh_server.exec_command(f"docker exec freepbx-app{i} ping -c 1 {ont}", 3)
+        command = f"docker exec freepbx-app{i} ping -c 1 {ont}"
+        logger.info(f"command: {command}")
+        stdin_olt,output_olt_time,err_olt = ssh_olt.exec_command(f"uptime", 3)
+        for line_olt in output_olt_time:
+            time = []
+            logger.info(f"line : {line_olt.strip()}")
+            time.append(str(line_olt.strip()))
+        app_information = get_information_of_app_on_system(ssh_olt)    
+        for line in output:
+            logger.info(f"line : {line.strip()}")
+            if line.find("Request timed out")!=-1 or line.find("Unreachable")!=-1:
+                sheet.append([f"{ont}", f"{time[0]}", f"{app_information}"])
+                workbook.save("PON8.xlsx")
+
 def test_traffic_of_ONTs():
     #********************************* creat EXCEL report file ************************************
     #current_directory = os.getcwd()

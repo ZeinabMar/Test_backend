@@ -1,18 +1,16 @@
-from scapy.all import Ether, IP, TCP, sendp, sniff, Dot1Q
+from scapy.all import Ether, IP, TCP, sendp, sniff, Raw, Dot1Q
 import threading 
 
 import time
 
+
 selectedPort=50001
 
-dst_ip='192.168.170.10'
+dst_ip='192.168.120.5'
 
 vlan_id=700
 
-dst_mac='00:e0:4c:68:0c:0b'
-
-payload = "************************** Hello, world! *****************************"
-
+dst_mac='d0:37:45:a7:1e:a9'
 
 
 #packet = Ether(src='00:11:22:33:44:55', dst='08:00:27:74:bc:d6') / IP(dst=dst_ip) / #TCP(dport=selectedPort)
@@ -50,9 +48,10 @@ def read_mac_addresses(file_path):
 def send_packet(src_mac_address,pay_load):
 
     # Craft an Ethernet frame with the desired source and destination MAC addresses
-
-    #packet = Ether(src=src_mac_address, dst=dst_mac) / Dot1Q(vlan=vlan_id) / IP(dst=dst_ip) / TCP(dport=selectedPort) / pay_load
-    packet = Ether(src=src_mac_address, dst=dst_mac)/pay_load
+    custom_payload = b'\xaa' * 466
+    ip_pkt = IP(dst=dst_ip, ttl=255, proto=254)
+    ether_pkt = Ether(dst=dst_mac, src=src_mac_address)
+    packet = ether_pkt / ip_pkt / Raw(load=custom_payload)
     print(src_mac_address) 
 
     # Send the packet

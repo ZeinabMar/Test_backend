@@ -87,7 +87,7 @@ def get_information_of_app_on_system(ssh):
             # logger.info(f"line : {line.strip()}") 
     return app_information
 
-def apply_extract_information(ssh_server,ssh_olt, sheet, workbook, i, List_Of_ONTs):
+def apply_extract_information(ssh_server,ssh_olt, sheet, workbook, i, List_Of_ONTs,Vlan):
     logger.info("************************   PON9 ******************************")
     for ont in List_Of_ONTs:
     	stdin,output,err = ssh_server.exec_command(f"docker exec freepbx-app{i} ping -c 1 {ont}", 3)
@@ -103,7 +103,11 @@ def apply_extract_information(ssh_server,ssh_olt, sheet, workbook, i, List_Of_ON
             logger.info(f"line : {line.strip()}")
             if line.find("Request timed out")!=-1 or line.find("Unreachable")!=-1:
                 sheet.append([f"{ont}", f"{time[0]}", f"{app_information}"])
-                workbook.save("PON9.xlsx")
+                workbook.save("/home/PON9.xlsx")
+                with open(f'/home/PON9_{Vlan}.txt', 'a') as f:
+                        f.write(f'\n  ****************************   {ont} :  ********************************   \n\n                                    Times is:  \n[{time[0]}] \n\n                                 app_information :   \n {app_information}')
+                    
+                    
                     
 def test_traffic_of_ONTs():
     #********************************* creat EXCEL report file ************************************
@@ -118,7 +122,7 @@ def test_traffic_of_ONTs():
         try:
             ssh_client_server = ssh_connect("192.168.2.218","saat","1234")
             ssh_client_olt = ssh_connect("192.168.9.135","root","sbkt4v")
-            apply_extract_information(ssh_client_server,ssh_client_olt,sheet1,workbook, "2", List_Of_ONTs_On_PON9_Voip_702)
+            apply_extract_information(ssh_client_server,ssh_client_olt,sheet1,workbook, "2", List_Of_ONTs_On_PON9_Voip_702, 702)
             ssh_client_server.close()
             ssh_client_olt.close()
         except:

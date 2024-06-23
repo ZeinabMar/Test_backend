@@ -114,10 +114,10 @@ def main():
             sniffer_socket = socket.socket(socket.PF_PACKET, socket.SOCK_RAW, socket.htons(0x0003))
             sock_created = True
 
-            # data_recv_form = sniffer_socket.recvfrom(2048)
+            data_recv_form = sniffer_socket.recvfrom(2048)
             data_recv = sniffer_socket.recv(2048)
 
-            # print(data_recv_form)    
+            print(data_recv_form)    
 
             data_recv, ip_bool = analyze_ether_header(data_recv)
     # sniff(prn=packet_callback, filter='tcp port 50001', store=False)

@@ -1,18 +1,18 @@
 #sp5100_test_senario_Translate_Service
 
 gpon
-	profile bandwidth test maximum 100000
+	profile bandwidth VOIP maximum 100000
 exit
 interface gpon-olt1/4  & interface gpon-olt1/10
 	no shutdown
 interface gpon-onu1/4:1 
-	tcont 1 profile test
+	tcont 1 profile VOIP
 	gemport 1 tcont 1
 	service-port 1 gemport 1 user-vlan 700 translate vlan 702
 	remote service 1 gem 1 uni veip vlan-mode access pvlan 700 priority 7	
 
 interface gpon-onu1/10:1 
-	tcont 1 profile test
+	tcont 1 profile VOIP
 	gemport 1 tcont 1
 	service-port 1 gemport 1 user-vlan 700 translate vlan 702
 	remote service 1 gem 1 uni veip vlan-mode access pvlan 700 priority 7	

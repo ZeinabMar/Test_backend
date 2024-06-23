@@ -79,7 +79,10 @@ def test_traffic_of_ONTs():
                     logger.info(f"line : {line.strip()}")
                     if line.find("Request timed out")!=-1 or line.find("Unreachable")!=-1:
                         sheet.append([f"{ont}", f"{time[0]}", f"{app_information}"])
-                        workbook.save("PON1.xlsx")
+                        workbook.save("/home/PON1.xlsx")
+                        with open('/home/PON1_802.txt', 'a') as f:
+                            f.write(f'\n  ****************************   {ont} :  ********************************   \n\n                                    Times is:  \n[{time[0]}] \n\n                                 app_information :   \n {app_information}')
+                    
                         
             ssh_client_server.close()
             ssh_client_olt.close()
