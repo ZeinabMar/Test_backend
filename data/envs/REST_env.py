@@ -4,7 +4,7 @@ from pytest_sina_framework import SecretText
 DICT__SERVER = {
     'type': "NMS_Server",
     'server_ip': "192.168.9.127",
-    'server_host': "https://192.168.5.212",
+    'server_host': "https://192.168.1.65",
     'nms_username': "root",
     'nms_password': SecretText("root"),
     'authenticate_url': "/api/usermanagement/user/login",
@@ -51,7 +51,7 @@ DICT__SIB_SERVER_5 = {
     'ssh_port': "22"
 }
 
-DICT__SERVER = {
+DICT__SERVER_SSH = {
     'type': "server",
     'ssh_ip': "192.168.2.218",
     'ssh_password': SecretText("1234"),
@@ -60,13 +60,13 @@ DICT__SERVER = {
 }
 
 DICT__ENV = {
-    'server_olt': DICT__SERVER,
+    'olt_nms': DICT__SERVER,
+    'server_olt': DICT__SERVER_SSH,
     'server_olt_1': DICT__SIB_SERVER_1,
     'server_olt_2': DICT__SIB_SERVER_2,
     'server_olt_3': DICT__SIB_SERVER_3,
     'server_olt_4': DICT__SIB_SERVER_4,
     'server_olt_5': DICT__SIB_SERVER_5,
-    'olt_nms': DICT__SERVER,
 }
 
 

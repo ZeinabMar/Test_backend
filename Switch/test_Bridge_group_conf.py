@@ -86,23 +86,23 @@ def switch_config(rest_interface_module, node_id, SWITCH_data=Switch(), method='
         assert response.status_code in range(400, 505), f'{method} ERROR in switch config {data._asdict}'
 
 
-def delete_switch():
+# def delete_switch(rest_interface_module):
     
-    read_data = rest_interface_module.get_request(f"/api/gponconfig/sp5100/bridgegroupconfig/get/{data.nodeId}/{data.shelfId}/{data.slotId}/{data.ethIfIndex}")
-    input_D = json.loads(read_data.text)
-    input_D = input_D._replace(bridgeIfBridgeGroupId=-1,bridgeIfStp=-1)
-    url = "/api/gponconfig/sp5100/bridgegroupconfig/update"
-    response = rest_interface_module.post_request(url, input_D._asdict())
-    #****************************************************************
-    read_data = rest_interface_module.get_request(f"/api/gponconfig/sp5100/bridgegroupconfig/get/{data.nodeId}/{data.shelfId}/{data.slotId}/{data.ethIfIndex}")
-    input_D = json.loads(read_data.text)
-    input_D = input_D._replace(bridgeIfSwitchPort=-1)
-    url = "/api/gponconfig/sp5100/bridgegroupconfig/update"
-    response = rest_interface_module.post_request(url, input_D._asdict())
+#     read_data = rest_interface_module.get_request(f"/api/gponconfig/sp5100/bridgegroupconfig/get/{data.nodeId}/{data.shelfId}/{data.slotId}/{data.ethIfIndex}")
+#     input_D = json.loads(read_data.text)
+#     input_D = input_D._replace(bridgeIfBridgeGroupId=-1,bridgeIfStp=-1)
+#     url = "/api/gponconfig/sp5100/bridgegroupconfig/update"
+#     response = rest_interface_module.post_request(url, input_D._asdict())
+#     #****************************************************************
+#     read_data = rest_interface_module.get_request(f"/api/gponconfig/sp5100/bridgegroupconfig/get/{data.nodeId}/{data.shelfId}/{data.slotId}/{data.ethIfIndex}")
+#     input_D = json.loads(read_data.text)
+#     input_D = input_D._replace(bridgeIfSwitchPort=-1)
+#     url = "/api/gponconfig/sp5100/bridgegroupconfig/update"
+#     response = rest_interface_module.post_request(url, input_D._asdict())
 
-    assert (input_data["bridgeIfSwitchPort"] == -1 and 
-            input_data["bridgeIfBridgeGroupId"] == -1 and
-            input_data["bridgeIfStp"] == -1), f'GET ERROR in switch config (after {method})'
+    # assert (input_data["bridgeIfSwitchPort"] == -1 and 
+    #         input_data["bridgeIfBridgeGroupId"] == -1 and
+    #         input_data["bridgeIfStp"] == -1), f'GET ERROR in switch config (after {method})'
 
 
 

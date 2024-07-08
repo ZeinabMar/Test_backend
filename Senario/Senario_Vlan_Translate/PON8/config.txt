@@ -1,32 +1,61 @@
-#sp5100_test_senario_Translate_Service
-
 gpon
 	profile bandwidth VOIP maximum 100000
 exit
 interface gpon-olt1/8 
 	no shutdown
-interface gpon-onu1/8:1 ... interface gpon-onu1/8:10 
-	tcont 1 profile test
-	gemport 1 tcont 1
-	service-port 1 gemport 1 user-vlan 800 translate vlan 802
-	remote service 1 gem 1 uni veip vlan-mode access pvlan 800 priority 7	
+	switchport 
+	bridge-group 1 spanning-tree enable 
+	switchport mode trunk
+	switchport trunk tag 802,800,700,702,900,902
 
+Where onts is 13,14
+interface gpon-onu1/8:?   And   interface gpon-onu1/8:? 
+	tcont 1 profile VOIP
+	gemport 1 tcont 1
+	service-port 1 gemport 1 user-vlan 700 transparent 
+	remote service 1 gem 1 uni veip vlan-mode access pvlan 700 priority 7
+	 tcont 2 profile HSI
+	gemport 2 tcont 2
+	service-port  2 gemport 2 user-vlan 900 translate vlan 902
+	remote service 2  gem 2 uni veip vlan-mode access pvlan 900 priority 7 	
+
+Where onts is 1,1
+ interface gpon-onu1/8:?   And   interface gpon-onu1/8:? 
+	tcont 1 profile VOIP
+	gemport 1 tcont 1
+	service-port 1 gemport 1 user-vlan 800 translate vlan 802 
+	remote service 1 gem 1 uni veip vlan-mode access pvlan 800 priority 7
+	 tcont 2 profile HSI
+	gemport 2 tcont 2
+	service-port  2 gemport 2 user-vlan 900 transparent
+	remote service 2  gem 2 uni veip vlan-mode access pvlan 900 priority 7 	
+
+Where onts is 17,18,20,21,22
+interface gpon-onu1/8:?   And   interface gpon-onu1/8:? 
+	tcont 1 profile VOIP
+	gemport 1 tcont 1
+	service-port 1 gemport 1 user-vlan 700 translate vlan 702 
+	remote service 1 gem 1 uni veip vlan-mode access pvlan 700 priority 7
+	 tcont 2 profile HSI
+	gemport 2 tcont 2
+	service-port  2 gemport 2 user-vlan 900 transparent
+	remote service 2  gem 2 uni veip vlan-mode access pvlan 900 priority 7 
+
+Switch
 bridge 1 protocol rstp-vlan-bridge
 	spanning-tree bridge 1 pathcost method short 
 	spanning-tree bridge 1 portfast bpdu-guard
 vlan 800 bridge 1 type customer state enable
 vlan 802 bridge 1 type customer state enable
+vlan 902 bridge 1 type customer state enable
+vlan 900 bridge 1 type customer state enable
+vlan 702 bridge 1 type customer state enable
+vlan 700 bridge 1 type customer state enable
 
-int gpon-olt1/8
-	switchport 
-	bridge-group 1 spanning-tree enable 
-	switchport mode trunk
-	switchport trunk tag 802,800
-	
 int ge1/1
 	max-frame 1650 
 	switchport 
 	bridge-group 1 spanning-tree enable 
 	switchport mode trunk
-	switchport trunk tag 802
-	speed 1G	
+	switchport trunk tag 802,800,700,702,900,902
+	speed 1G

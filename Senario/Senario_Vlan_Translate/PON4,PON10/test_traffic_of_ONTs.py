@@ -13,7 +13,6 @@ logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
 pytestmark = [pytest.mark.env_name("REST_env"), pytest.mark.ssh_dev("server_olt")]
-# pytestmark = [pytest.mark.env_name("SNMP_CLI_env"), pytest.mark.ssh_dev("shelf_olt")]
 
 List_Of_ONTs_On_PON10 = [
     '192.168.15.141'
