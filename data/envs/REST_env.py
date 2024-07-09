@@ -1,5 +1,11 @@
 
 from pytest_sina_framework import SecretText
+import sys
+
+print(sys.argv)
+
+
+
 
 DICT__SERVER = {
     'type': "NMS_Server",
