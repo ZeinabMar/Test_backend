@@ -4,5 +4,5 @@ git+ssh://git@gitlab.sinacomsys.local/quality-assurance/test-infrastructure/rest
 git+ssh://git@gitlab.sinacomsys.local/quality-assurance/test-infrastructure/clilib.git@master#egg=clilib
 git+ssh://git@gitlab.sinacomsys.local/quality-assurance/test-infrastructure/sshlib.git@master#egg=sshlib
 pytest_check==2.1.4
-
+colorama
 

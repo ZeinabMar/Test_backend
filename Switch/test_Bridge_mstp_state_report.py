@@ -6,7 +6,7 @@ from config import *
 from Switch.bridge_funcs import bridge_config
 from Switch.test_Bridge_group_conf import switch_config
 from Switch.test_Bridge_Stp_conf import Bridge_Stp_config
-
+from colorama import Fore
 # from pytest-check import check
 
 
@@ -19,24 +19,24 @@ Bridge_Mstp_report = namedtuple('Bridge_Stp_report', ['stpIndex', "specMstpBridg
                       'specMstpHelloTime', 'specMstpLastTopologyChange', 'specMstpMaxAge', 'specMstpMaxHops', 'specMstpRegRootId', 'specMstpRootId',
                       'specMstpRootPathCost', 'specMstpRootPort', 'specMstpStpEnable', 'specMstpTopologyChangeCount', 'specMstpTransmitHoldCount','shelfId', 'slotId', 'nodeId'])
 Bridge_Data = [
-# Bridge_conf(1, 'IEEE', 100, 30, 1, 6, priority=4096, result='Fail'),
-# Bridge_conf(1, 'IEEE_VLAN_BRIDGE', 1000, 29, 2, 7, priority=8192, result='Fail'),
-Bridge_conf(1, 'MSTP', 100, 30, maxAge=6, maxHops=1, priority=12288),
-Bridge_conf(1, 'MSTPRING', 1000, 29, maxAge=7, maxHops=20, priority=16384),
-# Bridge_conf(1, 'RPVSTP', 100, priority=20480),
-# Bridge_conf(1, 'RSTP', 1000, 29, 2, 7, priority=24576, result='Fail'),
-# Bridge_conf(1, 'RSTP_RING', 100, 30, 1, 6, priority=28672, result='Fail'),
-# Bridge_conf(1, 'RSTP_VLAN_BRIDGE', 1000, 29, 2, 7, priority=32768, result='Fail'),
-# Bridge_conf(1, 'RSTP_VLAN_BRIDGE_RING', 100, 30, 1, 6, priority=36864, result='Fail'),
-Bridge_conf(1, 'PROVIDER_MSTP', 1000, 29, maxAge=7, maxHops=35, priority=40960),
-Bridge_conf(1, 'PROVIDER_MSTP_EDGE', 100, 30, maxAge=6, maxHops=39, priority=45056),
-# Bridge_conf(1, 'PROVIDER_RSTP', 1000, 29, 2, 7, priority=49152, result='Fail'),
-# Bridge_conf(1, 'PROVIDER_RSTP_EDGE', 1000, 29, 2, 7, priority=53248 , result='Fail')
+# Bridge_conf(1, 1, 'IEEE', 100, 30, 1, 6, priority=4096, result='Fail'),
+# Bridge_conf(2, 1, 'IEEE_VLAN_BRIDGE', 1000, 29, 2, 7, priority=8192, result='Fail'),
+Bridge_conf(3, 1, 'MSTP', 100, 30, maxAge=6, maxHops=1, priority=12288),
+Bridge_conf(4, 1, 'MSTPRING', 1000, 29, maxAge=7, maxHops=20, priority=16384),
+# Bridge_conf(5, 1, 'RPVSTP', 100, priority=20480),
+# Bridge_conf(6, 1, 'RSTP', 1000, 29, 2, 7, priority=24576, result='Fail'),
+# Bridge_conf(7, 1, 'RSTP_RING', 100, 30, 1, 6, priority=28672, result='Fail'),
+# Bridge_conf(8, 1, 'RSTP_VLAN_BRIDGE', 1000, 29, 2, 7, priority=32768, result='Fail'),
+# Bridge_conf(9, 1, 'RSTP_VLAN_BRIDGE_RING', 100, 30, 1, 6, priority=36864, result='Fail'),
+Bridge_conf(10, 1, 'PROVIDER_MSTP', 1000, 29, maxAge=7, maxHops=35, priority=40960),
+Bridge_conf(11, 1, 'PROVIDER_MSTP_EDGE', 100, 30, maxAge=6, maxHops=39, priority=45056),
+# Bridge_conf(12, 1, 'PROVIDER_RSTP', 1000, 29, 2, 7, priority=49152, result='Fail'),
+# Bridge_conf(13, 1, 'PROVIDER_RSTP_EDGE', 1000, 29, 2, 7, priority=53248 , result='Fail')
 ]
 
 def Bridge_Mstp_report(rest_interface_module, node_id, Bridge_Mstp_rp=Bridge_conf(),stpIndex=1, method='POST', result="Pass"):
     data = Bridge_Mstp_rp._replace(nodeId=node_id)
-    logger.info(f"TRY TO {method} Bridge_Mstp_report CONFIG ...")
+    logger.info(f"{Fore.LIGHTGREEN_EX} ******** TRY TO {method} Bridge_Mstp_report CONFIG --> {data.index}...")
 
     if method == 'GET':  
         read_data = rest_interface_module.get_request(f"/api/gponconfig/sp5100/bridgemstpstatereport/get/{data.nodeId}/{data.shelfId}/{data.slotId}/{stpIndex}")
@@ -46,7 +46,7 @@ def Bridge_Mstp_report(rest_interface_module, node_id, Bridge_Mstp_rp=Bridge_con
         assert read_data.status_code == 200, f'{method} ERROR in Bridge_Mstp config {data._asdict}'
         if read_data.status_code != 200:
             logger.error(read_data.message)
-        logger.info(f' GETTING Bridge_Mstp_report (after {method} method) ... ')
+        logger.info(f'{Fore.LIGHTBLUE_EX}******* GETTING Bridge_Mstp_report (after {method} method) --> {data.index} ... ')
         assert (input_data["stpIndex"] == 1 and
                 len(str(input_data["specMstpBridgeId"])) != 0 and 
                 input_data["specMstpBridgePriority"] == data.priority and 

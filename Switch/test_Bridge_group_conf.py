@@ -7,7 +7,7 @@ from Switch.test_vlan import vlan_config
 from Switch.bridge_funcs import bridge_config
 from collections import namedtuple
 # from pytest-check import check
-
+from colorama import Fore
 
 pytestmark = [pytest.mark.env_name("REST_env"), pytest.mark.rest_dev("olt_nms")]
 
@@ -33,7 +33,7 @@ Switch_DATA = (
 
 def switch_config(rest_interface_module, node_id, SWITCH_data=Switch(), method='POST'):
     data = SWITCH_data._replace(nodeId=node_id)
-    logger.info(f"TRY TO {method} SWITCH CONFIG IN {data.index}...")
+    logger.info(f"{Fore.LIGHTGREEN_EX} **** TRY TO {method} SWITCH CONFIG IN {data.index}...")
     if method == 'POST':
         url = "/api/gponconfig/sp5100/bridgegroupconfig/update"
         response = rest_interface_module.post_request(url, data._asdict())
@@ -50,7 +50,7 @@ def switch_config(rest_interface_module, node_id, SWITCH_data=Switch(), method='
         assert response.status_code == 200, f'{method} ERROR in switch config'
         if response.status_code != 200:
             logger.error(response.message)
-        logger.info(f' GETTING switch-config (after {method} method) ... ')
+        logger.info(f' {Fore.LIGHTBLUE_EX} ****** GETTING switch-config (after {method} method) ... ')
         read_data = rest_interface_module.get_request(f"/api/gponconfig/sp5100/bridgegroupconfig/get/{data.nodeId}/{data.shelfId}/{data.slotId}/{data.ethIfIndex}")
         input_data = json.loads(read_data.text)
         if method == 'POST':

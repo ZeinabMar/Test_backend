@@ -8,49 +8,49 @@ logger = logging.getLogger(__name__)
 
 
 #****************************************************************************************************************************
-Bridge_conf = namedtuple('Bridge_conf', ['bridgeId', 'bridgeProtocol', 'ageingTime', 'forwardTime', 'helloTime', 'maxAge',
+Bridge_conf = namedtuple('Bridge_conf', ['index','bridgeId', 'bridgeProtocol', 'ageingTime', 'forwardTime', 'helloTime', 'maxAge',
                                'maxHops', 'priority', 'id', 'result', 'shelfId', 'slotId', 'nodeId'])
-Bridge_conf.__new__.__defaults__ = (1, "IEEE_VLAN_BRIDGE", 100, 15, 2, 20, 20, 32768, 1, "Pass", 1, 1, None)
+Bridge_conf.__new__.__defaults__ = (1, 1, "IEEE_VLAN_BRIDGE", 100, 15, 2, 20, 20, 32768, 1, "Pass", 1, 1, None)
 
 Bridge_conf_service =[
-    Bridge_conf(1, "PROVIDER_MSTP", 100, 15, 2, 20, 20, 32768, 1, "Pass", 1, 1, None),
-    Bridge_conf(1, "PROVIDER_MSTP_EDGE", 100, 15, 2, 20, 20, 32768, 1, "Pass", 1, 1, None),
-    Bridge_conf(1, "PROVIDER_RSTP", 100, 15, 2, 20, 20, 32768, 1, "Pass", 1, 1, None),
-    Bridge_conf(1, "PROVIDER_RSTP_EDGE", 100, 15, 2, 20, 20, 32768, 1, "Pass", 1, 1, None)
+    Bridge_conf(1, 1, "PROVIDER_MSTP", 100, 15, 2, 20, 20, 32768, 1, "Pass", 1, 1, None),
+    Bridge_conf(2, 1, "PROVIDER_MSTP_EDGE", 100, 15, 2, 20, 20, 32768, 1, "Pass", 1, 1, None),
+    Bridge_conf(3, 1, "PROVIDER_RSTP", 100, 15, 2, 20, 20, 32768, 1, "Pass", 1, 1, None),
+    Bridge_conf(4, 1, "PROVIDER_RSTP_EDGE", 100, 15, 2, 20, 20, 32768, 1, "Pass", 1, 1, None)
 ]
 
 Bridge_conf_custom =[
-    Bridge_conf(1, "IEEE_VLAN_BRIDGE", 100, 15, 2, 20, 20, 32768, 1, "Pass", 1, 1, None),
-    Bridge_conf(1, "PROVIDER_MSTP_EDGE", 100, 15, 2, 20, 20, 32768, 1, "Pass", 1, 1, None),
-    Bridge_conf(1, "PROVIDER_RSTP_EDGE", 100, 15, 2, 20, 20, 32768, 1, "Pass", 1, 1, None),
-    Bridge_conf(1, "MSTP", 100, 15, 2, 20, 20, 32768, 1, "Pass", 1, 1, None),
-    Bridge_conf(1, "MSTPRING", 100, 15, 2, 20, 20, 32768, 1, "Pass", 1, 1, None),
-    Bridge_conf(1, "RPVSTP", 100, 15, 2, 20, 20, 32768, 1, "Pass", 1, 1, None),
-    Bridge_conf(1, "RSTP", 100, 15, 2, 20, 20, 32768, 1, "Pass", 1, 1, None),
-    Bridge_conf(1, "RSTP_RING", 100, 15, 2, 20, 20, 32768, 1, "Pass", 1, 1, None),
-    Bridge_conf(1, "RSTP_VLAN_BRIDGE", 100, 15, 2, 20, 20, 32768, 1, "Pass", 1, 1, None),
-    Bridge_conf(1, "RSTP_VLAN_BRIDGE_RING", 100, 15, 2, 20, 20, 32768, 1, "Pass", 1, 1, None)
+    Bridge_conf(5, 1, "IEEE_VLAN_BRIDGE", 100, 15, 2, 20, 20, 32768, 1, "Pass", 1, 1, None),
+    Bridge_conf(6, 1, "PROVIDER_MSTP_EDGE", 100, 15, 2, 20, 20, 32768, 1, "Pass", 1, 1, None),
+    Bridge_conf(7, 1, "PROVIDER_RSTP_EDGE", 100, 15, 2, 20, 20, 32768, 1, "Pass", 1, 1, None),
+    Bridge_conf(8, 1, "MSTP", 100, 15, 2, 20, 20, 32768, 1, "Pass", 1, 1, None),
+    Bridge_conf(9, 1, "MSTPRING", 100, 15, 2, 20, 20, 32768, 1, "Pass", 1, 1, None),
+    Bridge_conf(10, 1, "RPVSTP", 100, 15, 2, 20, 20, 32768, 1, "Pass", 1, 1, None),
+    Bridge_conf(11, 1, "RSTP", 100, 15, 2, 20, 20, 32768, 1, "Pass", 1, 1, None),
+    Bridge_conf(12, 1, "RSTP_RING", 100, 15, 2, 20, 20, 32768, 1, "Pass", 1, 1, None),
+    Bridge_conf(13, 1, "RSTP_VLAN_BRIDGE", 100, 15, 2, 20, 20, 32768, 1, "Pass", 1, 1, None),
+    Bridge_conf(14, 1, "RSTP_VLAN_BRIDGE_RING", 100, 15, 2, 20, 20, 32768, 1, "Pass", 1, 1, None)
 ]
 
 Bridge_conf_s_c =[
-    Bridge_conf(1, "PROVIDER_MSTP_EDGE", 100, 15, 2, 20, 20, 32768, 1, "Pass", 1, 1, None),
-    Bridge_conf(1, "PROVIDER_RSTP_EDGE", 100, 15, 2, 20, 20, 32768, 1, "Pass", 1, 1, None)
+    Bridge_conf(2, "PROVIDER_MSTP_EDGE", 100, 15, 2, 20, 20, 32768, 1, "Pass", 1, 1, None),
+    Bridge_conf(4, "PROVIDER_RSTP_EDGE", 100, 15, 2, 20, 20, 32768, 1, "Pass", 1, 1, None)
 ]
 
 Bridge_Mstp = [
     Bridge_conf(1, "PROVIDER_MSTP", 100, 15, 2, 20, 20, 32768, 1, "Pass", 1, 1, None),
-    Bridge_conf(1, "PROVIDER_MSTP_EDGE", 100, 15, 2, 20, 20, 32768, 1, "Pass", 1, 1, None),
-    Bridge_conf(1, "MSTPRING", 100, 15, 2, 20, 20, 32768, 1, "Pass", 1, 1, None),
-    Bridge_conf(1, "MSTP", 100, 15, 2, 20, 20, 32768, 1, "Pass", 1, 1, None),
+    Bridge_conf(2, "PROVIDER_MSTP_EDGE", 100, 15, 2, 20, 20, 32768, 1, "Pass", 1, 1, None),
+    Bridge_conf(9, "MSTPRING", 100, 15, 2, 20, 20, 32768, 1, "Pass", 1, 1, None),
+    Bridge_conf(8, "MSTP", 100, 15, 2, 20, 20, 32768, 1, "Pass", 1, 1, None),
 ]
 
 Bridge_Stp = [
-    Bridge_conf(1, "PROVIDER_RSTP", 100, 15, 2, 20, 20, 32768, 1, "Pass", 1, 1, None),
-    Bridge_conf(1, "PROVIDER_RSTP_EDGE", 100, 15, 2, 20, 20, 32768, 1, "Pass", 1, 1, None),
-    Bridge_conf(1, "RPVSTP", 100, 15, 2, 20, 20, 32768, 1, "Pass", 1, 1, None),
-    Bridge_conf(1, "RSTP", 100, 15, 2, 20, 20, 32768, 1, "Pass", 1, 1, None),
-    Bridge_conf(1, "RSTP_RING", 100, 15, 2, 20, 20, 32768, 1, "Pass", 1, 1, None),
-    Bridge_conf(1, "RSTP_VLAN_BRIDGE", 100, 15, 2, 20, 20, 32768, 1, "Pass", 1, 1, None),
+    Bridge_conf(3, "PROVIDER_RSTP", 100, 15, 2, 20, 20, 32768, 1, "Pass", 1, 1, None),
+    Bridge_conf(4, "PROVIDER_RSTP_EDGE", 100, 15, 2, 20, 20, 32768, 1, "Pass", 1, 1, None),
+    Bridge_conf(10, "RPVSTP", 100, 15, 2, 20, 20, 32768, 1, "Pass", 1, 1, None),
+    Bridge_conf(11, "RSTP", 100, 15, 2, 20, 20, 32768, 1, "Pass", 1, 1, None),
+    Bridge_conf(12, "RSTP_RING", 100, 15, 2, 20, 20, 32768, 1, "Pass", 1, 1, None),
+    Bridge_conf(13, "RSTP_VLAN_BRIDGE", 100, 15, 2, 20, 20, 32768, 1, "Pass", 1, 1, None),
 ]
 
 #****************************************************************************************************************************

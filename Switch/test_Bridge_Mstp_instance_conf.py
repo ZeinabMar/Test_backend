@@ -8,7 +8,7 @@ from Switch.bridge_funcs import bridge_config
 from Switch.test_Bridge_group_conf import switch_config
 import re
 # from pytest-check import check
-
+from colorama import Fore
 
 pytestmark = [pytest.mark.env_name("REST_env"), pytest.mark.rest_dev("olt_nms")]
 
@@ -82,7 +82,7 @@ def set_and_clear_data(input_data=d_string):
 
 def Bridge_Mstp_config(rest_interface_module, node_id, Bridge_Mstp_data=Bridge_Mstp(), method='POST'):
     data = Bridge_Mstp_data._replace(nodeId=node_id)
-    logger.info(f"TRY TO {method} Bridge_Mstp CONFIG IN {data.index} ...")
+    logger.info(f"{Fore.LIGHTGREEN_EX} **** TRY TO {method} Bridge_Mstp CONFIG IN {data.index} ...")
     if method == 'add':
         url = "/api/gponconfig/sp5100/bridgemstpinstanceconfig/add"
         response = rest_interface_module.post_request(url, data._asdict()) 
@@ -98,7 +98,7 @@ def Bridge_Mstp_config(rest_interface_module, node_id, Bridge_Mstp_data=Bridge_M
         assert response.status_code == 200, f'{method} ERROR in Bridge_Mstp config {data._asdict}'
         if response.status_code != 200:
             logger.error(response.message)
-        logger.info(f' GETTING Bridge_Mstp-config (after {method} method) ... ')
+        logger.info(f' {Fore.L} ******* GETTING Bridge_Mstp-config (after {method} method) {data.index} ... ')
 
         read_data = rest_interface_module.get_request(f"/api/gponconfig/sp5100/bridgemstpinstanceconfig/get/{data.nodeId}/{data.shelfId}/{data.slotId}/{data.instanceIndex}")
         input_data = json.loads(read_data.text)

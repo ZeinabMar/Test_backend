@@ -2,6 +2,8 @@ import pytest
 import logging
 import json
 from collections import namedtuple
+from colorama import Fore
+
 pytestmark = [pytest.mark.env_name("REST_env"), pytest.mark.rest_dev("nms")]
 
 
@@ -9,15 +11,15 @@ pytestmark = [pytest.mark.env_name("REST_env"), pytest.mark.rest_dev("nms")]
 logger = logging.getLogger(__name__)
 
 
-Bridge = namedtuple('Bridge', ['bridgeId', 'bridgeProtocol', 'ageingTime', 'forwardTime', 'helloTime', 'maxAge',
+Bridge = namedtuple('Bridge', ['index','bridgeId', 'bridgeProtocol', 'ageingTime', 'forwardTime', 'helloTime', 'maxAge',
                                'maxHops', 'priority', 'id', 'result', 'shelfId', 'slotId', 'nodeId'])
-Bridge.__new__.__defaults__ = (1, "IEEE_VLAN_BRIDGE", 100, 15, 2, 20, 20, 32768, 1, "Pass", 1, 1, None)
+Bridge.__new__.__defaults__ = (1, 1, "IEEE_VLAN_BRIDGE", 100, 15, 2, 20, 20, 32768, 1, "Pass", 1, 1, None)
 
 
 
 def bridge_config(rest_interface_module, node_id, BRIDGE_data=Bridge(), method='POST'):
     data = BRIDGE_data._replace(nodeId=node_id)
-    logger.info(f"TRY TO {method} BRIDGE CONFIG ...")
+    logger.info(f"{Fore.LIGHTGREEN_EX} ********  TRY TO {method} BRIDGE CONFIG  --> {data.index}...")
     if method == 'POST':
         data_add = Bridge()
         data_add = data_add._replace(nodeId=node_id)
@@ -32,7 +34,7 @@ def bridge_config(rest_interface_module, node_id, BRIDGE_data=Bridge(), method='
         assert response.status_code == 200, f'{response.status_code }{method} ERROR in bridge config {data._asdict}'
         if response.status_code != 200:
             logger.error(response.message)
-        logger.info(f' GETTING bridge-config (after {method} method) ... ')
+        logger.info(f' {Fore.LIGHTBLUE_EX} ******  GETTING bridge-config (after {method} method) ... ')
         read_data = rest_interface_module.get_request(f"/api/gponconfig/sp5100/bridgeconfig/getall?nodeId={node_id}&shelfId=1&slotId=1")
         if method == 'POST':
             input_data = list(filter(lambda dic: dic["bridgeId"] == data.bridgeId, json.loads(read_data.text)))

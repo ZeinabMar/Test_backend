@@ -11,10 +11,10 @@ pytestmark = [pytest.mark.env_name("REST_env"), pytest.mark.rest_dev("olt_nms")]
 logger = logging.getLogger(__name__)
 
 BRIDGE_DATA = (
-    Bridge(1, 'IEEE', 100, 30, 1, 6, priority=4096),
-    Bridge(1, 'IEEE_VLAN_BRIDGE', 1000, 29, 2, 7, priority=8192),
-    Bridge(1, 'MSTP', 100, 30, maxAge=6, maxHops=1, priority=12288),
-    Bridge(1, 'MSTPRING', 1000, 29, maxAge=7, maxHops=20, priority=16384),
+    Bridge(1, 1, 'IEEE', 100, 30, 1, 6, priority=4096),
+    Bridge(2, 1, 'IEEE_VLAN_BRIDGE', 1000, 29, 2, 7, priority=8192),
+    Bridge(3, 1, 'MSTP', 100, 30, maxAge=6, maxHops=1, priority=12288),
+    Bridge(4, 1, 'MSTPRING', 1000, 29, maxAge=7, maxHops=20, priority=16384),
     # Bridge(1, 'RPVSTP', 100, priority=20480),
     # Bridge(1, 'RSTP', 1000, 29, 2, 7, priority=24576),
     # Bridge(1, 'RSTP_RING', 100, 30, 1, 6, priority=28672),
@@ -23,7 +23,7 @@ BRIDGE_DATA = (
     # Bridge(1, 'PROVIDER_MSTP', 1000, 29, maxAge=7, maxHops=35, priority=40960),
     # Bridge(1, 'PROVIDER_MSTP_EDGE', 100, 30, maxAge=6, maxHops=39, priority=45056),
     # Bridge(1, 'PROVIDER_RSTP', 1000, 29, 2, 7, priority=49152),
-    Bridge(1, 'PROVIDER_RSTP_EDGE', 1000, 29, 2, 7, priority=53248),
+    Bridge(5, 1, 'PROVIDER_RSTP_EDGE', 1000, 29, 2, 7, priority=53248),
     # Bridge(1, 'PROVIDER_MSTP', 1500, helloTime=3, result='Fail'),
     # Bridge(1, 'RSTP_RING', 1600, maxHops=21, result='Fail'),
     # Bridge(1, 'RSTP', 1000, 100, 23, 6, priority=53248, result='Fail'),
