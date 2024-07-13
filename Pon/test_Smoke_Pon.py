@@ -61,6 +61,7 @@ def find_vlan_from_Serial(rest_interface_module, port, node_id, SN):
     return vlan  
 
 PORT_TotalNumberOnusInThisPort= {2:1,3:1}
+Vlan_From_Serial_Of_ONUs = {}
 def test_Smoke(rest_interface_module, node_id):
     for port,total_of_onu in PORT_TotalNumberOnusInThisPort.items():
         no_shutDown_Pon(rest_interface_module,port,node_id)

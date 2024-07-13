@@ -1,12 +1,21 @@
 import pytest
 import json
 import logging
-
+import sys
+import os
 logger = logging.getLogger(__name__)
 
 # board_IP = input("Please Enter your Board IP:")
+# def pytest_addoption(parser):
+#     parser.addoption("--ip", action="store", help="IP address to use in tests")
 
-board_ip = "192.168.9.127"#board_IP #"192.168.9.128" #f"{board_IP}"#"
+# def ip_address(request):
+#     return request.config.getoption("--ip")
+
+# board_ip = request.config.getoption("--ip")
+
+
+board_ip =  "192.168.9.127"#board_IP #"192.168.9.128" #f"{board_IP}"#"
 
 
 def join_oid(url_base, *indexes):
